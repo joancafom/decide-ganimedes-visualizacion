@@ -153,10 +153,16 @@ STATIC_URL = '/static/'
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
 
-try:
-    from local_settings import *
-except ImportError:
-    print("local_settings.py not found")
+if 'TRAVIS' in os.environ:
+    try:
+        from local_settings_travis import *
+    except ImportError:
+        print("local_settings_travis.py not found")
+else:
+    try:
+        from local_settings import *
+    except ImportError:
+        print("local_settings.py not found")
 
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
