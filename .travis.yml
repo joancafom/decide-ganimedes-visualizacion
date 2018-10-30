@@ -1,0 +1,26 @@
+sudo: true
+
+language: python
+
+python:
+  - 3.6
+  - 3.7
+
+services:
+  - postgresql
+
+env:
+  - DJANGO=2.0
+  - DJANGO_SETTINGS_MODULE="decide.settings"
+
+install:
+  - pip install -r requirements.txt
+
+before_script:
+  - sudo su - postgres
+  - psql -c "create user decide with password 'decide'"
+  - psql -c "create database decide owner decide"
+
+script:
+  - python manage.py migrate
+  - python manage.py test
