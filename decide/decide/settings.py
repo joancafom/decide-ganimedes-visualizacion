@@ -155,9 +155,9 @@ KEYBITS = 256
 
 if 'TRAVIS' in os.environ:
     try:
-        from local_settings.travis import *
+        from local_settings_travis import *
     except ImportError:
-        print("local_settings.travis.py not found")
+        print("local_settings_travis.py not found")
 else:
     try:
         from local_settings import *
