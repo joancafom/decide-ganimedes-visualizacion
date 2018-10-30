@@ -23,4 +23,7 @@ before_script:
 
 script:
   - python ./decide/manage.py migrate
-  - python ./decide/manage.py test
+  - python ./decide/manage.py test ./decide
+
+notifications:
+    email: false
