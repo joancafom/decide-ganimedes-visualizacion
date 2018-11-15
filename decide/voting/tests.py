@@ -14,6 +14,7 @@ from mixnet.mixcrypt import ElGamal
 from mixnet.mixcrypt import MixCrypt
 from mixnet.models import Auth
 from voting.models import Voting, Question, QuestionOption
+from postproc.models import PostProcType
 
 
 class VotingTestCase(BaseTestCase):
@@ -125,7 +126,8 @@ class VotingTestCase(BaseTestCase):
             'name': 'Example',
             'desc': 'Description example',
             'question': 'I want a ',
-            'question_opt': ['cat', 'dog', 'horse']
+            'question_opt': ['cat', 'dog', 'horse'],
+            'postproc_type': PostProcType.IDENTITY
         }
 
         response = self.client.post('/voting/', data, format='json')

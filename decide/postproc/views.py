@@ -1,6 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from .models import PostProcType
+
 
 class PostProcView(APIView):
 
@@ -11,7 +13,7 @@ class PostProcView(APIView):
             out.append({
                 **opt,
                 'postproc': opt['votes'],
-            });
+            })
 
         out.sort(key=lambda x: -x['postproc'])
         return Response(out)
@@ -29,10 +31,10 @@ class PostProcView(APIView):
            ]
         """
 
-        t = request.data.get('type', 'IDENTITY')
+        t = request.data.get('type', PostProcType.IDENTITY)
         opts = request.data.get('options', [])
 
-        if t == 'IDENTITY':
+        if t == PostProcType.IDENTITY:
             return self.identity(opts)
 
         return Response({})
