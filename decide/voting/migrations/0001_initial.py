@@ -35,6 +35,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=200)),
                 ('desc', models.TextField(blank=True, null=True)),
+                ('postproc_type', models.IntegerField(blank=True, null=True)),
                 ('start_date', models.DateTimeField(blank=True, null=True)),
                 ('end_date', models.DateTimeField(blank=True, null=True)),
                 ('auths', models.ManyToManyField(related_name='votings', to='mixnet.Auth')),
