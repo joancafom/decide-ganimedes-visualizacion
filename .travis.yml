@@ -3,6 +3,7 @@ language: python
 python:
   - 3.6
 
+
 sudo: required
 dist: trusty
 addons:
@@ -27,6 +28,6 @@ script:
 
 notifications:
     email: false
-    
+
 branches:
     only: [master]
