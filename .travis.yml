@@ -1,29 +1,27 @@
 language: python
-
 python:
   - 3.6
-
-sudo: required
-dist: trusty
-addons:
-  postgresql: "9.6"
-
+env:
+  - DJANGO=2.0 DB=postgres
 services:
   - postgresql
+addons:
+  postgresql: "9.6"
+global:
+  - PGPORT=5432
 
-env:
-  - DJANGO_SETTINGS_MODULE="decide.settings"
-
+before_install:
+  -cd decide
 install:
-  - pip install -r requirements.txt
-
+  - pip install -r ../requirements.txt
 before_script:
-  - psql -c "create user decide with password 'decide'" -U postgres
-  - psql -c "create database decide owner decide" -U postgres
+  - cp local_settings_travis.py local_settings.py
+  - psql -c "create user decide with password 'decide'"
+  - psql -c "create database decide owner decide"
+  - python manage.py migrate
 
 script:
-  - python ./decide/manage.py migrate
-  - python ./decide/manage.py test ./decide
+  - python manage.py test
 
 notifications:
     email: false
