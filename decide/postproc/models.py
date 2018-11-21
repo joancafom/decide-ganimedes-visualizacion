@@ -5,3 +5,6 @@ from django.db import models
 
 class PostProcType(object):
     IDENTITY = 0
+    WEIGHT = 1
+    SEATS = 2
+    PARITY = 3
