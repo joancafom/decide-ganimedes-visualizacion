@@ -1,6 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from .models import PostProcType
+
 
 class PostProcView(APIView):
 
@@ -11,28 +13,36 @@ class PostProcView(APIView):
             out.append({
                 **opt,
                 'postproc': opt['votes'],
-            });
+            })
 
         out.sort(key=lambda x: -x['postproc'])
         return Response(out)
 
+
+    def weight(self, options):
+        return self.identity(options)  # TODO
+
+
+    def seats(self, options, sts):
+        return self.identity(options)  # TODO
+
+
+    def parity(self, options):
+        return self.identity(options)  # TODO
+
+
     def post(self, request):
-        """
-         * type: IDENTITY | EQUALITY | WEIGHT
-         * options: [
-            {
-             option: str,
-             number: int,
-             votes: int,
-             ...extraparams
-            }
-           ]
-        """
-
-        t = request.data.get('type', 'IDENTITY')
+        t = request.data.get('type', PostProcType.IDENTITY)
         opts = request.data.get('options', [])
+        sts = request.data.get('seats', -1)
 
-        if t == 'IDENTITY':
+        if t == PostProcType.IDENTITY:
             return self.identity(opts)
+        elif t == PostProcType.WEIGHT:
+            return self.weight(opts)
+        elif t == PostProcType.SEATS:
+            return self.seats(opts, sts)
+        elif t == PostProcType.PARITY:
+            return self.parity(opts)
 
         return Response({})

@@ -15,6 +15,7 @@ from census.models import Census
 from mixnet.models import Key
 from voting.models import Question
 from voting.models import Voting
+from postproc.models import PostProcType
 
 
 class StoreTextCase(BaseTestCase):
@@ -26,16 +27,17 @@ class StoreTextCase(BaseTestCase):
         self.voting = Voting(pk=5001,
                              name='voting example',
                              question=self.question,
+                             postproc_type=PostProcType.IDENTITY,
                              start_date=timezone.now(),
-        )
+                             )
         self.voting.save()
 
     def tearDown(self):
         super().tearDown()
 
     def gen_voting(self, pk):
-        voting = Voting(pk=pk, name='v1', question=self.question, start_date=timezone.now(),
-                end_date=timezone.now() + datetime.timedelta(days=1))
+        voting = Voting(pk=pk, name='v1', question=self.question, postproc_type=PostProcType.IDENTITY,
+                        start_date=timezone.now(), end_date=timezone.now() + datetime.timedelta(days=1))
         voting.save()
 
     def get_or_create_user(self, pk):

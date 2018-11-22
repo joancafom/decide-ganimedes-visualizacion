@@ -3,6 +3,7 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
 
+from postproc.models import PostProcType
 from base import mods
 
 
@@ -17,7 +18,7 @@ class PostProcTestCase(APITestCase):
 
     def test_identity(self):
         data = {
-            'type': 'IDENTITY',
+            'type': PostProcType.IDENTITY,
             'options': [
                 { 'option': 'Option 1', 'number': 1, 'votes': 5 },
                 { 'option': 'Option 2', 'number': 2, 'votes': 0 },
