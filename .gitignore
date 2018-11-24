@@ -181,5 +181,8 @@ fabric.properties
 # Sonarlint plugin
 .idea/sonarlint
 
+.idea/
+.vscode/
+
 
 # End of https://www.gitignore.io/api/pycharm
