@@ -20,7 +20,16 @@ class PostProcView(APIView):
 
 
     def weight(self, options):
-        return self.identity(options)  # TODO
+        out = []
+
+        for opt in options:
+            out.append({
+                **opt,
+                'postproc': opt['votes']*opt['weight'],
+            })
+
+        out.sort(key=lambda x: -x['postproc'])
+        return Response(out)
 
 
     def seats(self, options, sts):
