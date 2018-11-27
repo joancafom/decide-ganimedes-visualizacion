@@ -90,6 +90,9 @@ ENV/
 # visual code
 .vscode
 
+#sqlite3
+db.sqlite3
+
 # Spyder project settings
 .spyderproject
 .spyproject
