@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$USER_HOME$/eclipse-workspace/ClasesPracticasAII/.idea/ClasesPracticasAII.iml" filepath="$USER_HOME$/eclipse-workspace/ClasesPracticasAII/.idea/ClasesPracticasAII.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../PracticasAII/.idea/PracticasAII.iml" filepath="$PROJECT_DIR$/../PracticasAII/.idea/PracticasAII.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/decide-ganimedes-postproc.iml" filepath="$PROJECT_DIR$/.idea/decide-ganimedes-postproc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../AII/Practica_Django/.idea/untitled.iml" filepath="$PROJECT_DIR$/../AII/Practica_Django/.idea/untitled.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../AII/untitled/.idea/untitled.iml" filepath="$PROJECT_DIR$/../AII/untitled/.idea/untitled.iml" />
     </modules>
   </component>
 </project>
