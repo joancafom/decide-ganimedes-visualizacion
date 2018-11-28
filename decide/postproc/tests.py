@@ -48,19 +48,19 @@ class PostProcTestCase(APITestCase):
         data = {
             'type': PostProcType.SEATS,
             'options': [
-                { 'option': 'Option 1', 'number': 1, 'votes': 10 },
-                { 'option': 'Option 2', 'number': 2, 'votes': 5 },
-                { 'option': 'Option 3', 'number': 3, 'votes': 13 },
-                { 'option': 'Option 4', 'number': 4, 'votes': 2 },
+                {'option': 'Option 1', 'number': 1, 'votes': 10},
+                {'option': 'Option 2', 'number': 2, 'votes': 5},
+                {'option': 'Option 3', 'number': 3, 'votes': 13},
+                {'option': 'Option 4', 'number': 4, 'votes': 2},
             ],
-            'sts': 6
+            'seats': 6
         }
 
         expected_result = [
-            { 'option': 'Option 1', 'number': 1, 'votes': 10, 'seats': 2 },
-            { 'option': 'Option 2', 'number': 2, 'votes': 5, 'seats': 1 },
-            { 'option': 'Option 3', 'number': 3, 'votes': 13, 'seats': 3 },
-            { 'option': 'Option 4', 'number': 4, 'votes': 2, 'seats': 0 },
+            {'option': 'Option 3', 'number': 3, 'votes': 13, 'seats': 3},
+            {'option': 'Option 1', 'number': 1, 'votes': 10, 'seats': 2},
+            {'option': 'Option 2', 'number': 2, 'votes': 5, 'seats': 1},
+            {'option': 'Option 4', 'number': 4, 'votes': 2, 'seats': 0}
 
         ]
 
