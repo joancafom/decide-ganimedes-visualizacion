@@ -12,8 +12,9 @@
       <br/>
       <input type="submit" value="{% trans "Submit" %}" onClick="decideSignUp()"/>
     </div>
-    <div id="exits">exits</div>
-    <div id="noexits">no exits</div>
+    <div id="exits" style="display:none;">User already exits</div>
+    <div id="saved" style="display:none;">saved</div>
+    <div id="error" style="display:none;">error</div>
 {% endblock %}
 {% block extrabody %}
     <!-- needed to generate big random -->
@@ -42,12 +43,12 @@
         
           token = data.token;
         
-        decideUser();
+        decideUser();//logged
       })
       .catch(error => {
         
         
-        save();
+        save();//no logged
         });
   }
   function save() {
@@ -59,32 +60,42 @@
     postData("{{auth_url}}" + "/authentication/save/", data)
       .then(data => {
         user = data;
-        panel('exits');
+        panel('saved');
       }).catch(error => {
-        panel('noexits');;
+        panel('error');;
       });       
   }
-  function decideUser() {
+  function decideUser() {//logged
     var data = { token: token };
     postData("{{auth_url}}" + "/authentication/getuser/", data)
       .then(data => {
         user = data;
         panel('exits');
       }).catch(error => {
-        panel('noexits');;
+        panel('error');;
       });
   }
 
   function panel(p) {
     switch(p) {
         case 'exits':
-            document.querySelector("#noexits").style.display = "none";
+            document.querySelector("#error").style.display = "none";
+            document.querySelector("#signup").style.display = "none";
+            document.querySelector("#saved").style.display = "none";
             document.querySelector("#exits").style.display = "block";
             break;
-        case 'noexits':
-        default:
-            document.querySelector("#noexits").style.display = "block";
+        case 'saved':
+            document.querySelector("#error").style.display = "none";
+            document.querySelector("#signup").style.display = "none";
+            document.querySelector("#saved").style.display = "block";
             document.querySelector("#exits").style.display = "none";
+            break;
+        case 'error':
+        default:
+            document.querySelector("#signup").style.display = "block";
+            document.querySelector("#saved").style.display = "none";
+            document.querySelector("#exits").style.display = "none";
+            document.querySelector("#error").style.display = "block";
             break;
     };
   }
