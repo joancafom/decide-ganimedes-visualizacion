@@ -6,7 +6,6 @@ from base import mods
 
 
 class VisualizerView(TemplateView):
-    template_name = 'visualizer/visualizer.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -15,6 +14,24 @@ class VisualizerView(TemplateView):
         try:
             r = mods.get('voting', params={'id': vid})
             context['voting'] = r[0]
+
+            # Elegimos la plantilla a renderizar en base al estado
+            # de la votación
+            if r[0]['start_date'] is None:
+                
+                # Votación no comenzada
+                self.template_name = "visualizer/not_started.html"
+
+            elif r[0]['end_date'] is None:
+
+                # Votación en proceso
+                self.template_name = "visualizer/ongoing.html"
+
+            else:
+                
+                #Votación terminada
+                self.template_name = "visualizer/ended.html"
+
         except:
             raise Http404
 
