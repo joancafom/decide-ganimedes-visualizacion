@@ -4,6 +4,8 @@ from django.http import Http404
 
 from base import mods
 
+from .render import Render
+
 
 class VisualizerView(TemplateView):
 
@@ -36,3 +38,18 @@ class VisualizerView(TemplateView):
             raise Http404
 
         return context
+
+
+class VisualizerPdf(TemplateView):
+
+    def get(self, request, **kwargs):
+        vid = kwargs.get('voting_id', 0)
+
+        try:
+            r = mods.get('voting', params={'id': vid})
+            voting = r[0]
+        
+        except:
+            raise Http404
+
+        return Render.render('visualizer/endedPdf.html', {'voting':voting})
