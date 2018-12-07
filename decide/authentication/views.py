@@ -12,6 +12,10 @@ from django.http import Http404
 from base import mods
 from django.contrib.auth.models import User
 
+from django.shortcuts import render
+
+
+    
 class GetUserView(APIView):
     def post(self, request):
         key = request.data.get('token', '')
