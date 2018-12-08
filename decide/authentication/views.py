@@ -58,7 +58,7 @@ def nuevo_usuario(request):
         formulario = UserCreateForm(request.POST)
         if formulario.is_valid:
             formulario.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/admin')
     else:
         formulario = UserCreateForm()
     return render(request, 'authentication/nuevo_usuario.html', {'formulario':formulario})
