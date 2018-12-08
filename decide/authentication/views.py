@@ -1,13 +1,18 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.core.exceptions import ObjectDoesNotExist
 
 from .serializers import UserSerializer
 from django.views.generic import TemplateView
 from django.conf import settings
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
+
+from .forms import UserCreateForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 
 from base import mods
 from django.contrib.auth.models import User
@@ -47,4 +52,13 @@ class SaveUserView(APIView):
         User.objects.create_user(username,None, password)
 
         return Response({})
-        
+
+def nuevo_usuario(request):
+    if request.method == 'POST':
+        formulario = UserCreateForm(request.POST)
+        if formulario.is_valid:
+            formulario.save()
+            return HttpResponseRedirect('/admin')
+    else:
+        formulario = UserCreateForm()
+    return render(request, 'authentication/nuevo_usuario.html', {'formulario':formulario})
