@@ -6,7 +6,7 @@ import xhtml2pdf.pisa as pisa
 
 class Render:
 
-    def render(path, params):
+    def render_pdf(path, params):
         plantilla = get_template(path)
         html = plantilla.render(params)
 
@@ -17,4 +17,4 @@ class Render:
             return HttpResponse(response.getvalue(), content_type='application/pdf')
         
         else:
-            return HttpResponse("Error Renderizando PDF", status=400)
+            return HttpResponse("Error renderizando el archivo PDF", status=400)

@@ -48,8 +48,21 @@ class VisualizerPdf(TemplateView):
         try:
             r = mods.get('voting', params={'id': vid})
             voting = r[0]
+
+            # Elegimos la plantilla a renderizar en base al estado
+            # de la votación
+
+            if r[0]['end_date'] is None:
+
+                # Votación en proceso
+                plantilla = "visualizer/ongoing_export.html"
+
+            elif r[0]['start_date'] is not None and r[0]['end_date'] is not None:
+                
+                #Votación terminada
+                plantilla = "visualizer/ended_export.html"
         
         except:
             raise Http404
 
-        return Render.render('visualizer/endedPdf.html', {'voting':voting})
+        return Render.render_pdf(plantilla, {'voting':voting})
