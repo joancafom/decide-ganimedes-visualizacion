@@ -20,8 +20,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         db_table = 'auth_user'
-        verbose_name = 'usuario'
-        verbose_name_plural = 'usuarios'
+        verbose_name = 'user'
+        verbose_name_plural = 'users'
 
     def get_full_name(self):
         full_name = '{} {}'.format(self.first_name, self.last_name)

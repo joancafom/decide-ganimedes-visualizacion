@@ -6,7 +6,7 @@
     <h1>Registra un nuevo usuario</h1>
     <form id='formulario' method='post' action=''>
         {% csrf_token %}
-        <table>{{formulario.as_p}}</table>
+        <table>{{formulario}}</table>
         <p><input type='submit' value='Registrar' /></p>
     </form>
 {% endblock %}

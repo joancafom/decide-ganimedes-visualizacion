@@ -151,6 +151,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Avatar files
+AVATAR_ROOT = os.path.join(BASE_DIR, 'authentication/avatars')
+AVATAR_URL = '/authentication/avatars/'
+
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
 
