@@ -19,15 +19,6 @@ class CensusTestCase(BaseTestCase):
         super().tearDown()
         self.census = None
 
-    def test_check_vote_permissions(self):
-        response = self.client.get('/census/{}/?voter_id={}'.format(1, 2), format='json')
-        self.assertEqual(response.status_code, 401)
-        self.assertEqual(response.json(), 'Invalid voter')
-
-        response = self.client.get('/census/{}/?voter_id={}'.format(1, 1), format='json')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), 'Valid voter')
-
     def test_list_voting(self):
         response = self.client.get('/census/?voting_id={}'.format(1), format='json')
         self.assertEqual(response.status_code, 401)
