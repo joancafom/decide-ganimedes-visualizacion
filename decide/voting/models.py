@@ -30,6 +30,8 @@ class QuestionOption(models.Model):
     BOOL_CHOICES = ((True, 'Male'), (False, 'Female'))
     gender = models.NullBooleanField(blank=True, null=True, choices=BOOL_CHOICES)
 
+    # Leave empty if it doesn't apply.
+    team = models.IntegerField(blank=True, null=True)
 
     def save(self):
         if not self.number:
@@ -47,8 +49,8 @@ class Voting(models.Model):
 
     # Leave empty if it doesn't apply.
     TYPE_CHOICES = [(PostProcType.IDENTITY, "Identity"), (PostProcType.WEIGHT, "Weight"),
-                    (PostProcType.SEATS, "Seats"), (PostProcType.PARITY, "Parity")]
-    postproc_type = models.IntegerField(blank=True, null=True, choices=TYPE_CHOICES)
+                    (PostProcType.SEATS, "Seats"), (PostProcType.PARITY, "Parity"), (PostProcType.TEAM, "Team")]
+    postproc_type = models.IntegerField(blank=True, null=True, choices=TYPE_CHOICES, default=PostProcType.IDENTITY)
 
     start_date = models.DateTimeField(blank=True, null=True)
     end_date = models.DateTimeField(blank=True, null=True)
@@ -129,6 +131,7 @@ class Voting(models.Model):
                 'number': opt.number,
                 'votes': votes,
                 'gender': opt.gender,
+                'team': opt.team,
             })
 
         data = { 'type': self.postproc_type, 'options': opts, 'seats': self.question.seats }
