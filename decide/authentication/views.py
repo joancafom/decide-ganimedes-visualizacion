@@ -55,9 +55,9 @@ class SignUpView(TemplateView):
 
 class SaveUserView(APIView):
     def post(self, request):
-        username = request.data.get('username')
+        email = request.data.get('email')
         password = request.data.get('password')
-        User.objects.create_user(username,None, password)
+        User.objects.create_user(email, password)
 
         return Response({})
 
@@ -106,7 +106,7 @@ obtain_auth_token = ObtainAuthToken.as_view()
 def nuevo_usuario(request):
     if request.method == 'POST':
         formulario = UserCreateForm(request.POST)
-        if formulario.is_valid:
+        if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/admin')
     else:
