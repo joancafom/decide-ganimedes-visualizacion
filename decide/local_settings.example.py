@@ -13,6 +13,12 @@ MODULES = [
     'voting',
 ]
 
+INSTALLED_APPS = [
+    'django.contrib.staticfiles',
+]
+
+STATIC_URL = '/static/'
+
 APIS = {
     'authentication': 'http://10.5.0.1:8000',
     'base': 'http://10.5.0.1:8000',
@@ -39,3 +45,5 @@ DATABASES = {
 
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
+
+STATIC_URL = '/static/'
