@@ -29,7 +29,7 @@ class AuthTestCase(APITestCase):
         self.assertTrue(token.get('token'))
 
     def test_login_fail(self):
-        data = {'email': 'voter1@gmail.com', 'password': 'test1234'}
+        data = {'email': 'voter1', 'password': 'test1234'}
         response = self.client.post('/authentication/login/', data, format='json')
         self.assertEqual(response.status_code, 400)
 

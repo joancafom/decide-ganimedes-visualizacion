@@ -1,5 +1,5 @@
 import random
-from django.contrib.auth.models import User
+from authentication.models import User
 from django.test import TestCase
 from rest_framework.test import APIClient
 
@@ -32,7 +32,7 @@ class CensusTestCase(BaseTestCase):
         response = self.client.get('/census/?voting_id={}'.format(1), format='json')
         self.assertEqual(response.status_code, 401)
 
-        self.login(user='noadmin')
+        self.login(user='noadmin@gmail.com')
         response = self.client.get('/census/?voting_id={}'.format(1), format='json')
         self.assertEqual(response.status_code, 403)
 
@@ -46,7 +46,7 @@ class CensusTestCase(BaseTestCase):
         response = self.client.post('/census/', data, format='json')
         self.assertEqual(response.status_code, 401)
 
-        self.login(user='noadmin')
+        self.login(user='noadmin@gmail.com')
         response = self.client.post('/census/', data, format='json')
         self.assertEqual(response.status_code, 403)
 
@@ -59,7 +59,7 @@ class CensusTestCase(BaseTestCase):
         response = self.client.post('/census/', data, format='json')
         self.assertEqual(response.status_code, 401)
 
-        self.login(user='noadmin')
+        self.login(user='noadmin@gmail.com')
         response = self.client.post('/census/', data, format='json')
         self.assertEqual(response.status_code, 403)
 

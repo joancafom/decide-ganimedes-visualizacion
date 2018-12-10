@@ -23,7 +23,7 @@ from rest_framework.schemas import ManualSchema
 from rest_framework.views import APIView
 
 from base import mods
-from django.contrib.auth.models import User
+from .models import User
 
 class GetUserView(APIView):
     def post(self, request):
