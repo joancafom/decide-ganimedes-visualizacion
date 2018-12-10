@@ -49,7 +49,7 @@ class VotingTestCase(BaseTestCase):
 
     def create_voters(self, v):
         for i in range(100):
-            u, _ = User.objects.get_or_create(username='testvoter{}'.format(i))
+            u, _ = User.objects.get_or_create(email='testvoter{}@gmail.com'.format(i))
             u.is_active = True
             u.save()
             c = Census(voter_id=u.id, voting_id=v.id)
@@ -57,7 +57,7 @@ class VotingTestCase(BaseTestCase):
 
     def get_or_create_user(self, pk):
         user, _ = User.objects.get_or_create(pk=pk)
-        user.username = 'user{}'.format(pk)
+        user.email = 'user{}'.format(pk)
         user.set_password('qwerty')
         user.save()
         return user
@@ -78,7 +78,7 @@ class VotingTestCase(BaseTestCase):
                 }
                 clear[opt.number] += 1
                 user = self.get_or_create_user(voter.voter_id)
-                self.login(user=user.username)
+                self.login(user=user.email)
                 voter = voters.pop()
                 mods.post('store', json=data)
         return clear
