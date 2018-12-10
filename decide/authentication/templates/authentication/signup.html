@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
+
+{% block content %}
 <form action="{% url 'set_language' %}" method="post">
   {% csrf_token %}
   <input name="next" type="hidden" value="{{ redirect_to }}" />
@@ -14,7 +16,6 @@
   </select>
   <input type="submit" value="Go" />
 </form>
-{% block content %}
     <h1>sign up</h1>
     <div id="signup">
       <label for="username">{% trans "Username" %}</label>
@@ -136,5 +137,5 @@
             });
           }
 </script>
-</body>
+
 {% endblock %}
