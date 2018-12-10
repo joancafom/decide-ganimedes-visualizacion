@@ -29,4 +29,6 @@ notifications:
     email: false
     
 branches:
-    only: [master, develop]
+    only:
+    - master
+    - develop
