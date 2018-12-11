@@ -136,6 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'authentication.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -163,6 +164,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Avatar files
+AVATAR_ROOT = os.path.join(BASE_DIR, 'authentication/avatars')
+AVATAR_URL = '/authentication/avatars/'
 
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
