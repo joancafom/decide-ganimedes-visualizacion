@@ -2,7 +2,7 @@ import random
 import itertools
 from django.utils import timezone
 from django.conf import settings
-from django.contrib.auth.models import User
+from authentication.models import User
 from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
@@ -14,6 +14,7 @@ from mixnet.mixcrypt import ElGamal
 from mixnet.mixcrypt import MixCrypt
 from mixnet.models import Auth
 from voting.models import Voting, Question, QuestionOption
+from postproc.models import PostProcType
 
 
 class VotingTestCase(BaseTestCase):
@@ -37,7 +38,7 @@ class VotingTestCase(BaseTestCase):
         for i in range(5):
             opt = QuestionOption(question=q, option='option {}'.format(i+1))
             opt.save()
-        v = Voting(name='test voting', question=q)
+        v = Voting(name='test voting', question=q, postproc_type=PostProcType.IDENTITY)
         v.save()
 
         a, _ = Auth.objects.get_or_create(url=settings.BASEURL,
@@ -49,7 +50,7 @@ class VotingTestCase(BaseTestCase):
 
     def create_voters(self, v):
         for i in range(100):
-            u, _ = User.objects.get_or_create(username='testvoter{}'.format(i))
+            u, _ = User.objects.get_or_create(email='testvoter{}@gmail.com'.format(i))
             u.is_active = True
             u.save()
             c = Census(voter_id=u.id, voting_id=v.id)
@@ -57,7 +58,7 @@ class VotingTestCase(BaseTestCase):
 
     def get_or_create_user(self, pk):
         user, _ = User.objects.get_or_create(pk=pk)
-        user.username = 'user{}'.format(pk)
+        user.email = 'user{}'.format(pk)
         user.set_password('qwerty')
         user.save()
         return user
@@ -78,7 +79,7 @@ class VotingTestCase(BaseTestCase):
                 }
                 clear[opt.number] += 1
                 user = self.get_or_create_user(voter.voter_id)
-                self.login(user=user.username)
+                self.login(user=user.email)
                 voter = voters.pop()
                 mods.post('store', json=data)
         return clear
@@ -112,7 +113,7 @@ class VotingTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 401)
 
         # login with user no admin
-        self.login(user='noadmin')
+        self.login(user='noadmin@gmail.com')
         response = mods.post('voting', params=data, response=True)
         self.assertEqual(response.status_code, 403)
 
@@ -125,7 +126,8 @@ class VotingTestCase(BaseTestCase):
             'name': 'Example',
             'desc': 'Description example',
             'question': 'I want a ',
-            'question_opt': ['cat', 'dog', 'horse']
+            'question_opt': ['cat', 'dog', 'horse'],
+            'postproc_type': PostProcType.IDENTITY,
         }
 
         response = self.client.post('/voting/', data, format='json')
@@ -139,7 +141,7 @@ class VotingTestCase(BaseTestCase):
         #self.assertEqual(response.status_code, 401)
 
         # login with user no admin
-        self.login(user='noadmin')
+        self.login(user='noadmin@gmail.com')
         response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
         self.assertEqual(response.status_code, 403)
 
