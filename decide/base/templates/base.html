@@ -11,7 +11,7 @@
         <link type="text/css" rel="stylesheet" href="{% static "decide/css/base.css"%}"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab" rel="stylesheet">
         
-        <link type="text/css" rel="stylesheet" href="{% static "decide/css/materialize.css"%}">
+        <link type="text/css" rel="stylesheet" href="{% static "decide/css/materialize.css"%}"> 
         <!--Import materialize.js-->
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -26,7 +26,8 @@
         <form action="{% url 'set_language' %}" method="post">
             {% csrf_token %}
             <input name="next" type="hidden" value="{{ redirect_to }}" />
-            <select name="language">
+            
+        <select name="language" class="browser-default">
                 {% get_current_language as LANGUAGE_CODE %}
                 {% get_available_languages as LANGUAGES %}
                 {% for lang in LANGUAGES %}
@@ -35,11 +36,10 @@
                     </option>
                 {% endfor %}
             </select>
+        
             <input type="submit" value="Go" />
           </form>
-         {% block content %}
-
-        {% endblock %}
+         
         <script type="text/javascript" src="{% static "decide/js/materialize.js"%}"></script>
         <nav class="menu">
             <div class="nav-wrapper blue-grey darken-2">
