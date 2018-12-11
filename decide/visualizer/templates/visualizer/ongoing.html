@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}
+{% endblock %}
+{% block menu_options %}
+{% endblock %}
+{% block content %}
+    <h1>{{ voting.id }} - {{ voting.name }}</h1>
+
+    <h2>{% trans 'Voting is open' %}</h2>
+    <h2>{% trans 'Stats' %}</h2>
+
+    <h3>{% trans 'Census Size:' %}  {{stats_census_size}}</h3>
+    <h3>{% trans 'Voters Turnout:' %}  {{stats_voters_turnout}}</h3>
+    <h3>{% trans 'Participation:' %}  {{stats_participation_ratio}}%</h3>
+
+    <a href="pdf/" target="_blank">Descargar los resultado en formato .pdf</a>
+    <br/>
+    <a href="csv/" target="_blank">Descargar los resultado en formato .csv</a>
+
+{% endblock %}

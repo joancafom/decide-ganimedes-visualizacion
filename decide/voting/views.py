@@ -9,6 +9,7 @@ from .models import Question, QuestionOption, Voting
 from .serializers import VotingSerializer
 from base.perms import UserIsStaff
 from base.models import Auth
+from postproc.models import PostProcType
 
 
 class VotingView(generics.ListCreateAPIView):
@@ -23,9 +24,14 @@ class VotingView(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         self.permission_classes = (UserIsStaff,)
         self.check_permissions(request)
-        for data in ['name', 'desc', 'question', 'question_opt']:
+        for data in ['name', 'desc', 'question', 'question_opt', 'postproc_type']:
             if not data in request.data:
                 return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+        postproc_type = request.data.get('postproc_type')
+        types = [PostProcType.IDENTITY, PostProcType.WEIGHT, PostProcType.SEATS, PostProcType.PARITY, PostProcType.TEAM]
+        if postproc_type is not None and postproc_type not in types:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
         question = Question(desc=request.data.get('question'))
         question.save()

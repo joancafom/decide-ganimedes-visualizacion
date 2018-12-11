@@ -1,0 +1,30 @@
+body{
+    background-color:#fafafa;
+    font-family: 'Roboto';
+    font-size: 16px;
+    color: #263238;
+}
+
+.body{
+    margin-left: 30px;
+    margin-right: 30px;
+    
+}
+
+.menu{
+    margin-bottom: 50px;
+}
+
+.brand-logo{
+    font-family: 'Roboto Slab';
+}
+
+h4{
+    font-family: 'Roboto Slab';
+    color: #263238; 
+}
+
+h5, p{
+    font-family: 'Roboto';
+    color: #263238;
+}
