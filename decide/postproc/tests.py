@@ -43,3 +43,32 @@ class PostProcTestCase(APITestCase):
 
         values = response.json()
         self.assertEqual(values, expected_result)
+
+
+    def test_weight(self):
+        data = {
+            'type': PostProcType.WEIGHT,
+            'options': [
+                {'option': 'Option 1', 'number': 1, 'votes': 5, 'weight': 5},
+                {'option': 'Option 2', 'number': 2, 'votes': 0, 'weight': 5},
+                {'option': 'Option 3', 'number': 3, 'votes': 3, 'weight': 5},
+                {'option': 'Option 4', 'number': 4, 'votes': 2, 'weight': 5},
+                {'option': 'Option 5', 'number': 5, 'votes': 5, 'weight': 5},
+                {'option': 'Option 6', 'number': 6, 'votes': 1, 'weight': 5},
+            ]
+        }
+
+        expected_result = [
+            {'option': 'Option 1', 'number': 1, 'votes': 5, 'weight': 5, 'postproc': 25},
+            {'option': 'Option 5', 'number': 5, 'votes': 5, 'weight': 5, 'postproc': 25},
+            {'option': 'Option 3', 'number': 3, 'votes': 3, 'weight': 5, 'postproc': 15},
+            {'option': 'Option 4', 'number': 4, 'votes': 2, 'weight': 5, 'postproc': 10},
+            {'option': 'Option 6', 'number': 6, 'votes': 1, 'weight': 5, 'postproc': 5},
+            {'option': 'Option 2', 'number': 2, 'votes': 0, 'weight': 5, 'postproc': 0},
+        ]
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
