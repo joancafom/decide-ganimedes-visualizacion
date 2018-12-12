@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-12-07 14:03+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: authentication/templates/authentication/signup.html:20
+#: booth/templates/booth/booth.html:8
+msgid "Username"
+msgstr "Usuario"
+
+#: authentication/templates/authentication/signup.html:23
+#: booth/templates/booth/booth.html:11
+msgid "Password"
+msgstr "Contraseña"
+
+#: authentication/templates/authentication/signup.html:26
+msgid "Submit"
+msgstr "Enviar"
+
+#: booth/templates/booth/booth.html:14
+msgid "Login"
+msgstr "Iniciar sesión"
+
+#: booth/templates/booth/booth.html:18
+msgid "logout"
+msgstr "Cerrar sesión"
+
+#: booth/templates/booth/booth.html:27
+msgid "Vote"
+msgstr "Votar"
+
+#: booth/templates/booth/booth.html:95
+msgid "Conglatulations. Your vote has been sent"
+msgstr "Enhorabuena. Tu voto ha sido enviado"
+
+#: booth/templates/booth/booth.html:99 booth/templates/booth/booth.html:121
+#: booth/templates/booth/booth.html:137
+msgid "Error: "
+msgstr "Error"
+
+#: decide/settings.py:144
+msgid "Espanish"
+msgstr "Español"
+
+#: decide/settings.py:145
+msgid "English"
+msgstr "Ingles"
+
+#: local_settings.py:77
+msgid "Español"
+msgstr "Spanish"
+
+#: local_settings.py:78
+msgid "Inglés"
+msgstr "English"
+
+#: visualizer/templates/visualizer/visualizer.html:8
+msgid "Voting not started"
+msgstr "Votación no comenzada"
+
+#: visualizer/templates/visualizer/visualizer.html:10
+msgid "Voting is opened"
+msgstr "La votación está abierta"
+
+#: visualizer/templates/visualizer/visualizer.html:12
+msgid "Results: "
+msgstr "Resultados"
