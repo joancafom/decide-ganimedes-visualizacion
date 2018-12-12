@@ -73,7 +73,8 @@ MODULES = [
     'voting',
 ]
 
-BASEURL = 'http://localhost:8000'
+#BASEURL = 'http://localhost:8000'
+BASEURL = 'https://decide-jara.herokuapp.com/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -172,6 +173,8 @@ AVATAR_URL = '/authentication/avatars/'
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
 
+APIS = {}
+
 if 'TRAVIS' in os.environ:
     try:
         from local_settings_travis import *
@@ -185,3 +188,7 @@ else:
 
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
+
+
+import django_heroku
+django_heroku.settings(locals())
