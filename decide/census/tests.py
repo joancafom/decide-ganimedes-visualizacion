@@ -21,7 +21,7 @@ class CensusTestCase(BaseTestCase):
 
     def test_list_voting(self):
         response = self.client.get('/census/?voting_id={}'.format(1), format='json')
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 200)
 
         self.login(user='noadmin@gmail.com')
         response = self.client.get('/census/?voting_id={}'.format(1), format='json')
@@ -35,7 +35,7 @@ class CensusTestCase(BaseTestCase):
     def test_add_new_voters_conflict(self):
         data = {'voting_id': 1, 'voters': [1]}
         response = self.client.post('/census/', data, format='json')
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 409)
 
         self.login(user='noadmin@gmail.com')
         response = self.client.post('/census/', data, format='json')
@@ -48,7 +48,7 @@ class CensusTestCase(BaseTestCase):
     def test_add_new_voters(self):
         data = {'voting_id': 2, 'voters': [1,2,3,4]}
         response = self.client.post('/census/', data, format='json')
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 201)
 
         self.login(user='noadmin@gmail.com')
         response = self.client.post('/census/', data, format='json')
