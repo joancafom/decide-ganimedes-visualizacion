@@ -17,6 +17,11 @@ before_script:
 - psql -c "create database decide owner decide"
 - python manage.py migrate
 script:
-- python manage.py test
-addons:
-  postgresql: "9.6"
+  - python ./decide/manage.py migrate
+  - python ./decide/manage.py test ./decide
+
+notifications:
+    email: false
+    
+branches:
+    only: [master]
