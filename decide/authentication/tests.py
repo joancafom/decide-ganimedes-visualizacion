@@ -79,3 +79,20 @@ class AuthTestCase(APITestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(Token.objects.filter(user__username='voter1').count(), 0)
+
+#------------------------signup------------------------------
+#sudo python3 ./manage.py test authentication.tests
+
+    def test_signup_new(self):
+        data = {'username': 'new', 'password': 'new'}# this user must not exits in db
+        response = mods.get('authentication/signup', json=data, response=True) #getting the html
+        self.assertEqual(response.status_code, 200)  
+        response = mods.post('authentication/login', json=data, response=True) #trying logging
+        self.assertNotEqual(response.status_code, 200)  #user does not exit   
+        response = mods.post('authentication/save', json=data, response=True) #saving user
+        self.assertEqual(response.status_code, 200) 
+        response = mods.post('authentication/login', json=data, response=True) #trying logging
+        self.assertEqual(response.status_code, 200)  #user exits 
+
+      
+

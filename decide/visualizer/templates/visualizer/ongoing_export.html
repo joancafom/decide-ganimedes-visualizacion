@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block content %}
+    <h1>{{ voting.id }} - {{ voting.name }}</h1>
+
+    <h2>{% trans 'Voting is open' %}</h2>
+
+{% endblock %}
