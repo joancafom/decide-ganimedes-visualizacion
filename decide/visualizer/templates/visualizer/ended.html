@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}
+{% endblock %}
+{% block menu_options %}
+{% endblock %}
+{% block content %}
+    <h4>{{ voting.id }} - {{ voting.name }}</h4>
+
+        <h5>{% trans 'Results: ' %}</h5>
+        <ul>
+            {% for option in voting.postproc %}
+                <li>{{option.option}}: {{option.postproc}} <span>({{option.votes}})</span></li>
+            {% endfor %}
+        </ul>
+
+    <a href="pdf/" target="_blank">Descargar los resultado en formato .pdf</a>
+    <br/>
+    <a href="csv/" target="_blank">Descargar los resultado en formato .csv</a>
+
+{% endblock %}

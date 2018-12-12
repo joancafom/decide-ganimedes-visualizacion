@@ -11,11 +11,14 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+# Definimos el procesador de contexto para i18n
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+LOCALE_PATHS = (
+ os.path.join(BASE_DIR, "locale"),
+)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -29,6 +32,8 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+
+from django.utils.translation import ugettext_lazy as _
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -76,6 +81,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -136,7 +142,15 @@ AUTH_USER_MODEL = 'authentication.User'
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
+LANGUAGES = (
+ ('es', _('Espanish')),
+ ('en', _('English')),
+) 
+
 LANGUAGE_CODE = 'en-us'
+_ = lambda s: s
+
+
 
 TIME_ZONE = 'UTC'
 

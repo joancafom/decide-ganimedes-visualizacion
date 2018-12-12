@@ -25,6 +25,10 @@ from rest_framework.views import APIView
 from base import mods
 from .models import User
 
+from django.shortcuts import render
+
+
+    
 class GetUserView(APIView):
     def post(self, request):
         key = request.data.get('token', '')
