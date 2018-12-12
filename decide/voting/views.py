@@ -29,7 +29,7 @@ class VotingView(generics.ListCreateAPIView):
                 return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
         postproc_type = request.data.get('postproc_type')
-        types = [PostProcType.IDENTITY, PostProcType.WEIGHT, PostProcType.SEATS, PostProcType.PARITY]
+        types = [PostProcType.IDENTITY, PostProcType.WEIGHT, PostProcType.SEATS, PostProcType.PARITY, PostProcType.TEAM]
         if postproc_type is not None and postproc_type not in types:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
