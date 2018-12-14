@@ -6,9 +6,23 @@ from rest_framework.response import Response
 from rest_framework import generics
 
 from .models import Vote
-from .serializers import VoteSerializer
+from .serializers import VoteSerializer,VotingSerializer
 from base import mods
 from base.perms import UserIsStaff
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+
+class VotingView(generics.ListAPIView):
+    serializer_class = VotingSerializer
+    def get(self,request,voting_id):
+        voting_id = self.kwargs['voting_id']
+        result=Vote.objects.filter(voting_id=voting_id).values('voter_id')
+        #for id in result
+        #    result=User.objects.filter(id=id).values('username')
+        usernames = User.objects.filter(id__in=result).values('id','last_login','is_superuser','username','first_name','last_name',
+                                                              'email','is_staff','is_active','date_joined')
+        #return JsonResponse({"Vote": list(result)})
+        return JsonResponse({"User": list(usernames)})
 
 
 class StoreView(generics.ListAPIView):
