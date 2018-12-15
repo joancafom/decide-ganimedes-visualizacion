@@ -6,6 +6,7 @@ from django.http import Http404
 from base import mods
 
 from .render import Render
+from .computations import age_distribution, mean
 
 
 class VisualizerView(TemplateView):
@@ -36,15 +37,24 @@ class VisualizerView(TemplateView):
                 #Estadísticas básicas: tamaño del censo, personas que han
                 #votado y participación
                 census = mods.get('census', params={'voting_id': vid})
+                voters = get_stub_info('voters', vid)
+                no_voters = list(set(census['voters']) - set(voters))
                 stats['census_size'] = len(census['voters'])
                 stats['voters_turnout'] = get_stub_info('turnout', vid)
-                stats['participation_ratio'] = round((stats['voters_turnout'] / stats['census_size']) * 100, 2)
+                if stats['census_size'] != 0:
+                    stats['participation_ratio'] = round((stats['voters_turnout'] / stats['census_size']) * 100, 2)
+                else:
+                    stats['participation_ratio'] = 0
 
                 sexes = get_stub_info('sexes', vid, census['voters'])
                 print("sexes: " + str(sexes))
 
-                ages = get_stub_info('ages', vid, census['voters'])
-                print("ages: " + str(ages))
+                voters_ages = get_stub_info('ages', vid, voters)
+                no_voters_ages = get_stub_info('ages', vid, no_voters)
+                (voters_age_dist, voters_age_mean) = age_distribution(voters_ages)
+                stats['voters_age_dist'] = voters_age_dist
+                stats['voters_age_mean'] = voters_age_mean
+                stats['no_voters_age_mean'] = mean(no_voters_ages)
 
                 #Añadimos las estadísticas al contexto
                 for e,v in stats.items():
@@ -156,7 +166,11 @@ def get_stub_info(stub_info, vid, id_list = []):
                 res[years] = 1
 
         return res
+    elif stub_info == 'voters':
+        voters = Vote.objects.filter(voting_id=vid).values_list('voter_id', flat=True).all()
+        res = list(voters)
 
+        return res
     else:
         return None
 
