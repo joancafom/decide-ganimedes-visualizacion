@@ -88,7 +88,11 @@ venv/
 ENV/
 
 # visual code
-.vscode
+.vscode/*
+
+# Heroku
+Procfile
+runtime.txt
 
 #sqlite3
 db.sqlite3

@@ -19,12 +19,16 @@ from rest_framework.authtoken.models import Token
 from .serializers import AuthTokenSerializer
 from rest_framework.compat import coreapi, coreschema
 from rest_framework.response import Response
-from rest_framework.schemas import ManualSchema
+from .schemas import ManualSchema
 from rest_framework.views import APIView
 
 from base import mods
 from .models import User
 
+from django.shortcuts import render
+
+
+    
 class GetUserView(APIView):
     def post(self, request):
         key = request.data.get('token', '')
@@ -89,7 +93,7 @@ class ObtainAuthToken(APIView):
                     ),
                 ),
             ],
-            # encoding="application/json",
+            encoding="application/json",
         )
 
     def post(self, request, *args, **kwargs):
