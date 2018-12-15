@@ -5,11 +5,11 @@
     <h1>{{ voting.id }} - {{ voting.name }}</h1>
 
     <div id="login">
-        <label for="username">{% trans "Username" %}</label>
-        <input type="text" id="username" name="username" value=""/>
+        <label for="email">{% trans "Email" %}</label>
+        <input type="text" id="email" name="email" value=""/>
         <br/>
         <label for="password">{% trans "Password" %}</label>
-        <input type="password" id="password" name="username" value=""/>
+        <input type="password" id="password" name="password" value=""/>
         <br/>
         <input type="submit" value="{% trans "Login" %}" onClick="decideLogin()"/>
     </div>
@@ -124,7 +124,7 @@
 
         function decideLogin() {
             var data = {
-                username: document.querySelector("#username").value,
+                email: document.querySelector("#email").value,
                 password: document.querySelector("#password").value,
             };
             postData("{{auth_url}}" + "/authentication/login/", data)
