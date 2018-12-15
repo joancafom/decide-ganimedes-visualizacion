@@ -17,7 +17,7 @@ class AuthBackend(ModelBackend):
 
     def new_authenticate(self, request, email=None, password=None, **kwargs):
         if email is None:
-            email = kwargs.get(UserModel.EMAIL_FIELD)
+            email = kwargs.get(UserModel.USERNAME_FIELD)
         try:
             user = UserModel._default_manager.get_by_natural_key(email)
         except UserModel.DoesNotExist:
