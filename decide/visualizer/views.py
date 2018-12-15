@@ -1,3 +1,4 @@
+from datetime import date
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.http import Http404
@@ -34,9 +35,16 @@ class VisualizerView(TemplateView):
 
                 #Estadísticas básicas: tamaño del censo, personas que han
                 #votado y participación
-                stats['census_size'] = get_stub_info('census_size', vid)
+                census = mods.get('census', params={'voting_id': vid})
+                stats['census_size'] = len(census['voters'])
                 stats['voters_turnout'] = get_stub_info('turnout', vid)
                 stats['participation_ratio'] = round((stats['voters_turnout'] / stats['census_size']) * 100, 2)
+
+                sexes = get_stub_info('sexes', vid, census['voters'])
+                print("sexes: " + str(sexes))
+
+                ages = get_stub_info('ages', vid, census['voters'])
+                print("ages: " + str(ages))
 
                 #Añadimos las estadísticas al contexto
                 for e,v in stats.items():
@@ -109,14 +117,46 @@ class VisualizerCsv(TemplateView):
 
 # Stub Methods
 # Simulamos la llamada a otros módulos mientras estos implementan sus cambios
-from census.models import Census
 from store.models import Vote
-def get_stub_info(stub_info, vid):
+from authentication.models import User
 
-    if stub_info == "census_size":
-        return Census.objects.filter(voting_id=vid).count()
-    elif stub_info == "turnout":
+def get_stub_info(stub_info, vid, id_list = []):
+
+    if stub_info == "turnout":
         return Vote.objects.filter(voting_id=vid).count()
+
+    elif stub_info == 'sexes':
+        voters = User.objects.filter(id__in=id_list).all()
+
+        res = {
+
+            User.SEX_OPTIONS[0][0] : 0,
+            User.SEX_OPTIONS[1][0] : 0,
+            User.SEX_OPTIONS[2][0] : 0
+
+        }
+
+        for v in voters:
+            res[v.sex] = res[v.sex] + 1
+
+        return res
+
+    elif stub_info == 'ages':
+        voters = User.objects.filter(id__in=id_list).all()
+
+        res = {}
+        today = date.today()
+
+        for v in voters:
+            years = today.year - v.birthdate.year - ((today.month, today.day) < (v.birthdate.month, v.birthdate.day))
+
+            if years in res.keys():
+                res[years] = res[years] + 1
+            else:
+                res[years] = 1
+
+        return res
+
     else:
         return None
 
