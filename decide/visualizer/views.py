@@ -6,7 +6,7 @@ from django.http import Http404
 from base import mods
 
 from .render import Render
-from .computations import age_distribution, mean
+from .computations import age_distribution, mean, get_sexes_participation, get_sexes_percentages
 
 
 class VisualizerView(TemplateView):
@@ -46,15 +46,37 @@ class VisualizerView(TemplateView):
                 else:
                     stats['participation_ratio'] = 0
 
-                sexes = get_stub_info('sexes', vid, census['voters'])
-                print("sexes: " + str(sexes))
-
                 voters_ages = get_stub_info('ages', vid, voters)
                 no_voters_ages = get_stub_info('ages', vid, no_voters)
                 (voters_age_dist, voters_age_mean) = age_distribution(voters_ages)
                 stats['voters_age_dist'] = voters_age_dist
                 stats['voters_age_mean'] = voters_age_mean
                 stats['no_voters_age_mean'] = mean(no_voters_ages)
+
+                #Estadísticas avanzadas de votación II
+                votos = Vote.objects.filter(voting_id=vid).all()
+                votantes =  []
+                for v in votos:
+                    user = User.objects.filter(id = v.voter_id).all()
+                    votantes.append(user)
+                sexes_total = get_stub_info('sexes', vid, census['voters'])
+                sexes_empty = {
+                    User.SEX_OPTIONS[0][0] : 0,
+                    User.SEX_OPTIONS[1][0] : 0,
+                    User.SEX_OPTIONS[2][0] : 0
+                }
+
+                sexes_participation = get_sexes_participation(votantes, sexes_empty)
+
+                stats['women_participation'] = sexes_participation['W']
+                stats['men_participation'] = sexes_participation['M']
+                stats['nonbinary_participation'] = sexes_participation['N']
+
+                sexes_percentages = get_sexes_percentages(sexes_participation, sexes_total, sexes_empty)
+
+                stats['women_percentage'] = sexes_percentages['W']
+                stats['men_percentage'] = sexes_percentages['M']
+                stats['nonbinary_percentage'] = sexes_percentages['N']
 
                 #Añadimos las estadísticas al contexto
                 for e,v in stats.items():
