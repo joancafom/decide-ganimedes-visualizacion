@@ -20,17 +20,17 @@ def age_distribution(ages):
     la media del conjunto de datos """
 
     distribution = AGE_RANGES.copy()
-    tam = len(ages)
+    tam = sum(ages.values())
     mean = 0
 
     for (age, number) in ages.items():
         for (min_age, max_age) in AGE_RANGES.keys():
             if age > min_age and age <= max_age:
                 distribution[(min_age,max_age)] = distribution[(min_age,max_age)] + round(100 * number/tam, 2)
-                mean += age
+                mean += age*number
                 continue
-    
-    mean = None if mean == 0 else round(mean/tam, 2)
+
+    mean = None if tam == 0 else round(mean/tam, 2)
 
     return (distribution, mean)
 
