@@ -15,16 +15,27 @@
     </div>
 
     <div id="voting">
-        <a href="#" onClick="decideLogout()">{% trans "logout" %}</a>
-        <h2>{{ voting.question.desc }}</h2>
-
-        {% for opt in voting.question.options %}
-            <label for="q{{opt.number}}">
-                <input id="q{{opt.number}}" type="radio" name="question" value={{opt.number}} /> {{opt.option}}<br/>
-            </label>
-        {% endfor %}
+        
+        {% for question in voting.questions %}
+        
+	        <h2>{{ question.desc }}</h2>
+	
+	        {% for opt in question.options %}
+	            <label for="q{{opt.number}}">
+	                <input id="q{{opt.number}}" type="radio" name="question" value={{opt.number}} /> {{opt.option}}<br/>
+	            </label>
+	        {% endfor %}
+	        
+	        <br /><br />
+	        
+	    {% endfor %}
 
         <input type="submit" value="{% trans "Vote" %}" onClick="decideSend()"/>
+        
+        <br /><br />
+        
+        <a href="#" onClick="decideLogout()">{% trans "logout" %}</a>
+        
     </div>
 {% endblock %}
 

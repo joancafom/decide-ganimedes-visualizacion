@@ -7,45 +7,9 @@ from base import mods
 from base.models import Auth, Key
 from postproc.models import PostProcType
 
-
-class Question(models.Model):
-    desc = models.TextField()
-
-    # Leave empty if it doesn't apply.
-    seats = models.PositiveIntegerField(blank=True, null=True)
-
-    def __str__(self):
-        return self.desc
-
-
-class QuestionOption(models.Model):
-    question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
-    number = models.PositiveIntegerField(blank=True, null=True)
-    option = models.TextField()
-
-    # Leave empty if it doesn't apply.
-    weight = models.IntegerField(blank=True, null=True)
-
-    # Leave empty if it doesn't apply.
-    BOOL_CHOICES = ((True, 'Male'), (False, 'Female'))
-    gender = models.NullBooleanField(blank=True, null=True, choices=BOOL_CHOICES)
-
-    # Leave empty if it doesn't apply.
-    team = models.IntegerField(blank=True, null=True)
-
-    def save(self):
-        if not self.number:
-            self.number = self.question.options.count() + 2
-        return super().save()
-
-    def __str__(self):
-        return '{} ({})'.format(self.option, self.number)
-
-
 class Voting(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField(blank=True, null=True)
-    question = models.ForeignKey(Question, related_name='voting', on_delete=models.CASCADE)
 
     # Leave empty if it doesn't apply.
     TYPE_CHOICES = [(PostProcType.IDENTITY, "Identity"), (PostProcType.WEIGHT, "Weight"),
@@ -142,3 +106,38 @@ class Voting(models.Model):
 
     def __str__(self):
         return self.name
+
+class Question(models.Model):
+    desc = models.TextField()
+    voting = models.ForeignKey(Voting, null=True, related_name='questions', on_delete = models.CASCADE)
+
+    # Leave empty if it doesn't apply.
+    seats = models.PositiveIntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return self.desc
+
+
+class QuestionOption(models.Model):
+    question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
+    number = models.PositiveIntegerField(blank=True, null=True)
+    option = models.TextField()
+
+    # Leave empty if it doesn't apply.
+    weight = models.IntegerField(blank=True, null=True)
+
+    # Leave empty if it doesn't apply.
+    BOOL_CHOICES = ((True, 'Male'), (False, 'Female'))
+    gender = models.NullBooleanField(blank=True, null=True, choices=BOOL_CHOICES)
+
+    # Leave empty if it doesn't apply.
+    team = models.IntegerField(blank=True, null=True)
+
+    def save(self):
+        if not self.number:
+            self.number = self.question.options.count() + 2
+        return super().save()
+
+    def __str__(self):
+        return '{} ({})'.format(self.option, self.number)
+
