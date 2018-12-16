@@ -7,19 +7,56 @@
         margin-top: 100px;
     }
     .image-background {
-    height: 40px;
-  }
-  .respuestas {
-    margin-top: 20px;
-    margin-left: 25px;
-  }
-  .respuestas p {
-    margin-top: 5px !important;
-  }
-  .card-action {
-    text-align: center;
-  }
+        height: 40px;
+    }
+    .respuestas {
+        margin-top: 20px;
+        margin-left: 25px;
+    }
+    .respuestas p {
+        margin-top: 5px !important;
+    }
+    .card-action {
+        text-align: center;
+    }
+    /* The Modal (background) */
+    .modal1 {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+    /* Modal Content/Box */
+    .modal-content1 {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+    }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    #btnSend {
+        margin-top: 40px;
+    }
     </style>
+    
     <h3 class="center-align titulo">{{ voting.name }}</h3><br>
 
     <div id="login" class="container">
@@ -51,7 +88,8 @@
         <div class="row">
             
             {% for question in voting.questions %}
-            <div class="col s12 m6 l4">
+            <div class="col m1 l2"></div>
+            <div class="col s12 m10 l8">
                 <div class="card">
                     <div class="card-image">
                         <img class="image-background" src="../../static/images/fondo.jpg" />
@@ -74,31 +112,54 @@
                     </form>
                 </div>
                 <div class="card-action">
-                    <a class="blue-grey-text darken-5" href="#" onclick="startDictation({{question}})">Responder con voz</a>
+                    <a class="blue-grey-text darken-5" href="#" onclick="startDictation({{question}})">{% trans "Answer with voice" %}</a>
                 </div>
             </div>
           </div>
+          <div class="col m1 l2"></div>
           {% endfor %}
         </div>
+        <div id="btnSend" class="row center-align">
+            <button class="btn waves-effect waves-light" type="submit" name="action">{% trans "Send vote" %}
+                    <i class="material-icons right">send</i>
+            </button>
+        </div>
+        
     </div>
       
-      <div id="modal1" class="modal">
-        <h4>Speech Synthesis not supported</h4>
-        <p>Your browser does not support speech synthesis.</p>
-        <p>We recommend you use Google Chrome.</p>
-        <div class="action-bar">
-          <a
-            href="#"
-            class="waves-effect waves-green btn-flat modal-action modal-close"
-            >Close</a
-          >
+    <div id="myModal" class="modal1">
+        <div class="modal-content1">
+          <span id="close1" class="close">&times;</span>
+            <h4>{% trans "Speech Synthesis not supported" %}</h4>
+            <p>{% trans "Your browser does not support speech synthesis." %}</p>
+            <p>{% trans "We recommend you use Google Chrome." %}</p>
         </div>
-      </div>
+    </div>
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script>
-            function dictarVoz(array) {
-                primeraVez = true
-                var i;
+    //Script para modal
+    var modal = document.getElementById('myModal');
+    var span = document.getElementsByClassName("close")[0];
+
+    span.onclick = function() {
+    modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+    <script>
+        // Script para dictar preguntas y respuestas
+        function dictarVoz(array) {
+            respuestas = ""
+            primeraVez = true
+            if (array.options.length == 0) {
+                texto = 'La pregunta es: ' + array.desc + '.' + "y no hay respuestas disponibles."
+            } else {
                 for(i = 0; i < array.options.length ; i++) {
                     if (primeraVez) {
                         respuestas = array.options[i].option
@@ -108,63 +169,98 @@
                 }
                 respuestas += '.'
                 texto = 'La pregunta es: ' + array.desc + '.' +  ' Las respuestas son las siguientes: ' + respuestas
-                sintentizarVoz(texto)
             }
+            sintentizarVoz(texto)
+        }
 
-            function sintentizarVoz(texto) {
-              if ("speechSynthesis" in window) {
+        function sintentizarVoz(texto) {
+            if ("speechSynthesis" in window) {
                 var msg = new SpeechSynthesisUtterance();
                 var voices = window.speechSynthesis.getVoices();
                 msg.voice = voices[0]; /* por defecto (spain opcion 0)*/
                 msg.rate = 1;
                 msg.pitch = 1;
                 msg.text = texto;
-          
-                msg.onend = function(e) {
-                  console.log("Finished in " + event.elapsedTime + " seconds.");
-                };
+            
                 speechSynthesis.speak(msg);
-              } else {
-                $("#modal1").openModal();
-              }
+            } else {
+                var modal = document.getElementById('myModal');
+                modal.style.display = "block";
             }
+        }
     </script>
     <script>
-            function startDictation(question) {
-              if (window.hasOwnProperty("webkitSpeechRecognition")) {
-                var recognition = new webkitSpeechRecognition();
-          
-                recognition.continuous = false;
-                recognition.interimResults = false;
-          
-                recognition.lang = "es-ES";
-                recognition.start();
-          
-                recognition.onresult = function(e) {
-                  console.log(e.results[0][0].transcript);
-                  responderPreguntaPorVoz(question, e.results[0][0].transcript)
-                  recognition.stop();
-                };
-          
-                recognition.onerror = function(e) {
-                  recognition.stop();
-                };
-              }
+        //Script para responder con voz
+        function startDictation(question) {
+            if (window.hasOwnProperty("webkitSpeechRecognition")) {
+            var recognition = new webkitSpeechRecognition();
+        
+            recognition.continuous = false;
+            recognition.interimResults = false;
+        
+            recognition.lang = "es-ES";
+            recognition.start();
+        
+            recognition.onresult = function(e) {
+                console.log(e.results[0][0].transcript);
+                responderPreguntaPorVoz(question, e.results[0][0].transcript)
+                recognition.stop();
+            };
+        
+            recognition.onerror = function(e) {
+                recognition.stop();
+            };
+            } else {
+                var modal = document.getElementById('myModal');
+                modal.style.display = "block";
             }
-            function responderPreguntaPorVoz(question, respuestaVoz) {
-                respuesta = respuestaVoz.toLowerCase()
-                for(i = 0; i < question.options.length; i++) {
-                    opcion = question.options[i].option.toLowerCase()
-                    if (opcion.indexOf(respuesta) != -1) {
-                        id = "#" + question.number + question.options[i].number
-                        text = id.replace(/ /g,'')
-                        console.log(id)
-                        $(text).prop("checked", true)
+        }
+        function responderPreguntaPorVoz(question, respuestaVoz) {
+            //tratamiento del texto
+            respuesta = normalizarTexto(respuestaVoz.toLowerCase())
+            var i = 0
+            for(i = 0; i < question.options.length; i++) {
+                opcion = normalizarTexto(question.options[i].option.toLowerCase())
+                if (comprobarRespuesta(opcion, respuesta)) {
+                    //Si es la respuesta cogemos su id y eliminamos los espacios, luego marcamos el checkbox
+                    id = "#" + question.number + question.options[i].number
+                    text = id.replace(/ /g,'')
+                    $(text).prop("checked", true)
+                }
+            }
+
+        }
+        //Funcion que devuelve true si contiene el 65% de la respuesta
+        function comprobarRespuesta(o, r) {
+            res = false
+            opcion = o.replace('.','').replace(',', '').replace('¿', '').replace('?', '')
+            respuesta = r.replace('.','').replace(',', '').replace('¿', '').replace('?', '')
+
+            arrayOpcion = opcion.split(' ')
+            arrayRespuesta = respuesta.split(' ')
+
+            cont = 0
+
+            for(i = 0; i < arrayOpcion.length; i++){
+                for(j = 0; j < arrayRespuesta.length; j++){
+                    if(arrayOpcion[i].indexOf(arrayRespuesta[j]) != -1){
+                        cont++
+                        break;
                     }
                 }
-
             }
-          </script>
+            porcentaje =  cont / arrayOpcion.length
+            console.log(porcentaje)
+
+            if (porcentaje > 0.65) {
+                res = true
+            }
+            return res
+        }
+        function normalizarTexto(texto) {
+            return texto.normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize();
+        }
+        </script>
 
 {% endblock %}
 
