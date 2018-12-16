@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     path('', views.StoreView.as_view(), name='store'),
-    re_path('^votings/(?P<voting_id>.+)/$', views.VotingView().as_view()),
+    path('users/voting/<int:voting_id>/', views.VotingView().as_view(), name='store'),
 ]
