@@ -108,19 +108,30 @@ class Voting(models.Model):
         return self.name
 
 class Question(models.Model):
-    desc = models.TextField()
     voting = models.ForeignKey(Voting, null=True, related_name='questions', on_delete = models.CASCADE)
+    # Automatic assignment for the question number on save
+    number = models.PositiveIntegerField(editable = False, null = True)
+    desc = models.TextField()
+
+    def save(self):
+        if not self.number:
+            questions = self.voting.questions.all()
+            if questions:
+                self.number = questions.last().number + 1
+            else:
+                self.number = 1
+        return super().save()
 
     # Leave empty if it doesn't apply.
     seats = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
-        return self.desc
-
+        return '{} ({})'.format(self.desc, self.number)
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
-    number = models.PositiveIntegerField(blank=True, null=True)
+    # Automatic assignment for the option number on save
+    number = models.PositiveIntegerField(editable = False, null = True)
     option = models.TextField()
 
     # Leave empty if it doesn't apply.
@@ -133,11 +144,15 @@ class QuestionOption(models.Model):
     # Leave empty if it doesn't apply.
     team = models.IntegerField(blank=True, null=True)
 
+    
     def save(self):
         if not self.number:
-            self.number = self.question.options.count() + 2
+            options = self.question.options.all()
+            if options:
+                self.number = options.last().number + 1
+            else:
+                self.number = 1
         return super().save()
 
     def __str__(self):
         return '{} ({})'.format(self.option, self.number)
-

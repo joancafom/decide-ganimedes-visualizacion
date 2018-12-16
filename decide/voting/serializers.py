@@ -9,13 +9,11 @@ class QuestionOptionSerializer(serializers.HyperlinkedModelSerializer):
         model = QuestionOption
         fields = ('number', 'option')
 
-
 class QuestionSerializer(serializers.HyperlinkedModelSerializer):
     options = QuestionOptionSerializer(many=True)
     class Meta:
         model = Question
-        fields = ('desc', 'options')
-
+        fields = ('number', 'desc', 'options')
 
 class VotingSerializer(serializers.HyperlinkedModelSerializer):
     questions = QuestionSerializer(many=True)
