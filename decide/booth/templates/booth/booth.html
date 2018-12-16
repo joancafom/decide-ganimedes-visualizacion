@@ -65,8 +65,8 @@
                     <form class="respuestas">
                         {% for opt in question.options %}
                         <p>
-                            <label for="{{question.desc}}/{{opt.number}}">
-                            <input id="{{question.desc}}/{{opt.number}}" type="checkbox" class="filled-in" name="question" value={{opt.number}}/>
+                            <label for="{{question.number}}{{opt.number}}">
+                            <input id="{{question.number}}{{opt.number}}" type="checkbox" class="filled-in" name="question" value={{opt.number}}/>
                             <span>{{opt.option}}</span>
                             </label>
                         </p>
@@ -94,7 +94,7 @@
           >
         </div>
       </div>
-    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script>
             function dictarVoz(array) {
                 primeraVez = true
@@ -151,15 +151,15 @@
                 };
               }
             }
-            function responderPreguntaPorVoz(question, respuesta) {
-                respuesta = "PSOE"
+            function responderPreguntaPorVoz(question, respuestaVoz) {
+                respuesta = respuestaVoz.toLowerCase()
                 for(i = 0; i < question.options.length; i++) {
-                    console.log(question.options[i].option)
-                    if (question.options[i].option.indexOf(respuesta) != -1) {
-                        id = question.desc + "/" + question.options[i].number
+                    opcion = question.options[i].option.toLowerCase()
+                    if (opcion.indexOf(respuesta) != -1) {
+                        id = "#" + question.number + question.options[i].number
+                        text = id.replace(/ /g,'')
                         console.log(id)
-                        document.getElementById(id).checked
-                        break;
+                        $(text).prop("checked", true)
                     }
                 }
 
