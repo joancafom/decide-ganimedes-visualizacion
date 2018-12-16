@@ -10,20 +10,19 @@ from .serializers import VoteSerializer,VotingSerializer
 from base import mods
 from base.perms import UserIsStaff
 from django.contrib.auth.models import User
-from django.http import JsonResponse
+
 
 class VotingView(generics.ListAPIView):
     serializer_class = VotingSerializer
     def get(self,request,voting_id):
+        self.permission_classes = (UserIsStaff,)
+        self.check_permissions(request)
         voting_id = self.kwargs['voting_id']
         result=Vote.objects.filter(voting_id=voting_id).values('voter_id')
-        #for id in result
-        #    result=User.objects.filter(id=id).values('username')
-        usernames = User.objects.filter(id__in=result).values('id','last_login','is_superuser','username','first_name','last_name',
-                                                              'email','is_staff','is_active','date_joined')
-        #return JsonResponse({"Vote": list(result)})
-        return JsonResponse({"User": list(usernames)})
-
+        usernames = User.objects.filter(id__in=result)\
+            .values('id','last_login','is_superuser','username','first_name','last_name',
+                        'email','is_staff','is_active','date_joined')
+        return Response(usernames,status=status.HTTP_200_OK)
 
 class StoreView(generics.ListAPIView):
     queryset = Vote.objects.all()
@@ -73,6 +72,7 @@ class StoreView(generics.ListAPIView):
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
 
         a = vote.get("a")
+
         b = vote.get("b")
 
         defs = { "a": a, "b": b }
