@@ -2,41 +2,170 @@
 {% load i18n static %}
 
 {% block content %}
-    <h1>{{ voting.id }} - {{ voting.name }}</h1>
+    <style>
+    .titulo {
+        margin-top: 100px;
+    }
+    .image-background {
+    height: 40px;
+  }
+  .respuestas {
+    margin-top: 20px;
+    margin-left: 25px;
+  }
+  .respuestas p {
+    margin-top: 5px !important;
+  }
+  .card-action {
+    text-align: center;
+  }
+    </style>
+    <h3 class="center-align titulo">{{ voting.name }}</h3><br>
 
-    <div id="login">
-        <label for="email">{% trans "Email" %}</label>
-        <input type="text" id="email" name="email" value=""/>
-        <br/>
-        <label for="password">{% trans "Password" %}</label>
-        <input type="password" id="password" name="password" value=""/>
-        <br/>
-        <input type="submit" value="{% trans "Login" %}" onClick="decideLogin()"/>
+    <div id="login" class="container">
+        <div class="row center-align">
+            <div class="row">
+                <div class="col m2"></div>
+                <div class="input-field col m8 s12">
+                    <input id="email" type="email" class="validate" name="email">
+                    <label for="email">{% trans "Email" %}</label>
+                </div>
+                <div class="col m2"></div>
+            </div>
+            <div class="row">
+                <div class="col m2"></div>
+                <div class="input-field col m8 s12">
+                  <input id="password" type="password" class="validate" name="password">
+                  <label for="password">{% trans "Password" %}</label>
+                </div>
+                <div class="col m2"></div>
+            </div>
+            <div class="row">
+                <button class="btn waves-effect waves-light" onClick="decideLogin()" type="submit" name="action">{% trans "Login" %}
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
     </div>
-
     <div id="voting">
-        
-        {% for question in voting.questions %}
-        
-	        <h2>{{ question.desc }}</h2>
-	
-	        {% for opt in question.options %}
-	            <label for="q{{opt.number}}">
-	                <input id="q{{opt.number}}" type="radio" name="question" value={{opt.number}} /> {{opt.option}}<br/>
-	            </label>
-	        {% endfor %}
-	        
-	        <br /><br />
-	        
-	    {% endfor %}
-
-        <input type="submit" value="{% trans "Vote" %}" onClick="decideSend()"/>
-        
-        <br /><br />
-        
-        <a href="#" onClick="decideLogout()">{% trans "logout" %}</a>
-        
+        <div class="row">
+            
+            {% for question in voting.questions %}
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-image">
+                        <img class="image-background" src="../../static/images/fondo.jpg" />
+                        <a
+                        class="btn-floating halfway-fab waves-effect waves-light darkblue"
+                        onclick="dictarVoz({{question}})"
+                        ><i class="material-icons">record_voice_over</i></a>
+                    </div>
+                <div class="card-content">
+                    <span class="card-title">{{ question.desc }}</span>
+                    <form class="respuestas">
+                        {% for opt in question.options %}
+                        <p>
+                            <label for="{{question.desc}}/{{opt.number}}">
+                            <input id="{{question.desc}}/{{opt.number}}" type="checkbox" class="filled-in" name="question" value={{opt.number}}/>
+                            <span>{{opt.option}}</span>
+                            </label>
+                        </p>
+                        {% endfor %}
+                    </form>
+                </div>
+                <div class="card-action">
+                    <a class="blue-grey-text darken-5" href="#" onclick="startDictation({{question}})">Responder con voz</a>
+                </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
     </div>
+      
+      <div id="modal1" class="modal">
+        <h4>Speech Synthesis not supported</h4>
+        <p>Your browser does not support speech synthesis.</p>
+        <p>We recommend you use Google Chrome.</p>
+        <div class="action-bar">
+          <a
+            href="#"
+            class="waves-effect waves-green btn-flat modal-action modal-close"
+            >Close</a
+          >
+        </div>
+      </div>
+    
+    <script>
+            function dictarVoz(array) {
+                primeraVez = true
+                var i;
+                for(i = 0; i < array.options.length ; i++) {
+                    if (primeraVez) {
+                        respuestas = array.options[i].option
+                        primeraVez = false
+                    } else
+                        respuestas = respuestas + ', ' + array.options[i].option
+                }
+                respuestas += '.'
+                texto = 'La pregunta es: ' + array.desc + '.' +  ' Las respuestas son las siguientes: ' + respuestas
+                sintentizarVoz(texto)
+            }
+
+            function sintentizarVoz(texto) {
+              if ("speechSynthesis" in window) {
+                var msg = new SpeechSynthesisUtterance();
+                var voices = window.speechSynthesis.getVoices();
+                msg.voice = voices[0]; /* por defecto (spain opcion 0)*/
+                msg.rate = 1;
+                msg.pitch = 1;
+                msg.text = texto;
+          
+                msg.onend = function(e) {
+                  console.log("Finished in " + event.elapsedTime + " seconds.");
+                };
+                speechSynthesis.speak(msg);
+              } else {
+                $("#modal1").openModal();
+              }
+            }
+    </script>
+    <script>
+            function startDictation(question) {
+              if (window.hasOwnProperty("webkitSpeechRecognition")) {
+                var recognition = new webkitSpeechRecognition();
+          
+                recognition.continuous = false;
+                recognition.interimResults = false;
+          
+                recognition.lang = "es-ES";
+                recognition.start();
+          
+                recognition.onresult = function(e) {
+                  console.log(e.results[0][0].transcript);
+                  responderPreguntaPorVoz(question, e.results[0][0].transcript)
+                  recognition.stop();
+                };
+          
+                recognition.onerror = function(e) {
+                  recognition.stop();
+                };
+              }
+            }
+            function responderPreguntaPorVoz(question, respuesta) {
+                respuesta = "PSOE"
+                for(i = 0; i < question.options.length; i++) {
+                    console.log(question.options[i].option)
+                    if (question.options[i].option.indexOf(respuesta) != -1) {
+                        id = question.desc + "/" + question.options[i].number
+                        console.log(id)
+                        document.getElementById(id).checked
+                        break;
+                    }
+                }
+
+            }
+          </script>
+
 {% endblock %}
 
 {% block extrabody %}
