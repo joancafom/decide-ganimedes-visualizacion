@@ -46,8 +46,19 @@ def get_sexes_participation(votantes, sexes_participation):
 
 def get_sexes_percentages(sexes_participation, sexes_total, sexes_empty):
 
-        sexes_empty['W'] = round((sexes_participation['W'] / sexes_total['W']) * 100, 2)
-        sexes_empty['N'] = round((sexes_participation['N'] / sexes_total['N']) * 100, 2)
-        sexes_empty['M'] = round((sexes_participation['M'] / sexes_total['M']) * 100, 2)
+        if sexes_total['W'] == 0:
+            sexes_empty['W'] = 100
+        else:
+            sexes_empty['W'] = round((sexes_participation['W'] / sexes_total['W']) * 100, 2)
+
+        if sexes_total['N'] == 0:
+            sexes_empty['N'] = 100
+        else:
+            sexes_empty['N'] = round((sexes_participation['N'] / sexes_total['N']) * 100, 2)
+
+        if sexes_total['M'] == 0:
+            sexes_empty['M'] = 100
+        else:
+            sexes_empty['M'] = round((sexes_participation['M'] / sexes_total['M']) * 100, 2)
 
         return sexes_empty
