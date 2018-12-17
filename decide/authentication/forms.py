@@ -11,9 +11,9 @@ class UserCreateForm(UserCreationForm):
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
     email = forms.EmailField(required=True)
-    birthdate = forms.DateTimeField(input_formats=['%d/%m/%Y'], help_text="Formato: dd/mm/YYYY", required=True)
+    birthdate = forms.DateTimeField(input_formats=['%d/%m/%Y'], help_text="Formato: dd/mm/YYYY", required=False)
     city = forms.CharField(required=True)
-    sex = forms.ChoiceField(choices=SEX_OPTIONS, required=True)
+    sex = forms.ChoiceField(choices=SEX_OPTIONS, required=False)
 
     class Meta:
         model = User
