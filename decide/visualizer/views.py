@@ -4,6 +4,9 @@ from django.conf import settings
 from django.http import Http404
 
 from base import mods
+from django import template
+
+register = template.Library()
 
 from .render import Render
 from .computations import age_distribution, mean, get_sexes_participation, get_sexes_percentages
