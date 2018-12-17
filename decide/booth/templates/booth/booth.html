@@ -359,20 +359,27 @@
         }
 
         function decideLogin() {
-            var data = {
-                email: document.querySelector("#email").value,
-                password: document.querySelector("#password").value,
-            };
-            postData("{{auth_url}}" + "/authentication/login/", data)
-              .then(data => {
-                document.cookie = 'decide='+data.token+';';
-                token = data.token;
-                decideUser();
-              })
-              .catch(error => {
-                alert("{% trans "Error: " %}" + error);
-                console.error(error);
-              });
+        
+       		var questions = "{{voting.questions}}"
+        	if(questions.length == 2){
+        		alert("Esta votacion no contiene ninguna pregunta, por lo que no se puede acceder a ella todavia. Vuelva a intentarlo mas tarde.")
+        	
+        	}else{
+	            var data = {
+	                email: document.querySelector("#email").value,
+	                password: document.querySelector("#password").value,
+	            };
+	            postData("{{auth_url}}" + "/authentication/login/", data)
+	              .then(data => {
+	                document.cookie = 'decide='+data.token+';';
+	                token = data.token;
+	                decideUser();
+	              })
+	              .catch(error => {
+	                alert("{% trans "Error: " %}" + error);
+	                console.error(error);
+	              });
+	    	}
         }
 
         function panel(p) {
