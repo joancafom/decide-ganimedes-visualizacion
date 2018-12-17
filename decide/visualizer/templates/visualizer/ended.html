@@ -5,8 +5,9 @@
 {% block menu_options %}
 {% endblock %}
 {% block content %}
+    {% load static %}
+    <script type="text/javascript" src="{% static "decide/js/Chart.js"%}"></script>
     <h4>{{ voting.id }} - {{ voting.name }}</h4>
-
         <h5>{% trans 'Results: ' %}</h5>
         <ul>
             {% for option in voting.postproc %}
@@ -14,8 +15,45 @@
             {% endfor %}
         </ul>
 
+        {% regroup voting.postproc by team as teams %}
+
+        
+
     <a href="pdf/" target="_blank">Descargar los resultado en formato .pdf</a>
     <br/>
     <a href="csv/" target="_blank">Descargar los resultado en formato .csv</a>
+    
+    <!--Pintado de gráfica para Teams-->
+    <div style="width: 20%">
+        <canvas id="resultados" width="50%" height="50%"></canvas>
+    </div>
+    <script>
+
+    var randomColorGenerator = function () {
+        return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
+    };
+    
+    var ctx = document.getElementById("resultados").getContext("2d");
+    var myChart = new Chart(ctx, {
+        type:"bar",
+        data: {
+            labels:[{% for t in teams %}{% if forloop.first %}"{{t.grouper}}"{% else %},"{{t.grouper}}"{% endif %}{% endfor %}],
+            datasets: [{% for t in teams %}{% for option in t.list %}{label: "{{ option.option }}",backgroundColor: randomColorGenerator(),data:[{% for team in teams %}{% if team.grouper == option.team %}{{option.votes}},{% else %}0,{% endif %}{% endfor %}]},{% endfor %}{% endfor %}]
+        },
+
+        options:{
+            scales:{
+                yAxes:[{
+                    stacked:true
+                }],
+                xAxes:[{
+                    stacked:true
+                }]
+            }
+        }
+    });
+
+    
+    </script>
 
 {% endblock %}

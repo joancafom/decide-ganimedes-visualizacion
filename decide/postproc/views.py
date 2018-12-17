@@ -87,8 +87,11 @@ class PostProcView(APIView):
             return sorted_teams
 
         n_teams = obtener_n_equipos()
+        print(n_teams)
         votes_per_team = atribuir_votos()
+        print(votes_per_team)
         equipos_mayor_a_menor = sorted(votes_per_team, key=int, reverse = True)
+        print(equipos_mayor_a_menor)
         equipos = lista_ordenada(votes_per_team, equipos_mayor_a_menor)
         return Response(equipos)
 
