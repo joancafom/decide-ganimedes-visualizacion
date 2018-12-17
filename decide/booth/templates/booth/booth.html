@@ -362,7 +362,7 @@
         
        		var questions = "{{voting.questions}}"
         	if(questions.length == 2){
-        		alert("Esta votacion no contiene ninguna pregunta, por lo que no se puede acceder a ella todavia. Vuelva a intentarlo mas tarde.")
+        		alert("{% trans "This vote does not contain any questions, so it can not be accessed yet. Try it again later." %}")
         	
         	}else{
 	            var data = {
