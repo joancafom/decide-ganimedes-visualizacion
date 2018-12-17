@@ -16,20 +16,20 @@
 
     <div id="estadisticas-votacion" class="row">
         <div class="col m6 s12">
-            <div class="card teal">
+            <div class="card teal darken-3">
                 <div class="card-content white-text">
                     <span class="card-title">{% trans 'Stats' %}</span>
                     
                     <div class="row">
                          <div id="info-texto-left" class="col s3 offset-s3">
-                            <p>{% trans 'Census Size:' %}</p>
-                            <p>{% trans 'Voters Turnout:' %}</p>
-                            <p>{% trans 'Participation:' %}</p>
+                            <p class="stats">{% trans 'Census Size:' %}</p>
+                            <p class="stats">{% trans 'Voters Turnout:' %}</p>
+                            <p class="stats">{% trans 'Participation:' %}</p>
                          </div>
                         <div id="info-texto-right" class="col s3">
-                            <p>{{stats_census_size}}</p>
-                            <p>{{stats_voters_turnout}}</p>
-                            <p>{{stats_participation_ratio}}%</p>
+                            <p class="stats">{{stats_census_size}}</p>
+                            <p class="stats">{{stats_voters_turnout}}</p>
+                            <p class="stats">{{stats_participation_ratio}}%</p>
                          </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="col m6 s12">
-            <div class="card blue">
+            <div class="card teal lighten-2">
               <div class="card-content">
                 <p class="white-text">Interested in the participation according to genders? Check it out!</p>
               </div>
@@ -47,7 +47,7 @@
                     <li class="tab"><a class="active" href="#nonbinary-participation">{% trans "Non-Binary" %}</a></li>
                     <li class="tab"><a href="#men-participation">{% trans "Men" %}</a></li>
               </div>
-              <div class="card-content blue lighten-5 centered-text">
+              <div class="card-content teal lighten-5 centered-text">
                 <div id="women-participation">{{stats_women_participation}} {% trans "women voted" %} - {{stats_women_percentage}}% {% trans "of the total" %}</div>
                 <div id="nonbinary-participation">{{stats_nonbinary_participation}} {% trans "non-binary voted" %} - {{stats_nonbinary_percentage}}% {% trans "of the total" %}</div>
                 <div id="men-participation">{{stats_men_participation}} {% trans "men voted" %} - {{stats_men_percentage}}% {% trans "of the total" %}</div>
