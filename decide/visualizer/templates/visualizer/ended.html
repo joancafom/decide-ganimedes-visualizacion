@@ -5,6 +5,8 @@
 {% block menu_options %}
 {% endblock %}
 {% block content %}
+    {% load static %}
+    <script type="text/javascript" src="{% static "/decide/js/Chart.js"%}"></script>
     <h4>{{ voting.id }} - {{ voting.name }}</h4>
 
         <h5>{% trans 'Results: ' %}</h5>
@@ -13,9 +15,50 @@
                 <li>{{option.option}}: {{option.postproc}} <span>({{option.votes}})</span></li>
             {% endfor %}
         </ul>
+    <div style="width: 50%">
+        <canvas id="identityChart" width="100%" height="50%"></canvas>
+    </div>
 
     <a href="pdf/" target="_blank">Descargar los resultado en formato .pdf</a>
     <br/>
     <a href="csv/" target="_blank">Descargar los resultado en formato .csv</a>
 
+    <script>
+        var ctx = document.getElementById("identityChart");
+        
+        function getRandomColor() {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgb(" + r + "," + g + "," + b + ", 0.5)";
+        }
+        var colors = [];
+        {% for option in voting.postproc %}
+        colors.push(getRandomColor());
+        {% endfor %}
+        
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [{% for option in voting.postproc %}{% if forloop.first %}"{{option.option}}"{% else %},"{{option.option}}"{% endif %}{% endfor %}],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [{% for option in voting.postproc %}{% if forloop.first %}{{option.votes}}{% else %},{{option.votes}}{% endif %}{% endfor %}],
+                    backgroundColor: colors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+    
 {% endblock %}
+
