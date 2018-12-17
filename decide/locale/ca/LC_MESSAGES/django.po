@@ -37,13 +37,13 @@ msgstr ""
 
 #: .\authentication\serializers.py:16 .\booth\templates\booth\booth.html:68
 msgid "Email"
-msgstr ""
+msgstr "Correu electrònic"
 
 #: .\authentication\serializers.py:18
 #: .\authentication\templates\authentication\signup.html:11
 #: .\booth\templates\booth\booth.html:76
 msgid "Password"
-msgstr "Contraseña"
+msgstr "Contrasenya"
 
 #: .\authentication\serializers.py:32
 msgid "Unable to log in with provided credentials."
@@ -63,50 +63,50 @@ msgstr ""
 
 #: .\base\templates\base.html:29
 msgid "Change language"
-msgstr "Cambiar Idioma"
+msgstr "Canviar d'idioma"
 
 #: .\base\templates\base.html:32 .\base\templates\base.html:37
 #: .\base\templates\base.html:42 .\decide\settings.py:148
 msgid "Spanish"
-msgstr "Español"
+msgstr "Espanyol"
 
 #: .\base\templates\base.html:33 .\base\templates\base.html:38
 #: .\base\templates\base.html:43 .\decide\settings.py:147
 msgid "English"
-msgstr "Inglés"
+msgstr "Anglès"
 
 #: .\base\templates\base.html:34 .\base\templates\base.html:39
 #: .\base\templates\base.html:44 .\decide\settings.py:149
 msgid "Catalan"
-msgstr "Catalán"
+msgstr "Català"
 
 #: .\booth\templates\booth\booth.html:81
 msgid "Login"
-msgstr "Iniciar Sesión"
+msgstr "Iniciar Sessió"
 
 #: .\booth\templates\booth\booth.html:115
 msgid "Answer with voice"
-msgstr "Responder con voz"
+msgstr "Respondre amb veu"
 
 #: .\booth\templates\booth\booth.html:123
 msgid "Send vote"
-msgstr "Enviar voto"
+msgstr "Enviar vot"
 
 #: .\booth\templates\booth\booth.html:133
 msgid "Speech Synthesis not supported"
-msgstr "Síntesis de voz no soportada"
+msgstr "La síntesi de veu no és compatible"
 
 #: .\booth\templates\booth\booth.html:134
 msgid "Your browser does not support speech synthesis."
-msgstr "Su navegador no soporta la síntesis de voz."
+msgstr "El vostre navegador no admet la síntesi de veu."
 
 #: .\booth\templates\booth\booth.html:135
 msgid "We recommend you use Google Chrome."
-msgstr "Le recomendamos utilizar Google Chrome."
+msgstr "Us recomanem que feu servir Google Chrome."
 
 #: .\booth\templates\booth\booth.html:331
 msgid "Conglatulations. Your vote has been sent"
-msgstr "Enhorabuena. Tu voto ha sido enviado"
+msgstr "Felicitacions S'ha enviat el vostre vot"
 
 #: .\booth\templates\booth\booth.html:335
 #: .\booth\templates\booth\booth.html:357

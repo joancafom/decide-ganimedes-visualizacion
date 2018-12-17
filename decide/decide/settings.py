@@ -78,6 +78,7 @@ BASEURL = 'http://localhost:8000'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -141,10 +142,12 @@ AUTH_USER_MODEL = 'authentication.User'
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
+from django.utils.translation import ugettext_lazy as _
 LANGUAGES = (
-    ('es', _('Espanish')),
     ('en', _('English')),
-) 
+    ('es', _('Spanish')),
+    ('ca', _('Catalan')),
+)
 
 LANGUAGE_CODE = 'en-us'
 _ = lambda s: s
