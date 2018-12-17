@@ -14,12 +14,15 @@
                 <li>{{option.option}}: {{option.postproc}} <span>({{option.votes}})</span></li>
             {% endfor %}
         </ul>
+
     <div style="width: 50%">
         <canvas id="resultados" width="100%" height="50%"></canvas>
     </div>
 
-        {% regroup voting.postproc by team as teams %}
-    {% if voting.type == TEAM %}
+    {% with voting.postproc|first as firstVote %}
+    
+    {% if not firstVote.team == None %}
+    {% regroup voting.postproc by team as teams %}
     <!--Pintado de gráfica para Teams-->
     <script>
 
@@ -47,9 +50,9 @@
         }
     });
     </script>
-    {% endif %}
-
-    {% if voting.type == IDENTITY %}
+    
+    {% else %}
+    
     <!--Pintado de gráfica para Identity-->
     <script>
         var ctx = document.getElementById("resultados");
@@ -91,6 +94,6 @@
     <a href="pdf/" target="_blank">Descargar los resultado en formato .pdf</a>
     <br/>
     <a href="csv/" target="_blank">Descargar los resultado en formato .csv</a>
-    
+{% endwith %}
 {% endblock %}
 
