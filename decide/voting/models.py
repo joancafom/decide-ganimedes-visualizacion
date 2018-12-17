@@ -114,13 +114,18 @@ class Question(models.Model):
     desc = models.TextField()
 
     def save(self):
+        # Automatic assignment for the question number
         if not self.number:
             questions = self.voting.questions.all()
             if questions:
                 self.number = questions.last().number + 1
             else:
                 self.number = 1
-        return super().save()
+        
+        # Obligate to the user to put at least 2 options in the question
+        numopt = len(self.options.all())
+        if numopt > 1:
+            return super().save()
 
     # Leave empty if it doesn't apply.
     seats = models.PositiveIntegerField(blank=True, null=True)
@@ -146,13 +151,15 @@ class QuestionOption(models.Model):
 
     
     def save(self):
+        #Automatic assignment for the question number
         if not self.number:
             options = self.question.options.all()
             if options:
                 self.number = options.last().number + 1
             else:
                 self.number = 1
-        return super().save()
+
+            return super().save()
 
     def __str__(self):
         return '{} ({})'.format(self.option, self.number)
