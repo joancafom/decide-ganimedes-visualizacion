@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 17:49+0100\n"
+"POT-Creation-Date: 2018-12-17 20:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,134 +17,135 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: .\decide\authentication\schemas\inspectors.py:114
+
+#: .\authentication\schemas\inspectors.py:114
 msgid "unique integer value"
 msgstr ""
 
-#: .\decide\authentication\schemas\inspectors.py:116
+#: .\authentication\schemas\inspectors.py:116
 msgid "UUID string"
 msgstr ""
 
-#: .\decide\authentication\schemas\inspectors.py:118
+#: .\authentication\schemas\inspectors.py:118
 msgid "unique value"
 msgstr ""
 
-#: .\decide\authentication\schemas\inspectors.py:120
+#: .\authentication\schemas\inspectors.py:120
 #, python-brace-format
 msgid "A {value_type} identifying this {name}."
 msgstr ""
 
-#: .\decide\authentication\serializers.py:16
-#: .\decide\booth\templates\booth\booth.html:68
+#: .\authentication\serializers.py:16 .\booth\templates\booth\booth.html:68
 msgid "Email"
 msgstr "Email"
 
-#: .\decide\authentication\serializers.py:18
-#: .\decide\authentication\templates\authentication\signup.html:11
-#: .\decide\booth\templates\booth\booth.html:76
+#: .\authentication\serializers.py:18
+#: .\authentication\templates\authentication\signup.html:11
+#: .\booth\templates\booth\booth.html:76
 msgid "Password"
 msgstr "Contraseña"
 
-#: .\decide\authentication\serializers.py:32
+#: .\authentication\serializers.py:32
 msgid "Unable to log in with provided credentials."
 msgstr ""
 
-#: .\decide\authentication\serializers.py:35
+#: .\authentication\serializers.py:35
 msgid "Must include \"email\" and \"password\"."
 msgstr ""
 
-#: .\decide\authentication\templates\authentication\signup.html:8
+#: .\authentication\templates\authentication\signup.html:8
 msgid "Username"
 msgstr ""
 
-#: .\decide\authentication\templates\authentication\signup.html:14
+#: .\authentication\templates\authentication\signup.html:14
 msgid "Submit"
 msgstr ""
 
-#: .\decide\base\templates\base.html:29
+#: .\base\templates\base.html:29
 msgid "Change language"
 msgstr "Cambiar Idioma"
 
-#: .\decide\base\templates\base.html:32 .\decide\base\templates\base.html:37
-#: .\decide\base\templates\base.html:42 .\decide\decide\settings.py:148
+#: .\base\templates\base.html:32 .\base\templates\base.html:37
+#: .\base\templates\base.html:42 .\decide\settings.py:148
 msgid "Spanish"
 msgstr "Español"
 
-#: .\decide\base\templates\base.html:33 .\decide\base\templates\base.html:38
-#: .\decide\base\templates\base.html:43 .\decide\decide\settings.py:147
+#: .\base\templates\base.html:33 .\base\templates\base.html:38
+#: .\base\templates\base.html:43 .\decide\settings.py:147
 msgid "English"
 msgstr "Inglés"
 
-#: .\decide\base\templates\base.html:34 .\decide\base\templates\base.html:39
-#: .\decide\base\templates\base.html:44 .\decide\decide\settings.py:149
+#: .\base\templates\base.html:34 .\base\templates\base.html:39
+#: .\base\templates\base.html:44 .\decide\settings.py:149
 msgid "Catalan"
 msgstr "Catalán"
 
-#: .\decide\booth\templates\booth\booth.html:81
+#: .\booth\templates\booth\booth.html:81
 msgid "Login"
 msgstr "Iniciar Sesión"
 
-#: .\decide\booth\templates\booth\booth.html:115
+#: .\booth\templates\booth\booth.html:115
 msgid "Answer with voice"
 msgstr "Responder con voz"
 
-#: .\decide\booth\templates\booth\booth.html:123
+#: .\booth\templates\booth\booth.html:123
 msgid "Send vote"
 msgstr "Enviar voto"
 
-#: .\decide\booth\templates\booth\booth.html:133
+#: .\booth\templates\booth\booth.html:133
 msgid "Speech Synthesis not supported"
 msgstr "Síntesis de voz no soportada"
 
-#: .\decide\booth\templates\booth\booth.html:134
+#: .\booth\templates\booth\booth.html:134
 msgid "Your browser does not support speech synthesis."
 msgstr "Su navegador no soporta la síntesis de voz."
 
-#: .\decide\booth\templates\booth\booth.html:135
+#: .\booth\templates\booth\booth.html:135
 msgid "We recommend you use Google Chrome."
 msgstr "Le recomendamos utilizar Google Chrome."
 
-#: .\decide\booth\templates\booth\booth.html:331
+#: .\booth\templates\booth\booth.html:331
 msgid "Conglatulations. Your vote has been sent"
-msgstr "Enhorabuena. Tu voto ha sido enviado"
+msgstr "Felicidades. Tu voto ha sido enviado."
 
-#: .\decide\booth\templates\booth\booth.html:335
-#: .\decide\booth\templates\booth\booth.html:357
-#: .\decide\booth\templates\booth\booth.html:379
+#: .\booth\templates\booth\booth.html:335
+#: .\booth\templates\booth\booth.html:357
+#: .\booth\templates\booth\booth.html:379
 msgid "Error: "
 msgstr "Error"
 
-#: .\decide\booth\templates\booth\booth.html:365
+#: .\booth\templates\booth\booth.html:365
 msgid ""
-"This vote does not contain any questions, so it can not be accessed yet. Try it again later."
-msgstr "Esta votacion no contiene ninguna pregunta, por lo que no se puede acceder a ella todavia. Vuelva a intentarlo mas tarde."
+"This vote does not contain any questions, so it can not be accessed yet. Try "
+"it again later."
+msgstr "Esta votación no contiene preguntas, por lo que aún no se puede acceder. Inténtalo de nuevo más tarde."
 
-#: .\decide\visualizer\templates\visualizer\ended.html:10
-#: .\decide\visualizer\templates\visualizer\ended_export.html:7
+#: .\visualizer\templates\visualizer\ended.html:10
+#: .\visualizer\templates\visualizer\ended_export.html:7
 msgid "Results: "
 msgstr ""
 
-#: .\decide\visualizer\templates\visualizer\not_started.html:10
+#: .\visualizer\templates\visualizer\not_started.html:10
 msgid "Voting not started"
 msgstr ""
 
-#: .\decide\visualizer\templates\visualizer\ongoing.html:10
-#: .\decide\visualizer\templates\visualizer\ongoing_export.html:7
+#: .\visualizer\templates\visualizer\ongoing.html:10
+#: .\visualizer\templates\visualizer\ongoing_export.html:7
 msgid "Voting is open"
 msgstr ""
 
-#: .\decide\visualizer\templates\visualizer\ongoing.html:11
+#: .\visualizer\templates\visualizer\ongoing.html:11
 msgid "Stats"
 msgstr ""
 
-#: .\decide\visualizer\templates\visualizer\ongoing.html:13
+#: .\visualizer\templates\visualizer\ongoing.html:13
 msgid "Census Size:"
 msgstr ""
 
-#: .\decide\visualizer\templates\visualizer\ongoing.html:14
+#: .\visualizer\templates\visualizer\ongoing.html:14
 msgid "Voters Turnout:"
 msgstr ""
 
-#: .\decide\visualizer\templates\visualizer\ongoing.html:15
+#: .\visualizer\templates\visualizer\ongoing.html:15
 msgid "Participation:"
 msgstr ""
