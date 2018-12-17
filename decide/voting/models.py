@@ -121,12 +121,9 @@ class Question(models.Model):
                 self.number = questions.last().number + 1
             else:
                 self.number = 1
-        
-        # Obligate to the user to put at least 2 options in the question
-        numopt = len(self.options.all())
-        if numopt > 1:
-            return super().save()
-
+                
+        return super().save()
+            
     # Leave empty if it doesn't apply.
     seats = models.PositiveIntegerField(blank=True, null=True)
 
