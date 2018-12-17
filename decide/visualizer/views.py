@@ -193,15 +193,69 @@ class VisualizerCsv(TemplateView):
                 # Votación en proceso
                 plantilla = "visualizer/ongoing_export.html"
 
+                #Estadísticas básicas: tamaño del censo, personas que han
+                #votado y participación
+                census = mods.get('census', params={'voting_id': vid})
+                voters = get_stub_info('voters', vid)
+                no_voters = list(set(census['voters']) - set(voters))
+                stats_census_size = len(census['voters'])
+                stats_voters_turnout = get_stub_info('turnout', vid)
+
+                if stats_census_size != 0:
+                    stats_participation_ratio = round((stats_voters_turnout / stats_census_size) * 100, 2)
+                else:
+                    stats_participation_ratio = 0
+
+                stats_voters_ages = get_stub_info('ages', vid, voters)
+                stats_no_voters_ages = get_stub_info('ages', vid, no_voters)
+                (stats_voters_age_dist, stats_voters_age_mean) = age_distribution(stats_voters_ages)
+                stats_no_voters_age_mean = mean(stats_no_voters_ages)
+
+                #Estadísticas avanzadas de votación II
+                votos = Vote.objects.filter(voting_id=vid).all()
+                votantes =  []
+                for v in votos:
+                    user = User.objects.filter(id = v.voter_id).all()
+                    votantes.append(user)
+                sexes_total = get_stub_info('sexes', vid, census['voters'])
+                sexes_empty = {
+                    User.SEX_OPTIONS[0][0] : 0,
+                    User.SEX_OPTIONS[1][0] : 0,
+                    User.SEX_OPTIONS[2][0] : 0
+                }
+
+                sexes_participation = get_sexes_participation(votantes, sexes_empty)
+
+                stats_women_participation = sexes_participation['W']
+                stats_men_participation = sexes_participation['M']
+                stats_nonbinary_participation = sexes_participation['N']
+
+                sexes_percentages = get_sexes_percentages(sexes_participation, sexes_total, sexes_empty)
+
+                stats_women_percentage = sexes_percentages['W']
+                stats_men_percentage = sexes_percentages['M']
+                stats_nonbinary_percentage = sexes_percentages['N']
+
+                return Render.render_csv(plantilla, {'voting':voting, 'stats_census_size':stats_census_size, 
+                'stats_voters_turnout':stats_voters_turnout, 'stats_participation_ratio':stats_participation_ratio,
+                'stats_voters_age_mean':stats_voters_age_mean, 'stats_no_voters_age_mean':stats_no_voters_age_mean,
+                'stats_voters_age_dist':stats_voters_age_dist, 'stats_women_participation':stats_women_participation,
+                'stats_men_participation':stats_men_participation, 'stats_nonbinary_participation':stats_nonbinary_participation,
+                'stats_women_percentage':stats_women_percentage, 'stats_men_percentage':stats_men_percentage,
+                'stats_nonbinary_percentage':stats_nonbinary_percentage})
+
             elif r[0]['start_date'] is not None and r[0]['end_date'] is not None:
                 
                 #Votación terminada
                 plantilla = "visualizer/ended_export.html"
+
+                return Render.render_csv(plantilla, {'voting':voting})
         
-        except:
+        except Exception as e:
+            print(str(e))
             raise Http404
 
-        return Render.render_csv(plantilla, {'voting':voting})
+        return None
 
 # Stub Methods
 # Simulamos la llamada a otros módulos mientras estos implementan sus cambios

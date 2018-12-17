@@ -40,5 +40,26 @@ class Render:
         elif path == 'visualizer/ongoing_export.html':
 
             writer.writerow(['Estadísticas'])
+            writer.writerow(['Tamaño del censo', str(params['stats_census_size'])])
+            writer.writerow(['Personas que han votado', str(params['stats_voters_turnout'])])
+            writer.writerow(['Porcentaje de participación', str(params['stats_participation_ratio']) + '%'])
+
+            if params['stats_voters_age_mean']:
+                writer.writerow(['Edad media de las personas que han votado', str(params['stats_voters_age_mean']) + ' años'])
+
+            if params['stats_no_voters_age_mean']:
+                writer.writerow(['Edad media de las personas que no han votado', str(params['stats_no_voters_age_mean']) + ' años'])
+            
+            writer.writerow(['Análisis de la participación según rango etario'])
+
+            for rango, cantidad in params['stats_voters_age_dist'].items():
+                writer.writerow([str(rango) + ' años', str(cantidad) + '%'])
+
+            writer.writerow(['Número de mujeres que han votado', str(params['stats_women_participation'])])
+            writer.writerow(['Porcentaje de mujeres que han votado respecto a su total', str(params['stats_women_percentage']) + '%'])
+            writer.writerow(['Número de personas de género no binario que han votado', str(params['stats_nonbinary_participation'])])
+            writer.writerow(['Porcentaje de personas de género no binario que han votado respecto a su total', str(params['stats_nonbinary_percentage']) + '%'])
+            writer.writerow(['Número de hombres que han votado', str(params['stats_men_participation'])])
+            writer.writerow(['Porcentaje de hombres que han votado respecto a su total', str(params['stats_men_percentage']) + '%'])
 
         return response
