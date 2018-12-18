@@ -4,10 +4,18 @@
 {% block content %}
     <style>
     .titulo {
-        margin-top: 100px;
+        margin-top: 60px;
+    }
+    .descripcion {
+        font-size: 16px !important;
+        margin-top: -5px;
+        margin-bottom: 50px;
     }
     .image-background {
         height: 40px;
+    }
+    .pregunta {
+        margin-top: -19px;
     }
     .respuestas {
         margin-top: 20px;
@@ -62,10 +70,20 @@
         display: inline-block;
         border-bottom: 1px dotted black;
     }
+    .help-text {
+        font-size: 14px;
+        color: white;
+    }
+    .grande {
+        width:500px !important;
+        margin-left:-986% !important;
+    }
+    .pequeno {
 
+    }
     .tooltip .tooltiptext {
         visibility: hidden;
-        width: 120px;
+        width: 300px;
         background-color: #555;
         color: #fff;
         text-align: center;
@@ -74,17 +92,19 @@
         position: absolute;
         z-index: 1;
         bottom: 125%;
-        left: 50%;
-        margin-left: -60px;
+        margin-left: -575%;
         opacity: 0;
         transition: opacity 0.3s;
+    }
+    .tooltip .tooltiptext span {
+        font-size: 12px !important;
     }
 
     .tooltip .tooltiptext::after {
         content: "";
         position: absolute;
         top: 100%;
-        left: 50%;
+        /* left: 50%; */
         margin-left: -5px;
         border-width: 5px;
         border-style: solid;
@@ -98,6 +118,7 @@
     </style>
     
     <h3 class="center-align titulo">{{ voting.name }}</h3><br>
+    <p class="center-align flow-text descripcion">{{voting.desc}}</p>
 
     <div id="login" class="container">
         <div class="row center-align">
@@ -125,9 +146,10 @@
         </div>
     </div>
     <div id="voting">
-        <div class="row">
+        
             
             {% for question in voting.questions %}
+            <div class="row pregunta">
             <div class="col m1 l2"></div>
             <div class="col s12 m10 l8">
                 <div class="card">
@@ -142,7 +164,7 @@
                     {% if question.help_text %}
                     <div class="card-title">{{ question.desc }}
                         <span class="tooltip">[?]
-                            <span class="tooltiptext">{{ question.help_text }}</span>
+                            <span class="tooltiptext {% if question.help_text|length > 150 %}grande{% else %}pequeno{% endif %}"><p class="flow-text help-text">{{ question.help_text }}</p></span>
                         </span>
                     </div> 
                     {% else %}
@@ -165,9 +187,13 @@
             </div>
           </div>
           <div class="col m1 l2"></div>
-          {% endfor %}
         </div>
+          {% endfor %}
+        
         <div id="btnSend" class="row center-align">
+            <button class="btn waves-effect waves-light red" type="submit" name="action" onclick="decideLogout()">{% trans "Logout" %}
+                <i class="material-icons right">close</i>
+            </button>
             <button class="btn waves-effect waves-light" type="submit" name="action">{% trans "Send vote" %}
                     <i class="material-icons right">send</i>
             </button>
@@ -300,7 +326,7 @@
             porcentaje =  cont / arrayOpcion.length
             console.log(porcentaje)
 
-            if (porcentaje > 0.65) {
+            if (porcentaje > 0.70) {
                 res = true
             }
             return res
