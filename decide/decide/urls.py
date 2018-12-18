@@ -31,5 +31,5 @@ urlpatterns = [
 for module in settings.MODULES:
     urlpatterns += i18n_patterns(
         path('{}/'.format(module), include('{}.urls'.format(module))),
-        prefix_default_language=True,
+        prefix_default_language=False,
     )
