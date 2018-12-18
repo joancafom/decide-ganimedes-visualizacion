@@ -4,10 +4,15 @@
 {% endblock %}
 {% block menu_options %}
 {% endblock %}
+{% block extrahead %}
+    <link type="text/css" rel="stylesheet" href="{% static "decide/css/visualizer/ended.css"%}"/>
+{% endblock %}
 {% block content %}
-    <h4>{{ voting.id }} - {{ voting.name }}</h4>
-
+    <div id="cabecera-votacion">
+        <h4>{{ voting.name }}</h4>
         <h5>{% trans "Results: " %}</h5>
+    </div>
+        
         <ul>
             {% for option in voting.postproc %}
                 <li>{{option.option}}: {{option.postproc}} <span>({{option.votes}})</span></li>

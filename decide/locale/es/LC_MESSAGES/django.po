@@ -70,16 +70,16 @@ msgid "Inglés"
 msgstr "English"
 
 #: visualizer/templates/visualizer/ended_export.html:6
-#: visualizer/templates/visualizer/ended.html:10
+#: visualizer/templates/visualizer/ended.html:13
 msgid "Results: "
 msgstr "Resultados: "
 
-#: visualizer/templates/visualizer/ended.html:17
+#: visualizer/templates/visualizer/ended.html:22
 #: visualizer/templates/visualizer/ongoing.html:95
 msgid "Download results as .pdf"
 msgstr "Descargar los resultados en formato .pdf"
 
-#: visualizer/templates/visualizer/ended.html:19
+#: visualizer/templates/visualizer/ended.html:24
 #: visualizer/templates/visualizer/ongoing.html:97
 msgid "Download results as .csv"
 msgstr "Descargar los resultados en formato .csv"
@@ -99,7 +99,7 @@ msgstr "Estadisticas"
 
 #: visualizer/templates/visualizer/ongoing_export.html:8
 #: visualizer/templates/visualizer/ongoing.html:25
-msgid "Census size:"
+msgid "Census Size:"
 msgstr "Tamaño del censo:"
 
 #: visualizer/templates/visualizer/ongoing_export.html:9
@@ -164,15 +164,15 @@ msgstr "del total"
 
 #: visualizer/templates/visualizer/ongoing.html:51
 msgid "women voted"
-msgstr "mujeres votadas"
+msgstr "mujeres votaron"
 
 #: visualizer/templates/visualizer/ongoing.html:52
 msgid "non-binary voted"
-msgstr "no binario votados"
+msgstr "no binario votaron"
 
 #: visualizer/templates/visualizer/ongoing.html:53
 msgid "men voted"
-msgstr "hombres votados"
+msgstr "hombres votaron"
 
 #: visualizer/templates/visualizer/ongoing.html:61
 msgid "to"
