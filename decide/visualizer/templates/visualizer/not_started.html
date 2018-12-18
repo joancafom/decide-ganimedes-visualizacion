@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}
+{% endblock %}
+{% block menu_options %}
+{% endblock %}
+{% block content %}
+    <link type="text/css" rel="stylesheet" href="{% static "decide/css/visualizer/not_started.css"%}"/>
+    <div class="content">
+        <h4>{{ voting.name }}</h4>
+        <br>
+
+            <div class="col s12 m5">
+              <div class="card-panel  teal darken-1">
+                <span class="white-text">
+                    <p class="white-text">{% trans "Voting not started" %}</p>
+                </span>
+              </div>
+            </div>
+
+
+        
+
+    </div>
+    
+
+{% endblock %}
