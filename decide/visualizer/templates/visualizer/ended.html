@@ -4,11 +4,17 @@
 {% endblock %}
 {% block menu_options %}
 {% endblock %}
+{% block extrahead %}
+    <link type="text/css" rel="stylesheet" href="{% static "decide/css/visualizer/ended.css"%}"/>
+{% endblock %}
 {% block content %}
     {% load static %}
     <script type="text/javascript" src="{% static "decide/js/Chart.js"%}"></script>
-    <h4>{{ voting.id }} - {{ voting.name }}</h4>
-        <h5>{% trans 'Results: ' %}</h5>
+    <div id="cabecera-votacion">
+        <h4>{{ voting.name }}</h4>
+        <h5>{% trans "Results: " %}</h5>
+    </div>
+
         <ul>
             {% for option in voting.postproc %}
                 <li>{{option.option}}: {{option.postproc}} <span>({{option.votes}})</span></li>
@@ -143,9 +149,8 @@
     </script>
 
     {% endif %}
-    <a href="pdf/" target="_blank">Descargar los resultado en formato .pdf</a>
+    <a href="pdf/" target="_blank">{% trans "Download results as .pdf" %}</a>
     <br/>
-    <a href="csv/" target="_blank">Descargar los resultado en formato .csv</a>
-{% endwith %}
+    <a href="csv/" target="_blank">{% trans "Download results as .csv" %}</a>
 {% endblock %}
 

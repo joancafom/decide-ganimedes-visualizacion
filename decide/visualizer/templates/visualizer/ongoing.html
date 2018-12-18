@@ -39,7 +39,7 @@
         <div class="col m6 s12">
             <div class="card blue">
               <div class="card-content">
-                <p class="white-text">Interested in the participation according to genders? Check it out!</p>
+                <p class="white-text">{% trans "Interested in the participation according to genders? Check it out!" %}</p>
               </div>
               <div class="card-tabs">
                 <ul class="tabs tabs-fixed-width tabs-transparent">
@@ -67,11 +67,11 @@
             <li>
                 <div class="collapsible-header">
                 <i class="material-icons">question_answer</i>
-                    The average age of the people who voted is...
+                    {% trans "The average age of people who voted is..." %}
                 <span class="new badge" data-badge-caption="quiz"></span></div>
                 <div class="collapsible-body">
                     {% if stats_voters_age_mean %}
-                        <p>{{stats_voters_age_mean}} years old</p>
+                        <p>{{stats_voters_age_mean}} {% trans "years old" %}</p>
                     {% else %}
                         <p>{% trans "Nobody has voted yet :(" %}</p>
                     {% endif %}
@@ -80,11 +80,11 @@
             <li>
                 <div class="collapsible-header">
                 <i class="material-icons">question_answer</i>
-                    The average age of the people who didn't vote is...
+                    {% trans "The average age of people who didn't vote is..." %}
                 <span class="new badge" data-badge-caption="quiz"></span></div>
                 <div class="collapsible-body">
                     {% if stats_no_voters_age_mean %}
-                        <p>{{stats_no_voters_age_mean}} years old</p>
+                        <p>{{stats_no_voters_age_mean}} {% trans "years old" %}</p>
                     {% else %}
                         <p>{% trans "Everyone has voted already :)" %}</p>
                     {% endif %}
@@ -92,9 +92,9 @@
             </li>
             </ul>
             <div class="centered-text">
-                <a href="pdf/" target="_blank">Descargar los resultado en formato .pdf</a>
+                <a href="pdf/" target="_blank">{% trans "Download results as .pdf" %}</a>
                 <br/>
-                <a href="csv/" target="_blank">Descargar los resultado en formato .csv</a>
+                <a href="csv/" target="_blank">{% trans "Download results as .csv" %}</a>
             </div>
         </div>
 
