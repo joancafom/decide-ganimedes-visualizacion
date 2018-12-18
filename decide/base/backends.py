@@ -9,6 +9,7 @@ class AuthBackend(ModelBackend):
     '''
     This class makes the login to the authentication method for the django
     admin web interface.
+
     If the content-type is x-www-form-urlencoded, a requests is done to the
     authentication method to get the user token and this token is stored
     for future admin queries.
@@ -36,4 +37,4 @@ class AuthBackend(ModelBackend):
                     token = mods.post('authentication', entry_point='/login/', json=data)
                     request.session['auth-token'] = token['token']
 
-            return u 
+                return u
