@@ -132,7 +132,7 @@
             <div class="col s12 m10 l8">
                 <div class="card">
                     <div class="card-image">
-                        <img class="image-background" src="../../static/images/fondo.jpg" />
+                        <img class="image-background" src="../../../static/images/fondo.jpg" />
                         <a
                         class="btn-floating halfway-fab waves-effect waves-light darkblue"
                         onclick="dictarVoz({{question}})"
@@ -385,9 +385,11 @@
               });
         }
 
+        {% get_current_language as LANGUAGE_CODE %}
+        
         function decideLogout() {
             var data = { token: token };
-            postData("{{auth_url}}" + "/authentication/logout/", data);
+            postData("{{auth_url}}" + '/{{LANGUAGE_CODE}}' +  "/authentication/logout/", data);
 
             token = null;
             user = null;
@@ -397,7 +399,7 @@
 
         function decideUser() {
             var data = { token: token };
-            postData("{{auth_url}}" + "/authentication/getuser/", data)
+            postData("{{auth_url}}" + '/{{LANGUAGE_CODE}}' +  "/authentication/getuser/", data)
               .then(data => {
                 user = data;
                 panel('voting');
@@ -417,7 +419,7 @@
 	                email: document.querySelector("#email").value,
 	                password: document.querySelector("#password").value,
 	            };
-	            postData("{{auth_url}}" + "/authentication/login/", data)
+	            postData("{{auth_url}}" + '/{{LANGUAGE_CODE}}' +  "/authentication/login/", data)
 	              .then(data => {
 	                document.cookie = 'decide='+data.token+';';
 	                token = data.token;
