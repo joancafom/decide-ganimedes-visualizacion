@@ -112,6 +112,7 @@ class Question(models.Model):
     # Automatic assignment for the question number on save
     number = models.PositiveIntegerField(editable = False, null = True)
     desc = models.TextField()
+    help_text = models.TextField(max_length = 300, blank = True, null = True)
 
     def save(self):
         # Automatic assignment for the question number
