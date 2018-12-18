@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 from django.utils.translation import ugettext_lazy as _
 
 INSTALLED_APPS = [
+    'decide.apps.DecideConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -71,6 +72,7 @@ MODULES = [
     'store',
     'visualizer',
     'voting',
+    'decide',
 ]
 
 BASEURL = 'http://localhost:8000'
