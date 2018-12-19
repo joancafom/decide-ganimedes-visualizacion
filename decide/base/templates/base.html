@@ -19,9 +19,15 @@
         <title>{% block title %}Decide!{% endblock %}</title>
         {% block extrahead %}
         {% endblock %}
-        
+
+        <!-- Initialize Materialize JS -->
+        <script>
+            function initMaterialize(){
+                M.AutoInit();
+            } 
+        </script>
     </head>
-    <body>
+    <body onload="initMaterialize()">
         
         <form action="{% url 'set_language' %}" method="post">
             {% csrf_token %}
