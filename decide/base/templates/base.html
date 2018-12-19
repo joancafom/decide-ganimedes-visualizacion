@@ -22,29 +22,19 @@
         
     </head>
     <body>
+        <style>
+        .language {
+            width:115px;
+        }
+        .language1 {
+            margin-top:10px !important;
+        }
+        .language2 {
+            opacity:0.9 !important;
+            border-radius: 6px !important;
+        }
         
-        <div>
-            {% get_current_language as LANGUAGE_CODE %}
-            
-            {% trans "Change language" %}
-            <select id="select" onchange="changeLanguage()" class='browser-default'>
-                {% if LANGUAGE_CODE == 'es' %}
-                    <option value="spanish" selected disabled hidden>{% trans "Spanish" %}</option>
-                    <option value="english">{% trans "English" %}</option>
-                    <option value="catalan">{% trans "Catalan" %}</option>
-                {% endif %}
-                {% if LANGUAGE_CODE == 'en' %}
-                    <option value="spanish">{% trans "Spanish" %}</option>
-                    <option value="english" selected disabled hidden>{% trans "English" %}</option>
-                    <option value="catalan">{% trans "Catalan" %}</option>
-                {% endif %}
-                {% if LANGUAGE_CODE == 'ca' %}
-                    <option value="spanish">{% trans "Spanish" %}</option>
-                    <option value="english">{% trans "English" %}</option>
-                    <option value="catalan" selected disabled hidden>{% trans "Catalan" %}</option>
-                {% endif %}
-            </select>
-        </div>
+        </style>
         <script>
             function changeLanguage() {
                 const map = {
@@ -56,16 +46,39 @@
             }
         </script>
         
-         
         <script type="text/javascript" src="{% static "decide/js/materialize.js"%}"></script>
         <nav class="menu">
             <div class="nav-wrapper blue-grey darken-2">
+                <div class="row">
+                    <div class="language right">
+                            {% get_current_language as LANGUAGE_CODE %}
+                        <div class="col s12 language1">
+                            <select class="browser-default language2" id="select" onchange="changeLanguage()">
+                                {% if LANGUAGE_CODE == 'es' %}
+                                    <option value="spanish" selected disabled hidden>{% trans "Spanish" %}</option>
+                                    <option value="english">{% trans "English" %}</option>
+                                    <option value="catalan">{% trans "Catalan" %}</option>
+                                {% endif %}
+                                {% if LANGUAGE_CODE == 'en' %}
+                                    <option value="spanish">{% trans "Spanish" %}</option>
+                                    <option value="english" selected disabled hidden>{% trans "English" %}</option>
+                                    <option value="catalan">{% trans "Catalan" %}</option>
+                                {% endif %}
+                                {% if LANGUAGE_CODE == 'ca' %}
+                                    <option value="spanish">{% trans "Spanish" %}</option>
+                                    <option value="english">{% trans "English" %}</option>
+                                    <option value="catalan" selected disabled hidden>{% trans "Catalan" %}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
                 <a href="#" class="brand-logo center">Ganímedes</a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         {% block menu_options %}
                         {% endblock %}
                     </ul>
                 </div>
+            </div>
             </nav>
         <div class="body">
             {% block content %}
