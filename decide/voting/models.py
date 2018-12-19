@@ -146,7 +146,6 @@ class QuestionOption(models.Model):
 
     # Leave empty if it doesn't apply.
     team = models.IntegerField(blank=True, null=True)
-
     
     def save(self):
         #Automatic assignment for the question number
@@ -157,7 +156,7 @@ class QuestionOption(models.Model):
             else:
                 self.number = 1
 
-            return super().save()
-
+        return super().save()
+    
     def __str__(self):
         return '{} ({})'.format(self.option, self.number)

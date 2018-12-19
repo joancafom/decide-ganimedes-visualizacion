@@ -11,3 +11,5 @@ xhtml2pdf==0.2.3
 django-heroku
 gunicorn
 psycopg2-binary==2.7.6.1
+python-gettext==4.0
+django-makemessages-xgettext==0.1.1
