@@ -114,6 +114,11 @@ class Question(models.Model):
     desc = models.TextField()
     help_text = models.TextField(max_length = 300, blank = True, null = True)
 
+    yes_no_choices = ((True, 'Yes'), (False, 'No'))
+    yes_no_question = models.BooleanField(default=False,verbose_name="Yes/No question", help_text="Check the box to generate automatically the options yes/no ")
+
+    #choices=yes_no_choices
+    
     def save(self):
         # Automatic assignment for the question number
         if not self.number:
@@ -122,7 +127,7 @@ class Question(models.Model):
                 self.number = questions.last().number + 1
             else:
                 self.number = 1
-                
+    
         return super().save()
             
     # Leave empty if it doesn't apply.
@@ -130,6 +135,14 @@ class Question(models.Model):
 
     def __str__(self):
         return '{} ({})'.format(self.desc, self.number)
+
+@receiver(post_save, sender=Question)
+def check_question(sender, instance, **kwargs):
+    if instance.yes_no_question==True and instance.options.all().count()==0:
+        op1 = QuestionOption(question=instance, number=1, option="Yes")
+        op1.save()
+        op2 = QuestionOption(question=instance, number=2, option="No") 
+        op2.save()
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
