@@ -84,19 +84,49 @@ class AuthTestCase(APITestCase):
 #------------------------nuevo-usuario------------------------------
 #sudo python3 ./manage.py test authentication.tests
     
-    def test_nuevousuario(self):
+    #new user
+    def test_nuevo_usuario_ok(self):
 
         data = {'email': 'new1@mail.com', 'firs_name': 'new', 'last_name': 'new', 'birthday':'01/01/2000', 'password1': 'practica', 'password2': 'practica', 'city': 'Sevilla'}# this user must not exits in db
         response = mods.get('authentication/nuevo-usuario', json=data, response=True) #getting the html
         self.assertEqual(response.status_code, 200)  
-        response = mods.post('authentication/getuser', json=data, response=True) #trying logging
-        self.assertNotEqual(response.status_code, 200)  #user does not exit   
+        response = mods.post('authentication/nuevo-usuario', json=data, response=True) 
+        self.assertEqual(response.status_code, 200)  
         
         form = UserCreateForm(data)
         self.assertTrue(form)
         self.assertTrue(form.is_valid())
         user1=form.save()
         self.assertTrue(user1.id>0)#user exits
-        #print(form)
-   
+        
+    #user wrong email
+    def test_nuevo_usuario_fail_data(self):
+        data = {'email': 'new2.mail.com', 'firs_name': 'new', 'last_name': 'new', 'birthday':'01/01/2000', 'password1': 'practica', 'password2': 'practica', 'city': 'Sevilla'}
+        response = mods.get('authentication/nuevo-usuario', json=data, response=True) #getting the html
+        self.assertEqual(response.status_code, 200)   #get html    
+        response = mods.post('authentication/nuevo-usuario', json=data, response=True) 
+        self.assertEqual(response.status_code, 200) 
 
+        form = UserCreateForm(data)
+        self.assertTrue(form)
+        self.assertTrue(form.is_valid()==False)
+        #print(form)
+
+    #user already exits 
+    def test_nuevo_usuario_exits(self):
+        data = {'email': 'new1@mail.com', 'firs_name': 'new', 'last_name': 'new', 'birthday':'01/01/2000', 'password1': 'practica', 'password2': 'practica', 'city': 'Sevilla'}# this user is saved previously
+        response = mods.get('authentication/nuevo-usuario', json=data, response=True) #getting the html
+        self.assertEqual(response.status_code, 200)   #get html    
+        response = mods.post('authentication/nuevo-usuario', json=data, response=True) 
+        self.assertEqual(response.status_code, 200) 
+
+        form = UserCreateForm(data)
+        self.assertTrue(form)
+        self.assertTrue(form.is_valid())
+
+    #TODO Not finished. It needs validation in user
+
+
+        
+   
+        
