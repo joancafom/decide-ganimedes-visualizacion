@@ -29,9 +29,6 @@ def tally(ModelAdmin, request, queryset):
 
 class QuestionOptionInline(admin.TabularInline):
     model = QuestionOption
-    # Obligate to the user to put at least 2 options in the question
-    min_num=2
-    can_delete=False
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [QuestionOptionInline]
