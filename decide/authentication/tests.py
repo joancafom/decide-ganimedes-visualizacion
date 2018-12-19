@@ -102,6 +102,7 @@ class AuthTestCase(APITestCase):
     #user wrong email
     def test_nuevo_usuario_fail_data(self):
         data = {'email': 'new2.mail.com', 'firs_name': 'new', 'last_name': 'new', 'birthday':'01/01/2000', 'password1': 'practica', 'password2': 'practica', 'city': 'Sevilla'}
+        
         response = mods.get('authentication/nuevo-usuario', json=data, response=True) #getting the html
         self.assertEqual(response.status_code, 200)   #get html    
         response = mods.post('authentication/nuevo-usuario', json=data, response=True) 
@@ -114,7 +115,9 @@ class AuthTestCase(APITestCase):
 
     #user already exits 
     def test_nuevo_usuario_exits(self):
-        data = {'email': 'new1@mail.com', 'firs_name': 'new', 'last_name': 'new', 'birthday':'01/01/2000', 'password1': 'practica', 'password2': 'practica', 'city': 'Sevilla'}# this user is saved previously
+        data = {'email': 'voter1@gmail.com', 'firs_name': 'new', 'last_name': 'new', 'birthday':'01/01/2000', 'password1': 'practica', 'password2': 'practica', 'city': 'Sevilla'}# this user is saved previously
+        response = self.client.post('/authentication/login/', data, format='json') 
+        self.assertTrue(response.status_code, 200) #exits
         response = mods.get('authentication/nuevo-usuario', json=data, response=True) #getting the html
         self.assertEqual(response.status_code, 200)   #get html    
         response = mods.post('authentication/nuevo-usuario', json=data, response=True) 
@@ -122,9 +125,9 @@ class AuthTestCase(APITestCase):
 
         form = UserCreateForm(data)
         self.assertTrue(form)
-        self.assertTrue(form.is_valid())
+        self.assertTrue(form.is_valid()==False)
 
-    #TODO Not finished. It needs validation in user
+    
 
 
         
