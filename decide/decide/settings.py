@@ -181,6 +181,10 @@ if 'TRAVIS' in os.environ:
 elif 'HEROKU' in os.environ:
     try:
         from local_settings_heroku import *
+
+        #Heroku (Esta configuración debe ir aquí)
+        import django_heroku
+        django_heroku.settings(locals())
     except ImportError:
         print("local_settings_heroku.py not found")
 else:
@@ -191,7 +195,3 @@ else:
 
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
-
-#Heroku (Esta configuración debe ir aquí)
-import django_heroku
-django_heroku.settings(locals())

@@ -30,3 +30,5 @@ DATABASES = {
 KEYBITS = 256
 
 APIS = {}
+import django_heroku
+django_heroku.settings(locals())
