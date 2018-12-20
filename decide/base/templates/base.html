@@ -33,6 +33,16 @@
         
     </head>
     <body>
+            <nav>
+                    <div class="nav-wrapper blue-grey darken-2">
+                      <a href="#" class="brand-logo right">Ganímedes</a>
+                      <ul id="nav-mobile" class="left hide-on-med-and-down">
+                        <li><a href="#">Link1</a></li>
+                        <li><a href="#">Link2</a></li>
+                        <li><a href="#">Link3</a></li>
+                      </ul>
+                    </div>
+                  </nav>
         
             <form action="{% url 'set_language' %}" method="post">
                 {% csrf_token %}
@@ -55,15 +65,15 @@
 
         
 
-        <nav class="menu">
+        <!-- <nav class="menu">
             <div class="nav-wrapper blue-grey darken-2">
                 <a href="#" class="brand-logo center">Ganímedes</a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         {% block menu_options %}
                         {% endblock %}
                     </ul>
-                </div>
-            </nav>
+            </div>
+        </nav> -->
         <div class="body">
             {% block content %}
             {% endblock %}
