@@ -99,7 +99,7 @@ class StoreTextCase(BaseTestCase):
         self.assertEqual(Vote.objects.count(), 1)
         self.assertEqual(Vote.objects.first().voting_id, VOTING_PK)
         self.assertEqual(Vote.objects.first().voter_id, 1)
-        self.assertEqual(Vote.objects.first().a, CTE_A)
+        self.assertEqual(Vote.objectsCTE.first().a, _A)
         self.assertEqual(Vote.objects.first().b, CTE_B)
 
     def test_vote(self):
@@ -195,3 +195,17 @@ class StoreTextCase(BaseTestCase):
         self.voting.save()
         response = self.client.post('/store/', data, format='json')
         self.assertEqual(response.status_code, 401)
+
+    def test_get_voters_success(self):
+        # Generating votes
+        votings, voters = self.gen_votes()
+
+        # user login
+        user = self.get_or_create_user(voters[0])
+        self.login(user=user.username)
+        # voters request
+        response = self.client.get('/store/users/voting/{}/'.format(votings[2]))
+
+        # assert response
+        self.assertEqual(response.status_code, 200)
+    
