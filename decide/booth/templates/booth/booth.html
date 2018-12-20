@@ -437,7 +437,7 @@
         		// Post the generated data
         		postData("{{store_url}}" + "/store/", data)
                   .then(data => {
-                	  alert("{% trans "Conglatulations. Your vote has been sent" %}")
+                	  alert("{% trans "Congratulations. Your vote has been sent" %}")
                       console.log(v);
                   })
                   .catch(error => {
@@ -446,7 +446,7 @@
                   });
         		
         	} else {
-        		alert("You must select an option for each question.")
+        		alert("{% trans "You must select an option for each question." %}")
         	}
         	
         }
@@ -484,7 +484,7 @@
         	var questions = "{{voting.questions}}"
         	
         	if(data["email"] == "" || data["password"] == "") {
-        		alert("Enter an email and a password.")
+        		alert("{% trans "Enter an email and a password." %}")
         	} else {
         		if(questions.length == 2) {
         			alert("{% trans "This vote does not contain any questions, so it can not be accessed yet. Try it again later." %}")

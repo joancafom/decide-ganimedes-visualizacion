@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 20:47+0100\n"
+"POT-Creation-Date: 2018-12-20 11:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,13 +35,13 @@ msgstr ""
 msgid "A {value_type} identifying this {name}."
 msgstr ""
 
-#: .\authentication\serializers.py:16 .\booth\templates\booth\booth.html:68
+#: .\authentication\serializers.py:16 .\booth\templates\booth\booth.html:129
 msgid "Email"
 msgstr "Correu electrònic"
 
 #: .\authentication\serializers.py:18
 #: .\authentication\templates\authentication\signup.html:11
-#: .\booth\templates\booth\booth.html:76
+#: .\booth\templates\booth\booth.html:137
 msgid "Password"
 msgstr "Contrasenya"
 
@@ -61,60 +61,68 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: .\base\templates\base.html:29
-msgid "Change language"
-msgstr "Canviar d'idioma"
-
-#: .\base\templates\base.html:32 .\base\templates\base.html:37
-#: .\base\templates\base.html:42 .\decide\settings.py:148
+#: .\base\templates\base.html:58 .\base\templates\base.html:63
+#: .\base\templates\base.html:68 .\decide\settings.py:148
 msgid "Spanish"
 msgstr "Espanyol"
 
-#: .\base\templates\base.html:33 .\base\templates\base.html:38
-#: .\base\templates\base.html:43 .\decide\settings.py:147
+#: .\base\templates\base.html:59 .\base\templates\base.html:64
+#: .\base\templates\base.html:69 .\decide\settings.py:147
 msgid "English"
 msgstr "Anglès"
 
-#: .\base\templates\base.html:34 .\base\templates\base.html:39
-#: .\base\templates\base.html:44 .\decide\settings.py:149
+#: .\base\templates\base.html:60 .\base\templates\base.html:65
+#: .\base\templates\base.html:70 .\decide\settings.py:149
 msgid "Catalan"
 msgstr "Català"
 
-#: .\booth\templates\booth\booth.html:81
+#: .\booth\templates\booth\booth.html:142
 msgid "Login"
 msgstr "Iniciar Sessió"
 
-#: .\booth\templates\booth\booth.html:115
+#: .\booth\templates\booth\booth.html:187
 msgid "Answer with voice"
 msgstr "Respondre amb veu"
 
-#: .\booth\templates\booth\booth.html:123
+#: .\booth\templates\booth\booth.html:196
+msgid "Logout"
+msgstr "Tancar Sessió"
+
+#: .\booth\templates\booth\booth.html:199
 msgid "Send vote"
 msgstr "Enviar vot"
 
-#: .\booth\templates\booth\booth.html:133
+#: .\booth\templates\booth\booth.html:209
 msgid "Speech Synthesis not supported"
 msgstr "La síntesi de veu no és compatible"
 
-#: .\booth\templates\booth\booth.html:134
+#: .\booth\templates\booth\booth.html:210
 msgid "Your browser does not support speech synthesis."
 msgstr "El vostre navegador no admet la síntesi de veu."
 
-#: .\booth\templates\booth\booth.html:135
+#: .\booth\templates\booth\booth.html:211
 msgid "We recommend you use Google Chrome."
 msgstr "Us recomanem que feu servir Google Chrome."
 
-#: .\booth\templates\booth\booth.html:331
-msgid "Conglatulations. Your vote has been sent"
-msgstr "Felicitacions S'ha enviat el vostre vot"
+#: .\booth\templates\booth\booth.html:440
+msgid "Congratulations. Your vote has been sent"
+msgstr "Felicitacions. S'ha enviat el vostre vot"
 
-#: .\booth\templates\booth\booth.html:335
-#: .\booth\templates\booth\booth.html:357
-#: .\booth\templates\booth\booth.html:379
+#: .\booth\templates\booth\booth.html:444
+#: .\booth\templates\booth\booth.html:473
+#: .\booth\templates\booth\booth.html:499
 msgid "Error: "
 msgstr "Error"
 
-#: .\booth\templates\booth\booth.html:365
+#: .\booth\templates\booth\booth.html:449
+msgid "You must select an option for each question."
+msgstr "Heu de seleccionar una opció per a cada pregunta."
+
+#: .\booth\templates\booth\booth.html:487
+msgid "Enter an email and a password."
+msgstr "Introduïu un correu electrònic i una contrasenya."
+
+#: .\booth\templates\booth\booth.html:490
 msgid ""
 "This vote does not contain any questions, so it can not be accessed yet. Try "
 "it again later."
