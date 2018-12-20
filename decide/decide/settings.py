@@ -104,8 +104,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'decide.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -142,7 +140,7 @@ AUTH_USER_MODEL = 'authentication.User'
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGES = (
-    ('es', _('Espanish')),
+    ('es', _('Spanish')),
     ('en', _('English')),
 ) 
 
