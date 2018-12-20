@@ -172,15 +172,27 @@ AVATAR_URL = '/authentication/avatars/'
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
 
-
 if 'TRAVIS' in os.environ:
     try:
         from local_settings_travis import *
     except ImportError:
         print("local_settings_travis.py not found")
-elif 'HEROKU' in os.environ:
+elif 'HEROKU_GANIMEDES' in os.environ:
+    try:
+        from settings_heroku import *
+
+        #Heroku (Esta configuración debe ir aquí)
+        import django_heroku
+        django_heroku.settings(locals())
+    except ImportError:
+        print("local_settings_heroku.py not found")
+elif 'HEROKU_LOCAL' in os.environ:
     try:
         from local_settings_heroku import *
+
+        #Heroku (Esta configuración debe ir aquí)
+        import django_heroku
+        django_heroku.settings(locals())
     except ImportError:
         print("local_settings_heroku.py not found")
 else:
