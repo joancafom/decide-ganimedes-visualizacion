@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-20 11:57+0100\n"
+"POT-Creation-Date: 2018-12-20 15:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,18 +61,18 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: .\base\templates\base.html:58 .\base\templates\base.html:63
-#: .\base\templates\base.html:68 .\decide\settings.py:148
+#: .\base\templates\base.html:75 .\base\templates\base.html:80
+#: .\base\templates\base.html:85 .\decide\settings.py:143
 msgid "Spanish"
 msgstr "Espanyol"
 
-#: .\base\templates\base.html:59 .\base\templates\base.html:64
-#: .\base\templates\base.html:69 .\decide\settings.py:147
+#: .\base\templates\base.html:76 .\base\templates\base.html:81
+#: .\base\templates\base.html:86 .\decide\settings.py:142
 msgid "English"
 msgstr "Anglès"
 
-#: .\base\templates\base.html:60 .\base\templates\base.html:65
-#: .\base\templates\base.html:70 .\decide\settings.py:149
+#: .\base\templates\base.html:77 .\base\templates\base.html:82
+#: .\base\templates\base.html:87 .\decide\settings.py:144
 msgid "Catalan"
 msgstr "Català"
 
@@ -128,32 +128,133 @@ msgid ""
 "it again later."
 msgstr "Aquesta votació no conté cap pregunta, de manera que no es pot accedir-hi encara. Torneu-ho a provar més tard."
 
-#: .\visualizer\templates\visualizer\ended.html:10
-#: .\visualizer\templates\visualizer\ended_export.html:7
+#: .\visualizer\templates\visualizer\ended.html:15
+#: .\visualizer\templates\visualizer\ended_export.html:6
 msgid "Results: "
-msgstr ""
+msgstr "Resultats"
 
-#: .\visualizer\templates\visualizer\not_started.html:10
+#: .\visualizer\templates\visualizer\ended.html:152
+#: .\visualizer\templates\visualizer\ongoing.html:95
+msgid "Download results as .pdf"
+msgstr "Baixeu els resultats com .pdf"
+
+#: .\visualizer\templates\visualizer\ended.html:154
+#: .\visualizer\templates\visualizer\ongoing.html:97
+msgid "Download results as .csv"
+msgstr "Baixeu els resultats com .csv"
+
+#: .\visualizer\templates\visualizer\not_started.html:16
 msgid "Voting not started"
-msgstr ""
-
-#: .\visualizer\templates\visualizer\ongoing.html:10
-#: .\visualizer\templates\visualizer\ongoing_export.html:7
-msgid "Voting is open"
-msgstr ""
-
-#: .\visualizer\templates\visualizer\ongoing.html:11
-msgid "Stats"
-msgstr ""
-
-#: .\visualizer\templates\visualizer\ongoing.html:13
-msgid "Census Size:"
-msgstr ""
+msgstr "No s'ha iniciat la votació"
 
 #: .\visualizer\templates\visualizer\ongoing.html:14
-msgid "Voters Turnout:"
-msgstr ""
+msgid "In Progress"
+msgstr "En progrés"
 
-#: .\visualizer\templates\visualizer\ongoing.html:15
+#: .\visualizer\templates\visualizer\ongoing.html:21
+#: .\visualizer\templates\visualizer\ongoing_export.html:6
+msgid "Stats"
+msgstr "Estadístiques"
+
+#: .\visualizer\templates\visualizer\ongoing.html:25
+#: .\visualizer\templates\visualizer\ongoing_export.html:8
+msgid "Census Size:"
+msgstr "Mida del cens:"
+
+#: .\visualizer\templates\visualizer\ongoing.html:26
+#: .\visualizer\templates\visualizer\ongoing_export.html:9
+msgid "Voters Turnout:"
+msgstr "Participació"
+
+#: .\visualizer\templates\visualizer\ongoing.html:27
+#: .\visualizer\templates\visualizer\ongoing_export.html:10
 msgid "Participation:"
 msgstr ""
+
+#: .\visualizer\templates\visualizer\ongoing.html:42
+msgid "Interested in the participation according to genders? Check it out!"
+msgstr "Està interessat en la participació segons els sexes? Comprova-ho!"
+
+#: .\visualizer\templates\visualizer\ongoing.html:46
+msgid "Women"
+msgstr "No binari"
+
+#: .\visualizer\templates\visualizer\ongoing.html:47
+msgid "Non-Binary"
+msgstr "Homes"
+
+#: .\visualizer\templates\visualizer\ongoing.html:48
+msgid "Men"
+msgstr "Homes"
+
+#: .\visualizer\templates\visualizer\ongoing.html:51
+msgid "women voted"
+msgstr "les dones van votar"
+
+#: .\visualizer\templates\visualizer\ongoing.html:51
+#: .\visualizer\templates\visualizer\ongoing.html:52
+#: .\visualizer\templates\visualizer\ongoing.html:53
+msgid "of the total"
+msgstr "del total"
+
+#: .\visualizer\templates\visualizer\ongoing.html:52
+msgid "non-binary voted"
+msgstr "votació no binària"
+
+#: .\visualizer\templates\visualizer\ongoing.html:53
+msgid "men voted"
+msgstr "els homes van votar"
+
+#: .\visualizer\templates\visualizer\ongoing.html:61
+msgid "to"
+msgstr "a"
+
+#: .\visualizer\templates\visualizer\ongoing.html:61
+#: .\visualizer\templates\visualizer\ongoing.html:74
+#: .\visualizer\templates\visualizer\ongoing.html:87
+msgid "years old"
+msgstr "anys"
+
+#: .\visualizer\templates\visualizer\ongoing.html:70
+msgid "The average age of people who voted is..."
+msgstr "L'edat mitjana de les persones que van votar és ..."
+
+#: .\visualizer\templates\visualizer\ongoing.html:76
+msgid "Nobody has voted yet :("
+msgstr "Ningú ha votat encara :("
+
+#: .\visualizer\templates\visualizer\ongoing.html:83
+msgid "The average age of people who didn't vote is..."
+msgstr "L'edat mitjana de les persones que no van votar és ..."
+
+#: .\visualizer\templates\visualizer\ongoing.html:89
+msgid "Everyone has voted already :)"
+msgstr "Tothom ha votat ja :)"
+
+#: .\visualizer\templates\visualizer\ongoing_export.html:5
+msgid "Voting is open"
+msgstr "La votació està oberta"
+
+#: .\visualizer\templates\visualizer\ongoing_export.html:12
+msgid "Voter's Mean Age:"
+msgstr "Edat Mitjana de l'elector:"
+
+#: .\visualizer\templates\visualizer\ongoing_export.html:15
+msgid "Non-Voter's Mean Age:"
+msgstr "Edat mitjana no votant:"
+
+#: .\visualizer\templates\visualizer\ongoing_export.html:17
+msgid "Voter's Age Analysis:"
+msgstr "Anàlisi de l'edat dels votants:"
+
+#: .\visualizer\templates\visualizer\ongoing_export.html:24
+msgid "Women participation:"
+msgstr "Participació de les dones:"
+
+#: .\visualizer\templates\visualizer\ongoing_export.html:25
+msgid "Non-binary participation:"
+msgstr "Participació no binària:"
+
+#: .\visualizer\templates\visualizer\ongoing_export.html:26
+msgid "Men participation:"
+msgstr "Participació dels homes:"
