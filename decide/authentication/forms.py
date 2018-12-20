@@ -1,19 +1,23 @@
 from django import forms
 from .models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import ugettext_lazy as _
+
 
 class UserCreateForm(UserCreationForm):
     SEX_OPTIONS = (
-        ('M', 'Man'),
-        ('W', 'Woman'),
-        ('N', 'Non-binary'),
+        ('M', _('Man')),
+        ('W', _('Woman')),
+        ('N', _('Non-binary')),
     )
-    first_name = forms.CharField(required=False)
-    last_name = forms.CharField(required=False)
-    email = forms.EmailField(required=True)
-    birthdate = forms.DateTimeField(input_formats=['%d/%m/%Y'], help_text="Formato: dd/mm/YYYY", required=False)
-    city = forms.CharField(required=True)
-    sex = forms.ChoiceField(choices=SEX_OPTIONS, required=False)
+    aux=_("Format: dd/mm/YYYY"),
+
+    first_name = forms.CharField(label=_('First name'),required=False)
+    last_name = forms.CharField(label=_('Last name'),required=False)
+    email = forms.EmailField(label=_('Email'),required=True)
+    birthdate = forms.DateTimeField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
+    city = forms.CharField(label=_('City'),required=True)
+    sex = forms.ChoiceField(label=_('Sex'),choices=SEX_OPTIONS, required=False)
 
     class Meta:
         model = User

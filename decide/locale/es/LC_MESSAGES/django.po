@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 14:03+0100\n"
+"POT-Creation-Date: 2018-12-20 09:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,17 +18,99 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: authentication/templates/authentication/signup.html:20
-#: booth/templates/booth/booth.html:8
-msgid "Username"
-msgstr "Usuario"
+#: authentication/forms.py:9
+msgid "Man"
+msgstr "Hombre"
 
-#: authentication/templates/authentication/signup.html:23
+#: authentication/forms.py:10
+msgid "Woman"
+msgstr "Mujer"
+
+#: authentication/forms.py:11
+msgid "Non-binary"
+msgstr "No binario"
+
+#: authentication/forms.py:13
+msgid "Format: dd/mm/YYYY"
+msgstr "Formato: dd/mm/YY"
+
+#: authentication/forms.py:15 authentication/models.py:15
+msgid "First name"
+msgstr "Nombre"
+
+#: authentication/forms.py:16 authentication/models.py:16
+msgid "Last name"
+msgstr "Apellidos"
+
+#: authentication/forms.py:17 authentication/models.py:14
+#: authentication/serializers.py:16 booth/templates/booth/booth.html:8
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: authentication/forms.py:18 authentication/models.py:17
+msgid "Birthdate"
+msgstr "Fecha de nacimiento"
+
+#: authentication/forms.py:19 authentication/models.py:18
+msgid "City"
+msgstr "Ciudad"
+
+#: authentication/forms.py:20 authentication/models.py:19
+msgid "Sex"
+msgstr "Sexo"
+
+#: authentication/models.py:20
+msgid "Is active"
+msgstr "Está activo"
+
+#: authentication/models.py:21
+msgid "Avatar"
+msgstr "Avatar"
+
+#: authentication/models.py:22
+msgid "Is staf"
+msgstr "Es personal autorizado"
+
+#: authentication/schemas/inspectors.py:114
+msgid "unique integer value"
+msgstr "unique integer value"
+
+#: authentication/schemas/inspectors.py:116
+msgid "UUID string"
+msgstr "UUID string"
+
+#: authentication/schemas/inspectors.py:118
+msgid "unique value"
+msgstr "unique value"
+
+#: authentication/schemas/inspectors.py:120
+#, python-brace-format
+msgid "A {value_type} identifying this {name}."
+msgstr "A {value_type} identifying this {name}."
+
+#: authentication/serializers.py:18
+#: authentication/templates/authentication/signup.html:11
 #: booth/templates/booth/booth.html:11
 msgid "Password"
 msgstr "Contraseña"
 
-#: authentication/templates/authentication/signup.html:26
+#: authentication/serializers.py:32
+msgid "Unable to log in with provided credentials."
+msgstr "No se puede iniciar sesión con las credenciales provistas"
+
+#: authentication/serializers.py:35
+msgid "Must include \"email\" and \"password\"."
+msgstr "Debe incluir \"email\" and \"contraseña\"."
+
+#: authentication/templates/authentication/nuevo_usuario.html:8
+msgid "Sing up a new user"
+msgstr "Registrar un nuevo usuario"
+
+#: authentication/templates/authentication/signup.html:8
+msgid "Username"
+msgstr "Usuario"
+
+#: authentication/templates/authentication/signup.html:14
 msgid "Submit"
 msgstr "Enviar"
 
@@ -53,30 +135,65 @@ msgstr "Enhorabuena. Tu voto ha sido enviado"
 msgid "Error: "
 msgstr "Error"
 
-#: decide/settings.py:144
+#: decide/settings.py:145
+#, fuzzy
+#| msgid "Spanish"
 msgid "Espanish"
 msgstr "Español"
 
-#: decide/settings.py:145
+#: decide/settings.py:146
 msgid "English"
 msgstr "Ingles"
 
-#: local_settings.py:77
-msgid "Español"
-msgstr "Spanish"
+#: visualizer/templates/visualizer/ended.html:10
+#: visualizer/templates/visualizer/ended_export.html:7
+msgid "Results: "
+msgstr "Resultados"
 
-#: local_settings.py:78
-msgid "Inglés"
-msgstr "English"
-
-#: visualizer/templates/visualizer/visualizer.html:8
+#: visualizer/templates/visualizer/not_started.html:10
 msgid "Voting not started"
 msgstr "Votación no comenzada"
 
-#: visualizer/templates/visualizer/visualizer.html:10
-msgid "Voting is opened"
+#: visualizer/templates/visualizer/ongoing.html:10
+#: visualizer/templates/visualizer/ongoing_export.html:7
+#, fuzzy
+#| msgid "Voting is opened"
+msgid "Voting is open"
 msgstr "La votación está abierta"
 
-#: visualizer/templates/visualizer/visualizer.html:12
-msgid "Results: "
-msgstr "Resultados"
+#: visualizer/templates/visualizer/ongoing.html:11
+msgid "Stats"
+msgstr "Estadisticas"
+
+#: visualizer/templates/visualizer/ongoing.html:13
+msgid "Census Size:"
+msgstr "Tamaño del censo"
+
+#: visualizer/templates/visualizer/ongoing.html:14
+msgid "Voters Turnout:"
+msgstr "Asistencia de los votantes"
+
+#: visualizer/templates/visualizer/ongoing.html:15
+msgid "Participation:"
+msgstr "Participación"
+
+#~ msgid "Nombre"
+#~ msgstr "Nombre"
+
+#~ msgid "Apellidos"
+#~ msgstr "Apellidos"
+
+#~ msgid "Fecha de nacimiento"
+#~ msgstr "Fecha de nacimiento"
+
+#~ msgid "Ciudad"
+#~ msgstr "Ciudad"
+
+#~ msgid "Sexo"
+#~ msgstr "Sexo"
+
+#~ msgid "Español"
+#~ msgstr "Spanish"
+
+#~ msgid "Inglés"
+#~ msgstr "English"
