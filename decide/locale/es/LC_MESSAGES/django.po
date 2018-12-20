@@ -26,7 +26,7 @@ msgstr "Usuario"
 #: authentication/templates/authentication/signup.html:23
 #: booth/templates/booth/booth.html:11
 msgid "Password"
-msgstr "Contrase馻"
+msgstr "Contrase帽a"
 
 #: authentication/templates/authentication/signup.html:26
 msgid "Submit"
@@ -34,11 +34,11 @@ msgstr "Enviar"
 
 #: booth/templates/booth/booth.html:14
 msgid "Login"
-msgstr "Iniciar sesi髇"
+msgstr "Iniciar sesi贸n"
 
 #: booth/templates/booth/booth.html:18
 msgid "Logout"
-msgstr "Cerrar sesi髇"
+msgstr "Cerrar sesi贸n"
 
 #: booth/templates/booth/booth.html:27
 msgid "Vote"
@@ -55,18 +55,18 @@ msgstr "Error"
 
 #: decide/settings.py:145
 msgid "Spanish"
-msgstr "Espa駉l"
+msgstr "Espa帽ol"
 
 #: decide/settings.py:146
 msgid "English"
 msgstr "Ingles"
 
 #: local_settings.py:77
-msgid "Espa駉l"
+msgid "Espa帽ol"
 msgstr "Spanish"
 
 #: local_settings.py:78
-msgid "Ingl閟"
+msgid "Ingl茅s"
 msgstr "English"
 
 #: visualizer/templates/visualizer/ended_export.html:6
@@ -86,11 +86,15 @@ msgstr "Descargar los resultados en formato .csv"
 
 #: visualizer/templates/visualizer/not_started.html:16
 msgid "Voting not started"
-msgstr "La votaci髇 no ha comenzado"
+msgstr "La votaci贸n no ha comenzado"
 
 #: visualizer/templates/visualizer/ongoing_export.html:5
 msgid "Voting is open"
-msgstr "La votaci髇 esta abierta"
+msgstr "La votaci贸n esta abierta"
+
+#: visualizer/templates/visualizer/ongoing_export.html:5
+msgid "Voting is open"
+msgstr "La votaci贸n esta abierta"
 
 #: visualizer/templates/visualizer/ongoing_export.html:6
 #: visualizer/templates/visualizer/ongoing.html:21
@@ -100,17 +104,17 @@ msgstr "Estadisticas"
 #: visualizer/templates/visualizer/ongoing_export.html:8
 #: visualizer/templates/visualizer/ongoing.html:25
 msgid "Census Size:"
-msgstr "Tama駉 del censo:"
+msgstr "Tama帽o del censo:"
 
 #: visualizer/templates/visualizer/ongoing_export.html:9
 #: visualizer/templates/visualizer/ongoing.html:26
 msgid "Voters Turnout:"
-msgstr "N鷐ero de votantes:"
+msgstr "N煤mero de votantes:"
 
 #: visualizer/templates/visualizer/ongoing_export.html:10
 #: visualizer/templates/visualizer/ongoing.html:27
 msgid "Participation:"
-msgstr "Porcentaje de participaci髇:"
+msgstr "Porcentaje de participaci贸n:
 
 #: visualizer/templates/visualizer/ongoing_export.html:12
 msgid "Voter's Mean Age:"
@@ -126,15 +130,23 @@ msgstr "Analisis de la edad de los votantes:"
 
 #: visualizer/templates/visualizer/ongoing_export.html:24
 msgid "Women Participation:"
-msgstr "Participaci髇 femenina:"
+msgstr "Participaci贸n femenina:"
 
 #: visualizer/templates/visualizer/ongoing_export.html:25
 msgid "Non-Binary Participation:"
-msgstr "Participaci髇 de gen閞o no binario:"
+msgstr "Participaci贸n de gen茅ro no binario:"
 
 #: visualizer/templates/visualizer/ongoing_export.html:26
 msgid "Men Participation:"
-msgstr "Participaci髇 masculina:"
+msgstr "Participaci贸n masculina:"
+
+#: visualizer/templates/visualizer/ongoing_export.html:25
+msgid "Non-Binary Participation:"
+msgstr "Participaci贸n de gen茅ro no binario:"
+
+#: visualizer/templates/visualizer/ongoing_export.html:26
+msgid "Men Participation:"
+msgstr "Participaci贸n masculina:"
 
 #: visualizer/templates/visualizer/ongoing.html:14
 msgid "In Progress"
@@ -142,7 +154,7 @@ msgstr "En progreso"
 
 #: visualizer/templates/visualizer/ongoing.html:42
 msgid "Interested in the participation according to genders? Check it out!"
-msgstr "縌uieres saber la participaci髇 por g閚ero? 韗alo!"
+msgstr "驴Quieres saber la participaci贸n por g茅nero? 隆M铆ralo!"
 
 #: visualizer/templates/visualizer/ongoing.html:46
 msgid "Women"
@@ -182,7 +194,7 @@ msgstr "a"
 #: visualizer/templates/visualizer/ongoing.html:74
 #: visualizer/templates/visualizer/ongoing.html:87
 msgid "years old"
-msgstr "a駉s"
+msgstr "a帽os"
 
 #: visualizer/templates/visualizer/ongoing.html:71
 msgid "The average age of people who voted is..."
@@ -190,11 +202,15 @@ msgstr "La edad media de los votantes es..."
 
 #: visualizer/templates/visualizer/ongoing.html:76
 msgid "Nobody has voted yet :("
-msgstr "Nadie ha votado a鷑 :("
+msgstr "Nadie ha votado a煤n :("
 
 #: visualizer/templates/visualizer/ongoing.html:83
 msgid "The average age of people who didn't vote is..."
-msgstr "La edad media de los votantes que a鷑 no han votado es..."
+msgstr "La edad media de los votantes que a脙潞n no han votado es..."
+
+#: visualizer/templates/visualizer/ongoing.html:83
+msgid "The average age of people who didn't vote is..."
+msgstr "La edad media de los votantes que a煤n no han votado es..."
 
 #: visualizer/templates/visualizer/ongoing.html:89
 msgid "Everyone has voted already :)"
