@@ -11,9 +11,9 @@ class UserCreateForm(UserCreationForm):
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
     email = forms.EmailField(required=True)
-    birthdate = forms.DateTimeField(input_formats=['%d/%m/%Y'], help_text="Formato: dd/mm/YYYY", required=True)
+    birthdate = forms.DateTimeField(input_formats=['%d/%m/%Y'], help_text="Formato: dd/mm/YYYY", required=False)
     city = forms.CharField(required=True)
-    sex = forms.ChoiceField(choices=SEX_OPTIONS, required=True)
+    sex = forms.ChoiceField(choices=SEX_OPTIONS, required=False)
 
     class Meta:
         model = User
@@ -31,4 +31,15 @@ class UserCreateForm(UserCreationForm):
         if commit:
             user.save()
         return user
-    
+
+    #  validations  
+
+
+    def clean(self, *args, **kwargs):
+        cleaned_data = super(UserCreateForm, self).clean(*args, **kwargs)
+        email = cleaned_data.get('email', None)
+        if email is not None:
+            # look for in db
+            users = User.objects.all()
+            if email in users:
+                self.add_error('email', 'email alredy exits')
