@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-20 09:36+0000\n"
+"POT-Creation-Date: 2018-12-20 13:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,6 +59,10 @@ msgstr "Ciudad"
 msgid "Sex"
 msgstr "Sexo"
 
+#: authentication/forms.py:49
+msgid "Email alredy exits"
+msgstr "El correo ya existe"
+
 #: authentication/models.py:20
 msgid "Is active"
 msgstr "Está activo"
@@ -103,7 +107,9 @@ msgid "Must include \"email\" and \"password\"."
 msgstr "Debe incluir \"email\" and \"contraseña\"."
 
 #: authentication/templates/authentication/nuevo_usuario.html:8
-msgid "Sing up a new user"
+#, fuzzy
+#| msgid "Sign up a new user"
+msgid "Sign up a new user"
 msgstr "Registrar un nuevo usuario"
 
 #: authentication/templates/authentication/signup.html:8

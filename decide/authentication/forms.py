@@ -38,7 +38,7 @@ class UserCreateForm(UserCreationForm):
 
     #  validations  
 
-
+    
     def clean(self, *args, **kwargs):
         cleaned_data = super(UserCreateForm, self).clean(*args, **kwargs)
         email = cleaned_data.get('email', None)
@@ -46,4 +46,4 @@ class UserCreateForm(UserCreationForm):
             # look for in db
             users = User.objects.all()
             if email in users:
-                self.add_error('email', 'email alredy exits')
+                self.add_error('email', _('Email alredy exits'))
