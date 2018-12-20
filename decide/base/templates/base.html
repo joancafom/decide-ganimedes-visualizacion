@@ -23,57 +23,52 @@
         <title>{% block title %}Decide!{% endblock %}</title>
         {% block extrahead %}
         {% endblock %}
-
+      
+        <!-- Initialize Materialize JS -->
         <script type="text/javascript">
+            function initMaterialize(){
+                M.AutoInit();
+            } 
+      
             $(document).ready(function(){
-            $('select').formSelect();
+              $('select').formSelect();
             });
         </script>
-            
-        
+          
     </head>
-    <body>
-            <nav>
-                    <div class="nav-wrapper blue-grey darken-2">
-                      <a href="#" class="brand-logo right">Ganímedes</a>
-                      <ul id="nav-mobile" class="left hide-on-med-and-down">
-                        <li><a href="#">Link1</a></li>
-                        <li><a href="#">Link2</a></li>
-                        <li><a href="#">Link3</a></li>
-                      </ul>
-                    </div>
-                  </nav>
-        
-            <form action="{% url 'set_language' %}" method="post">
-                {% csrf_token %}
-                <input name="next" type="hidden" value="{{ redirect_to }}" />
-                <div class="selectLanguage">
-                    <select name="language">
-                        {% get_current_language as LANGUAGE_CODE %}
-                        {% get_available_languages as LANGUAGES %}
-                        {% for lang in LANGUAGES %}
-                            <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                                {{ lang.1 }} ({{ lang.0 }})
-                            </option>
-                        {% endfor %}
-                    </select>
+
+    <body onload="initMaterialize()">
+
+        <nav class="menu">
+                <div class="nav-wrapper blue-grey darken-2">
+                    <a href="#" class="brand-logo center">Ganímedes</a>
+                        <ul id="nav-mobile" class="right hide-on-med-and-down">
+                            {% block menu_options %}
+                            {% endblock %}
+                        </ul>
                 </div>
-                <input type="submit" value="Go" />
-            </form>
+        </nav>
+
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}" />
+            <div class="selectLanguage">
+                <select name="language">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% for lang in LANGUAGES %}
+                        <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                            {{ lang.1 }} ({{ lang.0 }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" value="Go" />
+        </form>
          
         <script type="text/javascript" src="{% static "decide/js/materialize.js"%}"></script>
 
-        
 
-        <!-- <nav class="menu">
-            <div class="nav-wrapper blue-grey darken-2">
-                <a href="#" class="brand-logo center">Ganímedes</a>
-                    <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        {% block menu_options %}
-                        {% endblock %}
-                    </ul>
-            </div>
-        </nav> -->
         <div class="body">
             {% block content %}
             {% endblock %}
