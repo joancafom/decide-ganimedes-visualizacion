@@ -15,8 +15,6 @@ from django.contrib.auth.models import User
 class VotingView(generics.ListAPIView):
     serializer_class = VotingSerializer
     def get(self,request,voting_id):
-        self.permission_classes = (UserIsStaff,)
-        self.check_permissions(request)
         voting_id = self.kwargs['voting_id']
         result=Vote.objects.filter(voting_id=voting_id).values('voter_id')
         usernames = User.objects.filter(id__in=result)\
