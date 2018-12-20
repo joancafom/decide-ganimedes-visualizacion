@@ -1,15 +1,10 @@
 from django import forms
 from .models import User
 from django.contrib.auth.forms import UserCreationForm
-<<<<<<< HEAD
 from django.utils.translation import ugettext_lazy as _
-=======
 import datetime
 import pytz
 from django.utils import timezone
-
-
->>>>>>> develop
 
 
 class UserCreateForm(UserCreationForm):

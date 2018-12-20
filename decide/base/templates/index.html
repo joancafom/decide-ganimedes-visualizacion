@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n static %}
 
 {% block title %}{% endblock %}
   
@@ -10,7 +11,7 @@
   </div>
   <div class="section white">
     <div class="row container">
-      <h2 class="header">Bienvenido</h2>
+      <h2 class="header">{% trans "Welcome" %}</h2>
         <a class="waves-effect waves-light btn-small" href="#"><i class="material-icons right">account_circle</i>Sign in</a>
         <a class="waves-effect waves-light btn-small" href="authentication/nuevo-usuario/"><i class="material-icons right">account_circle</i>Sign up</a>
     </div>
