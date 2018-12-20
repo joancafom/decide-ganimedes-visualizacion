@@ -170,16 +170,18 @@
                     {% else %}
                     <span class="card-title">{{ question.desc }}</span>
                     {% endif %}
-                    <form class="respuestas">
-                        {% for opt in question.options %}
-                        <p>
-                            <label for="{{question.number}}{{opt.number}}">
-                            <input id="{{question.number}}{{opt.number}}" type="checkbox" class="filled-in" name="question" value={{opt.number}}/>
-                            <span>{{opt.option}}</span>
-                            </label>
-                        </p>
-                        {% endfor %}
-                    </form>
+                    {% with index=forloop.counter %}
+	                    <form class="respuestas">
+	                        {% for opt in question.options %}
+	                        <p>
+	                            <label for="{{question.number}}{{opt.number}}">
+	                            <input id="{{question.number}}{{opt.number}}" type="radio" name="question{{index}}" value={{opt.number}} />
+	                            <span>{{opt.option}}</span>
+	                            </label>
+	                        </p>
+	                        {% endfor %}
+	                    </form>
+                    {% endwith %}
                 </div>
                 <div class="card-action">
                     <a class="blue-grey-text darken-5" href="#" onclick="startDictation({{question}})">{% trans "Answer with voice" %}</a>
@@ -188,13 +190,13 @@
           </div>
           <div class="col m1 l2"></div>
         </div>
-          {% endfor %}
+        {% endfor %}
         
         <div id="btnSend" class="row center-align">
             <button class="btn waves-effect waves-light red" type="submit" name="action" onclick="decideLogout()">{% trans "Logout" %}
                 <i class="material-icons right">close</i>
             </button>
-            <button class="btn waves-effect waves-light" type="submit" name="action">{% trans "Send vote" %}
+            <button class="btn waves-effect waves-light" type="submit" name="action" onclick="decideSend()">{% trans "Send vote" %}
                     <i class="material-icons right">send</i>
             </button>
         </div>
@@ -385,30 +387,68 @@
           });
         }
 
-        function decideEncrypt() {
-            var msg = document.querySelector("input[name=question]:checked").value;
-            var bigmsg = BigInt.fromJSONObject(msg);
+        function decideEncrypt(text) {
+            var bigmsg = BigInt.fromJSONObject(text);
             var cipher = ElGamal.encrypt(bigpk, bigmsg);
             return cipher;
         }
 
-        function decideSend() {
-            var v = decideEncrypt();
-            var data = {
-                vote: {a: v.alpha.toString(), b: v.beta.toString()},
-                voting: {{voting.id}},
-                voter: user.id,
-                token: token
-            }
-            postData("{{store_url}}" + "/store/", data)
-              .then(data => {
-                alert("{% trans "Conglatulations. Your vote has been sent" %}")
-                console.log(v);
-              })
-              .catch(error => {
-                alert("{% trans "Error: " %}" + error);
-                console.error(error);
-              });
+		function decideSend() {
+        	
+        	// Number of questions of the voting
+        	var votingQuestions = parseInt("{{voting.questions|length}}");
+        	
+        	// Empty array for the options selected by the user
+        	var selectedOptions = []
+        	
+        	// Fill the array with the selected options
+        	for (i = 1; i < (votingQuestions + 1); i++) {
+        		var query = "input[name=question" + i + "]:checked";
+        		var option = document.querySelector(query);
+        		if(option !== null) {
+        			selectedOptions.push(option.value);
+        		}
+        	}
+        	
+        	/*
+        	If the user has selected one option per question -> OK
+        	Otherwise -> SHOW AN ALERT
+        	*/
+        	
+        	if(selectedOptions.length == votingQuestions) {
+        		
+        		// Empty array for the encrypted votes
+        		var encryptedVotes = [];
+        		
+        		// Loop over the selected options and cipher them
+        		for (i = 0; i < selectedOptions.length; i++) {
+        			var encryptedVote = decideEncrypt(selectedOptions[i]);
+        			encryptedVotes.push({a: encryptedVote.alpha.toString(), b: encryptedVote.beta.toString()});
+        		}
+        		
+        		// Generate the data
+        		var data = {
+                	votes: encryptedVotes,
+               	 	voting: {{voting.id}},
+                	voter: user.id,
+                	token: token
+            	}
+        		
+        		// Post the generated data
+        		postData("{{store_url}}" + "/store/", data)
+                  .then(data => {
+                	  alert("{% trans "Conglatulations. Your vote has been sent" %}")
+                      console.log(v);
+                  })
+                  .catch(error => {
+                	  alert("{% trans "Error: " %}" + error);
+                	  console.error(error);
+                  });
+        		
+        	} else {
+        		alert("You must select an option for each question.")
+        	}
+        	
         }
 
         {% get_current_language as LANGUAGE_CODE %}
