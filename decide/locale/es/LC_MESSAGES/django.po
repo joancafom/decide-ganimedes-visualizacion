@@ -92,10 +92,6 @@ msgstr "La votación no ha comenzado"
 msgid "Voting is open"
 msgstr "La votación esta abierta"
 
-#: visualizer/templates/visualizer/ongoing_export.html:5
-msgid "Voting is open"
-msgstr "La votación esta abierta"
-
 #: visualizer/templates/visualizer/ongoing_export.html:6
 #: visualizer/templates/visualizer/ongoing.html:21
 msgid "Stats"
@@ -114,7 +110,7 @@ msgstr "Número de votantes:"
 #: visualizer/templates/visualizer/ongoing_export.html:10
 #: visualizer/templates/visualizer/ongoing.html:27
 msgid "Participation:"
-msgstr "Porcentaje de participación:
+msgstr "Porcentaje de participación:"
 
 #: visualizer/templates/visualizer/ongoing_export.html:12
 msgid "Voter's Mean Age:"
@@ -131,14 +127,6 @@ msgstr "Analisis de la edad de los votantes:"
 #: visualizer/templates/visualizer/ongoing_export.html:24
 msgid "Women Participation:"
 msgstr "Participación femenina:"
-
-#: visualizer/templates/visualizer/ongoing_export.html:25
-msgid "Non-Binary Participation:"
-msgstr "Participación de genéro no binario:"
-
-#: visualizer/templates/visualizer/ongoing_export.html:26
-msgid "Men Participation:"
-msgstr "Participación masculina:"
 
 #: visualizer/templates/visualizer/ongoing_export.html:25
 msgid "Non-Binary Participation:"
@@ -203,10 +191,6 @@ msgstr "La edad media de los votantes es..."
 #: visualizer/templates/visualizer/ongoing.html:76
 msgid "Nobody has voted yet :("
 msgstr "Nadie ha votado aún :("
-
-#: visualizer/templates/visualizer/ongoing.html:83
-msgid "The average age of people who didn't vote is..."
-msgstr "La edad media de los votantes que aÃºn no han votado es..."
 
 #: visualizer/templates/visualizer/ongoing.html:83
 msgid "The average age of people who didn't vote is..."
