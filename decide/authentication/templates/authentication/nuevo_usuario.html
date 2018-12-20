@@ -9,6 +9,6 @@
     <form id='formulario' method='post' action=''>
         {% csrf_token %}
         <table>{{formulario}}</table>
-        <p><input type='submit' value='Registrar' /></p>
+        <p><input type='submit' value="{% trans 'Sign Up' %}" /></p>
     </form>
 {% endblock %}

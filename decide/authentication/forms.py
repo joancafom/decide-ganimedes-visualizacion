@@ -50,7 +50,7 @@ class UserCreateForm(UserCreationForm):
 
             for u in users:
                 if email==u.email:
-                    self.add_error('email', 'Email alredy exits')
+                    self.add_error('email', _('Email alredy exits'))
                     break
 
                     
@@ -60,4 +60,4 @@ class UserCreateForm(UserCreationForm):
            
             
             if birthdate > now:
-                self.add_error('birthdate', 'Future date not posible')
+                self.add_error('birthdate', _('Future date not posible'))
