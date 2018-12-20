@@ -1,6 +1,12 @@
 from django import forms
 from .models import User
 from django.contrib.auth.forms import UserCreationForm
+import datetime
+import pytz
+from django.utils import timezone
+
+
+
 
 class UserCreateForm(UserCreationForm):
     SEX_OPTIONS = (
@@ -38,8 +44,19 @@ class UserCreateForm(UserCreationForm):
     def clean(self, *args, **kwargs):
         cleaned_data = super(UserCreateForm, self).clean(*args, **kwargs)
         email = cleaned_data.get('email', None)
-        if email is not None:
-            # look for in db
+        if email is not None:# look for in db
             users = User.objects.all()
-            if email in users:
-                self.add_error('email', 'email alredy exits')
+            for u in users:
+                if email==u.email:
+                    self.add_error('email', 'Email alredy exits')
+                    break
+
+                    
+        birthdate= cleaned_data.get('birthdate', None)
+        if birthdate is not None:
+            now = timezone.now()
+           
+            
+            if birthdate > now:
+                self.add_error('birthdate', 'Future date not posible')
+
