@@ -99,7 +99,7 @@ class StoreTextCase(BaseTestCase):
         self.assertEqual(Vote.objects.count(), 1)
         self.assertEqual(Vote.objects.first().voting_id, VOTING_PK)
         self.assertEqual(Vote.objects.first().voter_id, 1)
-        self.assertEqual(Vote.objectsCTE.first().a, _A)
+        self.assertEqual(Vote.objects.first().a, CTE_A)
         self.assertEqual(Vote.objects.first().b, CTE_B)
 
     def test_vote(self):
