@@ -91,7 +91,8 @@ ENV/
 .vscode/*
 
 # Heroku
-/decide/.local_settings_heroku.py
+/decide/local_settings_heroku.py
+/prueba.txt
 
 #sqlite3
 db.sqlite3
