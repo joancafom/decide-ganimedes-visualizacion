@@ -23,16 +23,20 @@
         <title>{% block title %}Decide!{% endblock %}</title>
         {% block extrahead %}
         {% endblock %}
-
+      
+        <!-- Initialize Materialize JS -->
         <script type="text/javascript">
+            function initMaterialize(){
+                M.AutoInit();
+            } 
+      
             $(document).ready(function(){
-            $('select').formSelect();
+              $('select').formSelect();
             });
         </script>
-            
-        
+          
     </head>
-    <body>
+    <body onload="initMaterialize()">
         
             <form action="{% url 'set_language' %}" method="post">
                 {% csrf_token %}
