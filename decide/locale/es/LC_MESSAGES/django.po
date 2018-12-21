@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-20 17:32+0000\n"
+"POT-Creation-Date: 2018-12-21 00:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,15 +110,14 @@ msgstr "No se puede iniciar sesión con las credenciales provistas"
 msgid "Must include \"email\" and \"password\"."
 msgstr "Debe incluir \"email\" and \"contraseña\"."
 
-#: authentication/templates/authentication/nuevo_usuario.html:8
+#: authentication/templates/authentication/nuevo_usuario.html:9
 msgid "Sign up a new user"
 msgstr "Registrar un nuevo usuario"
 
-#: authentication/templates/authentication/nuevo_usuario.html:12
-#, fuzzy
-#| msgid "Sign up"
-msgid "Sign Up"
-msgstr "Registrar"
+#: authentication/templates/authentication/nuevo_usuario.html:13
+#: base/templates/index.html:16
+msgid "Sign up"
+msgstr "Registrarse"
 
 #: authentication/templates/authentication/signup.html:8
 msgid "Username"
@@ -131,6 +130,10 @@ msgstr "Enviar"
 #: base/templates/index.html:14
 msgid "Welcome"
 msgstr "Bienvenido"
+
+#: base/templates/index.html:15
+msgid "Sign in"
+msgstr "Iniciar sesión"
 
 #: booth/templates/booth/booth.html:14
 msgid "Login"

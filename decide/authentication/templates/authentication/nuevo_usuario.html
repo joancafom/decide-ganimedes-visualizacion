@@ -5,10 +5,11 @@
 {% block title %}Nuevo usuario{% endblock %}
 
 {% block content %}
+
     <h1>{% trans "Sign up a new user" %}</h1>
     <form id='formulario' method='post' action=''>
         {% csrf_token %}
         <table>{{formulario}}</table>
-        <p><input type='submit' value="{% trans 'Sign Up' %}" /></p>
+        <p><input type='submit' value= "{% trans 'Sign up' %}" /></p>
     </form>
 {% endblock %}
