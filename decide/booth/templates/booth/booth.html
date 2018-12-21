@@ -482,23 +482,31 @@
 	            };
         	
         	var questions = "{{voting.questions}}"
+        	var v_start_date = "{{voting.start_date}}"
+        	var v_end_date = "{{voting.end_date}}"
         	
         	if(data["email"] == "" || data["password"] == "") {
         		alert("{% trans "Enter an email and a password." %}")
         	} else {
-        		if(questions.length == 2) {
-        			alert("{% trans "This vote does not contain any questions, so it can not be accessed yet. Try it again later." %}")
+        		if(v_start_date == "None"){
+        			alert("The voting can not be accessed because it has not started.")
+        		} else if(v_end_date != "None") {
+        			alert("The voting can not be accessed because it has ended.")
         		} else {
-		            postData("{{auth_url}}" +  "/authentication/login/", data)
-		              .then(data => {
-		                document.cookie = 'decide='+data.token+';';
-		                token = data.token;
-		                decideUser();
-		              })
-		              .catch(error => {
-		                alert("{% trans "Error: " %}" + error);
-		                console.error(error);
-		              });
+	        		if(questions.length == 2) {
+	        			alert("{% trans "This vote does not contain any questions, so it can not be accessed yet. Try it again later." %}")
+	        		} else {
+			            postData("{{auth_url}}" +  "/authentication/login/", data)
+			              .then(data => {
+			                document.cookie = 'decide='+data.token+';';
+			                token = data.token;
+			                decideUser();
+			              })
+			              .catch(error => {
+			                alert("{% trans "Error: " %}" + error);
+			                console.error(error);
+			              });
+	        		}
         		}
 	    	}
         }
