@@ -13,7 +13,7 @@ MODULES = [
     'voting',
 ]
 
-BASEURL = 'https://decide-ganimedes-auth.herokuapp.com/'
+BASEURL = 'https://ganimedes-authentication.herokuapp.com/'
 
 DATABASES = {
     'default': {
