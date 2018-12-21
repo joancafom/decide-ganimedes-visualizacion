@@ -10,6 +10,11 @@ body{
     width: 85%
 }
 
+.collapsibleInformation{
+    margin-left: 5%;
+    display:inline-block;
+}
+
 .menu{
     margin-bottom: 50px;
 }
@@ -30,4 +35,13 @@ h5, p{
 
 .decideFooter{
     margin-top:50px;
+}
+
+.errorlist
+    {
+        color: red;
+    }
+or if you want to change field border color then
+.error input, .error select {
+border: 2px red solid;
 }
