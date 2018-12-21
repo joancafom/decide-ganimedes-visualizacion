@@ -1,25 +1,26 @@
 from django import forms
 from .models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import ugettext_lazy as _
 import datetime
 import pytz
 from django.utils import timezone
 
 
-
-
 class UserCreateForm(UserCreationForm):
     SEX_OPTIONS = (
-        ('M', 'Man'),
-        ('W', 'Woman'),
-        ('N', 'Non-binary'),
+        ('M', _('Man')),
+        ('W', _('Woman')),
+        ('N', _('Non-binary')),
     )
-    first_name = forms.CharField(required=False)
-    last_name = forms.CharField(required=False)
-    email = forms.EmailField(required=True)
-    birthdate = forms.DateTimeField(input_formats=['%d/%m/%Y'], help_text="Formato: dd/mm/YYYY", required=False)
-    city = forms.CharField(required=True)
-    sex = forms.ChoiceField(choices=SEX_OPTIONS, required=False)
+    aux=_("Format: dd/mm/YYYY"),
+
+    first_name = forms.CharField(label=_('First name'),required=False)
+    last_name = forms.CharField(label=_('Last name'),required=False)
+    email = forms.EmailField(label=_('Email'),required=True)
+    birthdate = forms.DateTimeField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
+    city = forms.CharField(label=_('City'),required=True)
+    sex = forms.ChoiceField(label=_('Sex'),choices=SEX_OPTIONS, required=False)
 
     class Meta:
         model = User
@@ -40,15 +41,16 @@ class UserCreateForm(UserCreationForm):
 
     #  validations  
 
-
+    
     def clean(self, *args, **kwargs):
         cleaned_data = super(UserCreateForm, self).clean(*args, **kwargs)
         email = cleaned_data.get('email', None)
         if email is not None:# look for in db
             users = User.objects.all()
+
             for u in users:
                 if email==u.email:
-                    self.add_error('email', 'Email alredy exits')
+                    self.add_error('email', _('Email alredy exits'))
                     break
 
                     
@@ -58,5 +60,4 @@ class UserCreateForm(UserCreationForm):
            
             
             if birthdate > now:
-                self.add_error('birthdate', 'Future date not posible')
-
+                self.add_error('birthdate', _('Future date not posible'))
