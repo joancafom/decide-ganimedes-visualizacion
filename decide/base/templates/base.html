@@ -51,16 +51,6 @@
         }
         
         </style>
-        <script>
-            function changeLanguage() {
-                const map = {
-                    spanish: '/booth/'+ {{ voting.id }}
-                    , english: '/booth/'+ {{ voting.id }}
-                    , catalan: '/booth/'+ {{ voting.id }}
-                }
-                location.href = map[document.getElementById("select").value]
-            }
-        </script>
          
         <script type="text/javascript" src="{% static "decide/js/materialize.js"%}"></script>
 
@@ -77,8 +67,8 @@
                                     {% get_current_language as LANGUAGE_CODE %}
                                     {% get_available_languages as LANGUAGES %}
                                     {% for lang in LANGUAGES %}
-                                    <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                                        {{ lang.1 }} ({{ lang.0 }})
+                                    <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected disabled hidden {% endif %}>
+                                        {{ lang.1 }}
                                     </option>
                                     {% endfor %}
                                 </select>
