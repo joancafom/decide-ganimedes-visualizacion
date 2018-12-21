@@ -54,9 +54,9 @@
         <script>
             function changeLanguage() {
                 const map = {
-                    spanish: '/es/booth/'+ {{ voting.id }}
-                    , english: '/en/booth/'+ {{ voting.id }}
-                    , catalan: '/ca/booth/'+ {{ voting.id }}
+                    spanish: '/booth/'+ {{ voting.id }}
+                    , english: '/booth/'+ {{ voting.id }}
+                    , catalan: '/booth/'+ {{ voting.id }}
                 }
                 location.href = map[document.getElementById("select").value]
             }
@@ -64,31 +64,27 @@
          
         <script type="text/javascript" src="{% static "decide/js/materialize.js"%}"></script>
 
+
         <nav class="menu">
             <div class="nav-wrapper blue-grey darken-2">
                 <div class="row">
                     <div class="language right">
-                            {% get_current_language as LANGUAGE_CODE %}
-                        <div class="col s12 language1">
-                            <select class="browser-default language2" id="select" onchange="changeLanguage()">
-                                {% if LANGUAGE_CODE == 'es' %}
-                                    <option value="spanish" selected disabled hidden>{% trans "Spanish" %}</option>
-                                    <option value="english">{% trans "English" %}</option>
-                                    <option value="catalan">{% trans "Catalan" %}</option>
-                                {% endif %}
-                                {% if LANGUAGE_CODE == 'en' %}
-                                    <option value="spanish">{% trans "Spanish" %}</option>
-                                    <option value="english" selected disabled hidden>{% trans "English" %}</option>
-                                    <option value="catalan">{% trans "Catalan" %}</option>
-                                {% endif %}
-                                {% if LANGUAGE_CODE == 'ca' %}
-                                    <option value="spanish">{% trans "Spanish" %}</option>
-                                    <option value="english">{% trans "English" %}</option>
-                                    <option value="catalan" selected disabled hidden>{% trans "Catalan" %}</option>
-                                {% endif %}
-                            </select>
-                        </div>
-                    </div>
+                        <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}" />
+                            <div class="col s12 language1">
+                                <select class="browser-default language2" name="language" onchange="this.form.submit()">
+                                    {% get_current_language as LANGUAGE_CODE %}
+                                    {% get_available_languages as LANGUAGES %}
+                                    {% for lang in LANGUAGES %}
+                                    <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                                        {{ lang.1 }} ({{ lang.0 }})
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </form>
+                    </div> 
                 <a href="#" class="brand-logo center">Ganímedes</a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         {% block menu_options %}

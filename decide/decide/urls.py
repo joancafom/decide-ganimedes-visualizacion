@@ -26,10 +26,10 @@ schema_view = get_swagger_view(title='Decide API')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('doc/', schema_view),
+    path(r'i18n/', include('django.conf.urls.i18n')),
 ]
 
 for module in settings.MODULES:
-    urlpatterns += i18n_patterns(
-        path('{}/'.format(module), include('{}.urls'.format(module))),
-        prefix_default_language=True,
-    )
+    urlpatterns += [
+        path('{}/'.format(module), include('{}.urls'.format(module)))
+    ]

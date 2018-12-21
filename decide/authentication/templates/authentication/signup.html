@@ -41,7 +41,7 @@
         password: document.querySelector("#password").value,
           
       };
-      postData("{{auth_url}}" + '/{{LANGUAGE_CODE}}' + "/authentication/login/", data)    
+      postData("{{auth_url}}" + "/authentication/login/", data)    
       .then(data => {
         
           token = data.token;
@@ -60,7 +60,7 @@
         password: document.querySelector("#password").value,
           
       };
-    postData("{{auth_url}}" + '/{{LANGUAGE_CODE}}' + "/authentication/save/", data)
+    postData("{{auth_url}}" + "/authentication/save/", data)
       .then(data => {
         user = data;
         panel('saved');
@@ -70,7 +70,7 @@
   }
   function decideUser() {//logged
     var data = { token: token };
-    postData("{{auth_url}}" + '/{{LANGUAGE_CODE}}' +"/authentication/getuser/", data)
+    postData("{{auth_url}}" +"/authentication/getuser/", data)
       .then(data => {
         user = data;
         panel('exits');
