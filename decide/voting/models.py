@@ -82,23 +82,26 @@ class Voting(models.Model):
 
     def do_postproc(self):
         tally = self.tally
-        options = self.question.options.all()
+        questions = self.questions.all()
 
-        opts = []
-        for opt in options:
-            if isinstance(tally, list):
-                votes = tally.count(opt.number)
-            else:
-                votes = 0
-            opts.append({
-                'option': opt.option,
-                'number': opt.number,
-                'votes': votes,
-                'gender': opt.gender,
-                'team': opt.team,
-            })
+        qsts = []
+        for qst in questions:
+            opts = []
+            for opt in qst.options.all():
+                if isinstance(tally, list):
+                    votes = tally.count(opt.number)
+                else:
+                    votes = 0
+                opts.append({
+                    'option': opt.option,
+                    'number': opt.number,
+                    'votes': votes,
+                    'gender': opt.gender,
+                    'team': opt.team,
+                })
+            qsts.append({'id': qst.id, 'options': opts, 'seats': qst.seats})
 
-        data = { 'type': self.postproc_type, 'options': opts, 'seats': self.question.seats }
+        data = { 'type': self.postproc_type, 'questions': qsts }
         postp = mods.post('postproc', json=data)
 
         self.postproc = postp
