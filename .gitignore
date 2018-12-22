@@ -203,6 +203,13 @@ fabric.properties
 # Sonarlint plugin
 .idea/sonarlint
 
+#### Pydev/Eclipse files ####
+.settings
+.project
+.pydevproject
+
+#### Booth autobuild script ####
+iniciarEntorno.bat
 
 # End of https://www.gitignore.io/api/pycharm
 

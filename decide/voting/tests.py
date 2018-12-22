@@ -129,6 +129,17 @@ class VotingTestCase(BaseTestCase):
             'question_opt': ['cat', 'dog', 'horse'],
             'postproc_type': PostProcType.IDENTITY,
         }
+        
+        """
+        NUEVO FORMATO DE LOS DATOS:
+        data = {
+            'name': 'Example',
+            'desc': 'Description example',
+            'questions': ['I want a ', 'I like ',],
+            'question_opts': [['cat', 'dog', 'horse'],["hamburguer", "pizza"],],
+            'postproc_type': PostProcType.IDENTITY,
+        }
+        """
 
         response = self.client.post('/voting/', data, format='json')
         self.assertEqual(response.status_code, 201)
