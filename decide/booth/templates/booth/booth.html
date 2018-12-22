@@ -489,9 +489,9 @@
         		alert("{% trans "Enter an email and a password." %}")
         	} else {
         		if(v_start_date == "None"){
-        			alert("The voting can not be accessed because it has not started.")
+        			alert("{% trans "The voting can not be accessed because it has not started." %}")
         		} else if(v_end_date != "None") {
-        			alert("The voting can not be accessed because it has ended.")
+        			alert("{% trans "The voting can not be accessed because it has ended." %}")
         		} else {
 	        		if(questions.length == 2) {
 	        			alert("{% trans "This vote does not contain any questions, so it can not be accessed yet. Try it again later." %}")

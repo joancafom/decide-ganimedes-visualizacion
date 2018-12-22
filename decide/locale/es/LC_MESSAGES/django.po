@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-20 15:33+0100\n"
+"POT-Creation-Date: 2018-12-22 00:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,21 +61,6 @@ msgstr "Usuario"
 msgid "Submit"
 msgstr "Enviar"
 
-#: .\base\templates\base.html:75 .\base\templates\base.html:80
-#: .\base\templates\base.html:85 .\decide\settings.py:143
-msgid "Spanish"
-msgstr "Español"
-
-#: .\base\templates\base.html:76 .\base\templates\base.html:81
-#: .\base\templates\base.html:86 .\decide\settings.py:142
-msgid "English"
-msgstr "Inglés"
-
-#: .\base\templates\base.html:77 .\base\templates\base.html:82
-#: .\base\templates\base.html:87 .\decide\settings.py:144
-msgid "Catalan"
-msgstr "Catalán"
-
 #: .\booth\templates\booth\booth.html:142
 msgid "Login"
 msgstr "Iniciar Sesión"
@@ -110,7 +95,7 @@ msgstr "Felicidades. Tu voto ha sido enviado."
 
 #: .\booth\templates\booth\booth.html:444
 #: .\booth\templates\booth\booth.html:473
-#: .\booth\templates\booth\booth.html:499
+#: .\booth\templates\booth\booth.html:506
 msgid "Error: "
 msgstr "Error"
 
@@ -118,15 +103,35 @@ msgstr "Error"
 msgid "You must select an option for each question."
 msgstr "Debes seleccionar una opción para cada pregunta."
 
-#: .\booth\templates\booth\booth.html:487
+#: .\booth\templates\booth\booth.html:489
 msgid "Enter an email and a password."
 msgstr "Introduzca un correo electrónico y una contraseña."
 
-#: .\booth\templates\booth\booth.html:490
+#: .\booth\templates\booth\booth.html:492
+msgid "The voting can not be accessed because it has not started."
+msgstr "No se puede acceder a la votación porque no ha comenzado."
+
+#: .\booth\templates\booth\booth.html:494
+msgid "The voting can not be accessed because it has ended."
+msgstr "No se puede acceder a la votación porque ha finalizado."
+
+#: .\booth\templates\booth\booth.html:497
 msgid ""
 "This vote does not contain any questions, so it can not be accessed yet. Try "
 "it again later."
 msgstr "Esta votación no contiene preguntas, por lo que aún no se puede acceder. Inténtalo de nuevo más tarde."
+
+#: .\decide\settings.py:142
+msgid "English"
+msgstr "Inglés"
+
+#: .\decide\settings.py:143
+msgid "Spanish"
+msgstr "Español"
+
+#: .\decide\settings.py:144
+msgid "Catalan"
+msgstr "Catalán"
 
 #: .\visualizer\templates\visualizer\ended.html:15
 #: .\visualizer\templates\visualizer\ended_export.html:6
