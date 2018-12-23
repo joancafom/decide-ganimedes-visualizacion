@@ -3,6 +3,7 @@ python:
 - "3.6"
 services:
 - postgresql
+- docker
 env:
 - DJANGO=2.0 DB=postgres
 global:
@@ -18,6 +19,9 @@ before_script:
 - python manage.py migrate
 script:
   - python manage.py test
+
+after_success:
+  - ../docker/docker_push.sh
 
 notifications:
     email: false
