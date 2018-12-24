@@ -26,7 +26,7 @@ class StoreView(generics.ListAPIView):
         """
          * voting: id
          * voter: id
-         * vote: { "a": int, "b": int }
+         * votes: [{ "a": int, "b": int }, ...]
         """
 
         vid = request.data.get('voting')
@@ -38,41 +38,52 @@ class StoreView(generics.ListAPIView):
         not_started = not start_date or timezone.now() < parse_datetime(start_date)
         is_closed = end_date and parse_datetime(end_date) < timezone.now()
         if not_started or is_closed:
-            return Response({}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"message": "voting not started or is closed"},
+                status=status.HTTP_401_UNAUTHORIZED)
 
         uid = request.data.get('voter')
-        vote = request.data.get('vote')
+        votes = request.data.get('votes')
 
-        if not vid or not uid or not vote:
-            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+        if not vid or not uid or not votes:
+            return Response(
+                {"message": "voting id or voter id or votes is empty"},
+                status=status.HTTP_400_BAD_REQUEST)
 
         # validating voter
         token = request.auth.key
         voter = mods.post('authentication', entry_point='/getuser/', json={'token': token})
         voter_id = voter.get('id', None)
         if not voter_id or voter_id != uid:
-            return Response({}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"message": "voter id is not authorized"},
+                status=status.HTTP_401_UNAUTHORIZED)
 
         # the user is in the census
         perms = mods.get('census/{}'.format(vid), params={'voter_id': uid}, response=True)
         if perms.status_code == 401:
-            return Response({}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"message": "voter id is not in census"},
+                status=status.HTTP_401_UNAUTHORIZED)
 
-        # Creo un diccionario con todos los votos
-        defs = {}
+        # check if voter has been already vote in current voting
+        old_votes = Vote.objects.filter(voting_id=vid, voter_id=uid)
+        if old_votes:
+            # deleting votes
+            for vote in old_votes:
+                vote.delete()
 
-        # Recorro los votos
-        for v in vote:
-            # Cojo el voto
-            a = v.get("a")
+        # Iterate in new votes
+        for vote in votes:
+            # get primes from vote
+            a = vote.get("a")
+            b = vote.get("b")
 
-            # Añado al diccionario el nuevo voto
-            defs[a] = 'a'
+            # creating new vote
+            v = Vote(voting_id=vid, voter_id=uid, a=a, b=b)
 
-        vot, _ = Vote.objects.get_or_create(voting_id=vid, voter_id=uid,
-                                                defaults=defs)
+            # save vote
+            v.save()
 
-        vot.save()
-
-        return Response({})
+        return Response({"message": "votes stored successfully"})
 
