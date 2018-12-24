@@ -85,7 +85,7 @@
         function decideSend() {
             var v = decideEncrypt();
             var data = {
-                vote: {a: v.alpha.toString(), b: v.beta.toString()},
+                votes: [{a: v.alpha.toString(), b: v.beta.toString()}],
                 voting: {{voting.id}},
                 voter: user.id,
                 token: token
