@@ -2,6 +2,7 @@ from datetime import date
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.http import Http404, HttpResponseBadRequest
+from django.core.cache import cache
 
 from base import mods
 from django import template
@@ -180,54 +181,92 @@ class VisualizerJson(TemplateView):
 
         return context
 
+STATS_NAMES = [
+    'census_size',
+    'voters_turnout',
+    'participation_ratio',
+    'voters_age_dist',
+    'voters_age_mean',
+    'no_voters_age_mean',
+    'women_participation',
+    'men_participation',
+    'nonbinary_participation',
+    'women_percentage',
+    'men_percentage',
+    'nonbinary_percentage'
+]
+
+CACHE_TIMEOUT = 10
+
 def get_statistics(vid):
     
     #Obtenemos las estadísticas de la votación
     stats = {}
 
-    #Estadísticas básicas: tamaño del censo, personas que han
-    #votado y participación
-    census = mods.get('census', params={'voting_id': vid})
-    voters = get_stub_info('voters', vid)
-    no_voters = list(set(census['voters']) - set(voters))
-    stats['census_size'] = len(census['voters'])
-    stats['voters_turnout'] = get_stub_info('turnout', vid)
-    if stats['census_size'] != 0:
-        stats['participation_ratio'] = round((stats['voters_turnout'] / stats['census_size']) * 100, 2)
+    #Comprobamos si las estadísticas están en caché intentando
+    #acceder a una de ellas
+    in_cache = cache.get('census_size')
+
+    if(in_cache is None):
+        # No existen las estadísticas en caché
+
+        #Estadísticas básicas: tamaño del censo, personas que han
+        #votado y participación
+        census = mods.get('census', params={'voting_id': vid})
+        voters = get_stub_info('voters', vid)
+        no_voters = list(set(census['voters']) - set(voters))
+        stats['census_size'] = len(census['voters'])
+        stats['voters_turnout'] = get_stub_info('turnout', vid)
+        if stats['census_size'] != 0:
+            stats['participation_ratio'] = round((stats['voters_turnout'] / stats['census_size']) * 100, 2)
+        else:
+            stats['participation_ratio'] = 0
+
+        voters_ages = get_stub_info('ages', vid, voters)
+        no_voters_ages = get_stub_info('ages', vid, no_voters)
+        (voters_age_dist, voters_age_mean) = age_distribution(voters_ages)
+        stats['voters_age_dist'] = voters_age_dist
+        stats['voters_age_mean'] = voters_age_mean
+        stats['no_voters_age_mean'] = mean(no_voters_ages)
+
+        #Estadísticas avanzadas de votación II
+        votos = Vote.objects.filter(voting_id=vid).all()
+        votantes =  []
+        for v in votos:
+            user = User.objects.filter(id = v.voter_id).all()
+            votantes.append(user)
+        sexes_total = get_stub_info('sexes', vid, census['voters'])
+        sexes_empty = {
+            User.SEX_OPTIONS[0][0] : 0,
+            User.SEX_OPTIONS[1][0] : 0,
+            User.SEX_OPTIONS[2][0] : 0
+        }
+
+        sexes_participation = get_sexes_participation(votantes, sexes_empty)
+
+        stats['women_participation'] = sexes_participation['W']
+        stats['men_participation'] = sexes_participation['M']
+        stats['nonbinary_participation'] = sexes_participation['N']
+
+        sexes_percentages = get_sexes_percentages(sexes_participation, sexes_total, sexes_empty)
+
+        stats['women_percentage'] = sexes_percentages['W']
+        stats['men_percentage'] = sexes_percentages['M']
+        stats['nonbinary_percentage'] = sexes_percentages['N']
+
+        cache.set_many(stats, timeout=CACHE_TIMEOUT)
+
     else:
-        stats['participation_ratio'] = 0
 
-    voters_ages = get_stub_info('ages', vid, voters)
-    no_voters_ages = get_stub_info('ages', vid, no_voters)
-    (voters_age_dist, voters_age_mean) = age_distribution(voters_ages)
-    stats['voters_age_dist'] = voters_age_dist
-    stats['voters_age_mean'] = voters_age_mean
-    stats['no_voters_age_mean'] = mean(no_voters_ages)
+        #Las estadísticas deberían estar en caché...
+        cached_stats = cache.get_many(STATS_NAMES)
 
-    #Estadísticas avanzadas de votación II
-    votos = Vote.objects.filter(voting_id=vid).all()
-    votantes =  []
-    for v in votos:
-        user = User.objects.filter(id = v.voter_id).all()
-        votantes.append(user)
-    sexes_total = get_stub_info('sexes', vid, census['voters'])
-    sexes_empty = {
-        User.SEX_OPTIONS[0][0] : 0,
-        User.SEX_OPTIONS[1][0] : 0,
-        User.SEX_OPTIONS[2][0] : 0
-    }
-
-    sexes_participation = get_sexes_participation(votantes, sexes_empty)
-
-    stats['women_participation'] = sexes_participation['W']
-    stats['men_participation'] = sexes_participation['M']
-    stats['nonbinary_participation'] = sexes_participation['N']
-
-    sexes_percentages = get_sexes_percentages(sexes_participation, sexes_total, sexes_empty)
-
-    stats['women_percentage'] = sexes_percentages['W']
-    stats['men_percentage'] = sexes_percentages['M']
-    stats['nonbinary_percentage'] = sexes_percentages['N']
+        #Si no se encuentran todas, puede que haya expirado mientras
+        #realizábamos la comprobación. Volvemos a calcularlas entonces
+        if cached_stats is None or len(cached_stats) != len(STATS_NAMES):
+            get_statistics(vid)
+        else:
+            stats = cached_stats
     
     return stats
 
