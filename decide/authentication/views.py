@@ -48,22 +48,6 @@ class LogoutView(APIView):
         return Response({})
 
 
-class SignUpView(TemplateView):
-    template_name = 'authentication/signup.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
-        return context
-
-
-class SaveUserView(APIView):
-    def post(self, request):
-        email = request.data.get('email')
-        password = request.data.get('password')
-        User.objects.create_user(email, password)
-
-        return Response({})
 
 class ObtainAuthToken(APIView):
     throttle_classes = ()
