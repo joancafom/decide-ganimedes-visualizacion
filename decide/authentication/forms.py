@@ -1,12 +1,12 @@
 from django import forms
-from .models import User
+from django.contrib.auth import get_user_model 
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
 import datetime
 import pytz
 from django.utils import timezone
 
-
+User=get_user_model()
 class UserCreateForm(UserCreationForm):
     SEX_OPTIONS = (
         ('M', _('Man')),
