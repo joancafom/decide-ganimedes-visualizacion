@@ -10,13 +10,14 @@ from rest_framework.status import (
         HTTP_409_CONFLICT as ST_409
 )
 
-from base.perms import UserIsStaff
+from base.perms import CensusPermissions
 from .models import Census
+from census.serializer import CensusSerializer
 
 
 class CensusCreate(generics.ListCreateAPIView):
-    permission_classes = (UserIsStaff,)
-
+    permission_classes = (CensusPermissions,)
+    serializer_class = CensusSerializer
     def create(self, request, *args, **kwargs):
         voting_id = request.data.get('voting_id')
         voters = request.data.get('voters')

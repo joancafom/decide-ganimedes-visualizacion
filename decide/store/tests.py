@@ -1,6 +1,6 @@
 import datetime
 import random
-from django.contrib.auth.models import User
+from authentication.models import User
 from django.utils import timezone
 from django.test import TestCase
 from rest_framework.test import APIClient
@@ -42,7 +42,7 @@ class StoreTextCase(BaseTestCase):
 
     def get_or_create_user(self, pk):
         user, _ = User.objects.get_or_create(pk=pk)
-        user.username = 'user{}'.format(pk)
+        user.email = 'user{}@gmail.com'.format(pk)
         user.set_password('qwerty')
         user.save()
         return user
@@ -56,7 +56,7 @@ class StoreTextCase(BaseTestCase):
             self.gen_voting(v)
             random_user = random.choice(users)
             user = self.get_or_create_user(random_user)
-            self.login(user=user.username)
+            self.login(user=user.email)
             census = Census(voting_id=v, voter_id=random_user)
             census.save()
             data = {
@@ -96,7 +96,7 @@ class StoreTextCase(BaseTestCase):
             ]
         }
         user = self.get_or_create_user(1)
-        self.login(user=user.username)
+        self.login(user=user.email)
         response = self.client.post('/store/', data, format='json')
         self.assertEqual(response.status_code, 200)
 
@@ -111,7 +111,7 @@ class StoreTextCase(BaseTestCase):
         response = self.client.get('/store/', format='json')
         self.assertEqual(response.status_code, 401)
 
-        self.login(user='noadmin')
+        self.login(user='noadmin@gmail.com')
         response = self.client.get('/store/', format='json')
         self.assertEqual(response.status_code, 403)
 
@@ -130,7 +130,7 @@ class StoreTextCase(BaseTestCase):
         response = self.client.get('/store/?voting_id={}'.format(v), format='json')
         self.assertEqual(response.status_code, 401)
 
-        self.login(user='noadmin')
+        self.login(user='noadmin@gmail.com')
         response = self.client.get('/store/?voting_id={}'.format(v), format='json')
         self.assertEqual(response.status_code, 403)
 
@@ -157,7 +157,7 @@ class StoreTextCase(BaseTestCase):
         response = self.client.get('/store/?voting_id={}&voter_id={}'.format(v, u), format='json')
         self.assertEqual(response.status_code, 401)
 
-        self.login(user='noadmin')
+        self.login(user='noadmin@gmail.com')
         response = self.client.get('/store/?voting_id={}&voter_id={}'.format(v, u), format='json')
         self.assertEqual(response.status_code, 403)
 
@@ -182,7 +182,7 @@ class StoreTextCase(BaseTestCase):
         self.voting.start_date = timezone.now() + datetime.timedelta(days=1)
         self.voting.save()
         user = self.get_or_create_user(1)
-        self.login(user=user.username)
+        self.login(user=user.email)
         response = self.client.post('/store/', data, format='json')
         self.assertEqual(response.status_code, 401)
 

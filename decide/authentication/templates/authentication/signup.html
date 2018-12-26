@@ -2,6 +2,7 @@
 {% load i18n static %}
 
 {% block content %}
+
     <h1>sign up</h1>
     <div id="signup">
       <label for="username">{% trans "Username" %}</label>
@@ -31,6 +32,8 @@
 
   var token = null;
   var user = null;
+  
+  {% get_current_language as LANGUAGE_CODE %}
 
   function decideSignUp() {
       var data = {
@@ -67,7 +70,7 @@
   }
   function decideUser() {//logged
     var data = { token: token };
-    postData("{{auth_url}}" + "/authentication/getuser/", data)
+    postData("{{auth_url}}" +"/authentication/getuser/", data)
       .then(data => {
         user = data;
         panel('exits');
@@ -123,5 +126,5 @@
             });
           }
 </script>
-</body>
+
 {% endblock %}
