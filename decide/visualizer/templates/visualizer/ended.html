@@ -13,22 +13,23 @@
     <div id="cabecera-votacion">
         <h4>{{ voting.name }}</h4>
         <h5>{% trans "Results: " %}</h5>
+        <br>
     </div>
 
-        <ul>
+        <ol id="options">
             {% for option in voting.postproc %}
-                <li>{{option.option}}: {{option.postproc}} <span>({{option.votes}})</span></li>
+                <h6><li id="option">{{option.option}}: {{option.postproc}} <span id="number-votes">({{option.votes}})</span></li></h6>
             {% endfor %}
-        </ul>
+        </ol>
 
-    <div style="width: 50%">
+    <div id="resultados-text">
         <canvas id="resultados" width="100%" height="50%"></canvas>
-    </div>
 
     {% with voting.postproc|first as firstVote %}
     
     {% if firstVote.team != None %}
     {% regroup voting.postproc by team as teams %}
+    
     <!--Pintado de gráfica para Teams-->
     <script>
 
@@ -148,10 +149,16 @@
     });
     </script>
 
+    </div>
+
     {% endif %}
-    <a href="pdf/" target="_blank">{% trans "Download results as .pdf" %}</a>
-    <br/>
-    <a href="csv/" target="_blank">{% trans "Download results as .csv" %}</a>
+    <div id="exports">
+        <a href="pdf/" target="_blank">{% trans "Download results as .pdf" %}</a>
+        <br/>
+        <a href="csv/" target="_blank">{% trans "Download results as .csv" %}</a>
+        <br/>
+        <a href="xml/" target="_blank">{% trans "Download results as .xml" %}</a>
+    </div>
     {% endwith %}
 {% endblock %}
 
