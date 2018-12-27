@@ -203,6 +203,10 @@ fabric.properties
 # Sonarlint plugin
 .idea/sonarlint
 
+.idea/
+.vscode/
+.github/
+
 #### Pydev/Eclipse files ####
 .settings
 .project
