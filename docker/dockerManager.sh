@@ -1,9 +1,9 @@
 #!/bin/bash
 #title:         dockerManager.sh
-#description:   Panel de Administración para docker
+#description:   Panel de Administración de docker para decide-ganimedes
 #author:        Juan Carlos Utrilla
 #created:       Dic 25 2018
-#version:       1.0
+#version:       2.0
 #usage:         ./dockerManager.sh
 #==============================================================================
 
@@ -31,47 +31,57 @@ function menuEstadoDocker () {
 	
 	if [[ $estadoDocker == "inactive" ]];
         then
-                echo -e "| \e[4mEstado del demonio de docker\e[0m: \e[33m\e[5m\e[1mINACTIVO\e[0m                               |"
+                echo -e "\e[1m|\e[0m \e[4mEstado del demonio de docker\e[0m: \e[33m\e[5m\e[1mINACTIVO\e[0m                               \e[1m|\e[0m"
 	elif [[ $estadoDocker == "failed" ]];
 	then
-		echo -e "| \e[4mEstado del demonio de docker\e[0m: \e[31m\e[5m\e[1mFALLIDO\e[0m                                |"
+		echo -e "\e[1m|\e[0m \e[4mEstado del demonio de docker\e[0m: \e[31m\e[5m\e[1mFALLIDO\e[0m                                \e[1m|\e[0m"
 	elif [[ $estadoDocker == "active" ]];
 	then
-		echo -e "| \e[4mEstado del demonio de docker\e[0m: \e[32m\e[1mACTIVO\e[0m                                 |"
+		echo -e "\e[1m|\e[0m \e[4mEstado del demonio de docker\e[0m: \e[32m\e[1mACTIVO\e[0m                                 \e[1m|\e[0m"
 	fi
 }
 
 
 function menu {
 	estadoDocker=$(sudo systemctl is-active docker)
-        echo -e "\e[1m+----------------------------------------------------------------------+\e[0m"
+        
+	clear
+	
+	echo -e "\e[1m+----------------------------------------------------------------------+\e[0m"
 	echo -e "\e[1m|              Panel de Administración - Decide-Ganimedes              |\e[0m"
 	echo -e "\e[1m+----------------------------------------------------------------------+\e[0m"
-                                                                                       
+        
         if [[ $estadoDocker == "active" ]];
 	then
+		# Menú con docker en estado ACTIVO
+
 		echo -e "\e[1m| 1)\e[0m Listar imágenes, contenedores, volúmenes y redes                  \e[1m|\e[0m"
-		echo -e "\e[1m| 2)\e[0m Encender contenedores con docker-compose                          \e[1m|\e[0m"
-        	echo -e "\e[1m| 3)\e[0m Apagar contenedores con docker-compose                            \e[1m|\e[0m"
-        	echo -e "\e[1m| 4)\e[0m Apagar contenedores y eliminar componentes sin uso                \e[1m|\e[0m"
-        	echo -e "\e[1m| 5)\e[0m Crear un usuario de administración para web                       \e[1m|\e[0m"
-        	echo -e "\e[1m| 6)\e[0m Eliminar todas las imágenes sin uso                               \e[1m|\e[0m"
-        	echo -e "\e[1m| 7)\e[0m Resetear Docker (mantiene los volúmenes)                          \e[1m|\e[0m"
-        	echo -e "\e[1m| 8)\e[0m Eliminar volúmenes                                                \e[1m|\e[0m"
+		echo -e "\e[1m| 2)\e[0m Eliminar componentes de docker                                    \e[1m|\e[0m"
+		echo -e "\e[1m|                                                                      |\e[0m"
+		echo -e "\e[1m| 3)\e[0m Encender contenedores con docker-compose                          \e[1m|\e[0m"
+		echo -e "\e[1m| 4)\e[0m Compilar contenedores con docker-compose                          \e[1m|\e[0m"
+        	echo -e "\e[1m| 5)\e[0m Apagar contenedores con docker-compose                            \e[1m|\e[0m"
+        	echo -e "\e[1m|                                                                      |\e[0m"
+		echo -e "\e[1m| 6)\e[0m Crear un usuario de administración para web                       \e[1m|\e[0m"
 		echo -e "\e[1m|\e[0m                                                                      \e[1m|\e[0m"
 		echo -e "\e[1m| 9)\e[0m Desactivar demonio de docker                                      \e[1m|\e[0m"
-	else
-		echo -e "\e[1m| 1)\e[0m Activar demonio de docker                                         \e[1m|\e[0m"
+	elif [[ $estadoDocker == "inactive" ]] || [[ $estadoDocker == "failed" ]];
+	then
 
+		# Menú con docker en estado INACTIVO o FALLIDO
+
+		echo -e "\e[1m| 1)\e[0m Activar demonio de docker                                         \e[1m|\e[0m"
+		
 		if [[ $estadoDocker == "failed" ]];
-		then
-			echo "|                                                                      |"
-			echo -e "| \e[31mSi la activación del demonio de docker ha fallado puede ser debido a \e[0m|"
-			echo -e "| \e[31mque el servicio se ha activado y apagado demasiadas veces de forma  \e[0m |"
-	        	echo -e "| \e[31mmuy rápida. Espere 1 minuto para volver a intentarlo. \e[0m               |"	
+	        then
+			echo -e "\e[1m|\e[0m                                                                      \e[1m|\e[0m"
+			echo -e "\e[1m|\e[0m \e[31mSi la activación del demonio de docker ha fallado puede ser debido a \e[0m\e[1m|\e[0m"
+			echo -e "\e[1m|\e[0m \e[31mque el servicio se ha activado y apagado demasiadas veces de forma  \e[0m \e[1m|\e[0m"
+	        	echo -e "\e[1m|\e[0m \e[31mmuy rápida. Espere 1 minuto para volver a intentarlo. \e[0m               \e[1m|\e[0m"
 		fi
 	fi
-        echo -e "|                                                                      |"
+
+        echo -e "\e[1m|\e[0m                                                                      \e[1m|\e[0m"
 	menuEstadoDocker
 	echo -e "\e[1m|                                                                      |\e[0m"
         echo -e "\e[1m| 0)\e[0m  Salir                                                            \e[1m|\e[0m"
@@ -79,6 +89,43 @@ function menu {
 	echo -e "\e[1m+----------------------------------------------------------------------+\e[0m"
 }
 
+# Acciones a realizar
+function ACTIONS {
+
+    # Opción 1
+    if [[ ${choices[0]} ]]; then
+        echo "Borrando las imágenes sin uso"
+	sudo docker image prune -af
+    fi
+
+    # Opción 2
+    if [[ ${choices[1]} ]]; then
+        echo "Borrando los volúmenes sin uso"
+	sudo docker volume prune -f
+    fi
+
+    # Opción 3
+    if [[ ${choices[2]} ]]; then
+        echo "Borrando las redes sin uso"
+	sudo docker network prune -f
+    fi
+}
+
+# Función MENU
+function MENU {
+    echo "Opciones disponibles:"
+    for NUM in ${!options[@]}; do
+        echo "[""${choices[NUM]:- }""]" $(( NUM+1 ))") ${options[NUM]}"
+    done
+    echo "$ERROR"
+}
+
+# Variables
+options[0]="Imágenes sin uso"
+options[1]="Volúmenes sin uso"
+options[2]="Redes sin uso"
+
+ERROR=" "
 respuesta=99
 
 while  [ $respuesta -ne 0 ];
@@ -95,85 +142,88 @@ clear
 		case "$respuesta" in
 			''|*[0-9]*)
 				case "$respuesta" in
-					1)      echo -e "\nEjecutando - Listar imágenes y contenedores\n"
-						echo -e "\n----------- Listado de imágenes -----------\n"		
+					1)      echo -e "\n\n\e[1mEjecutando - Listar imágenes y contenedores...\e[0m\n"
+						echo -e "\n\e[1m\e[32m----------- Listado de imágenes -----------\e[0m \n"	
 						sudo docker images
-						echo -e "\n-------- Listado de contenedores ----------\n"
+						echo -e "\n\e[1m\e[32m-------- Listado de contenedores ----------\e[0m \n"
 						sudo docker container list
-						echo -e "\n---------- Listado de volúmenes -----------\n"
+						echo -e "\n\e[1m\e[32m---------- Listado de volúmenes -----------\e[0m \n"
 						sudo docker volume list
-						echo -e "\n------------- Listado de redes ------------\n"
+						echo -e "\n\e[1m\e[32m------------- Listado de redes ------------\e[0m \n"
 						sudo docker network list
 						read -n 1 -p $'\nPresiona una tecla para volver al menú...\n'
 						;;
-
-					2)	echo -e "\nEjecutando - Encender contenedores con docker-compose\n"
-						sudo docker-compose up -d
-						read -n 1 -p $'\nPresiona una tecla para volver al menú...\n'
-						;;
-
-					3)	echo -e "\nEjecutando - Apagar contenedores con docker-compose\n"
-						sudo docker-compose down
-						read -n 1 -p $'\nPresiona una tecla para volver al menú...\n'
-						;;
 		
-					4) 	echo -e "\nEjecutando - Apagar contenedores y eliminar componentes sin uso \n"
-						sudo docker ps -aq > temp.txt 
-						temporal=$(tr -d '\n' < temp.txt)
-						rm temp.txt
+					2) 	echo -e "\n\n\e[1mEjecutando - Eliminar componentes de docker...\e[0m\n"
 
-						if [ -z $temporal ];
-						then
-							echo -e "\nTodos los contenedores están apagados\n\n"	
-						else
-							sudo docker stop $(sudo docker ps -aq)
-							sudo docker system prune -f
-						fi
+						# Menú en bucle
+						
+						unset choices
+						while MENU && read -e -p "Seleccione las opciones deseadas usando los números indicados (de nuevo para desmarcarlos, ENTER para finalizar): " -n1 SELECTION && [[ -n "$SELECTION" ]]; do
+    							clear
+    
+							if [[ "$SELECTION" == *[[:digit:]]* && $SELECTION -ge 1 && $SELECTION -le ${#options[@]} ]]; 
+							then
+        							(( SELECTION-- ))
+        							if [[ "${choices[SELECTION]}" == "+" ]]; then
+            								choices[SELECTION]=""
+        							else
+            								choices[SELECTION]="+"
+        							fi
+            							ERROR=" "
+    							else
+        							ERROR="Opción inválida: $SELECTION"
+    							fi
+						done
+
+						ACTIONS
+
+
 						read -n 1 -p $'\nPresiona una tecla para volver al menú...\n'
 						;;
 
-					5)	echo -e "\nEjecutando - Crear un usuario de administración para web\n"               
+					3)      echo -e "\n\n\e[1mEjecutando - Encender contenedores con docker-compose...\e[0m\n"
+                                                sudo docker-compose up -d
+                                                read -n 1 -p $'\nPresiona una tecla para volver al menú...\n'
+                                                ;;
+
+
+					4)	echo -e "\n\n\e[1mEjecutando - Compilar contenedores con docker-compose...\e[0m\n"
+
+						read -rp $'\nPregunta: ¿Desea visualizar la ejecución de los servicios de docker-compose? (Y/n): ' opc;
+
+                                        	if [ $opc = "Y" ] || [ $opc = "y" ];
+                                        	then
+							echo -e "\n\n\e[1m\e[32mImportante: para cerrar la ejecución, pulse Ctrl + C \e[0m \n\n"
+							sleep 5
+							sudo docker-compose up --build
+							
+							echo -e "\n\n\e[1m\e[32mVolviendo a lanzar los contenedores...\e[0m \n\n"
+							sudo docker-compose up -d
+
+						elif [ $opc = "N" ] || [ $opc = "n" ];
+                                                then
+							echo -e "\n\n\e[1m\e[32mCompilando...\e[0m \n\n"
+							sleep 5
+							sudo docker-compose build
+                                               	fi
+                                                
+						read -n 1 -p $'\nPresiona una tecla para volver al menú...\n'
+                                                ;;
+
+
+                                        5)      echo -e "\n\n\e[1mEjecutando - Apagar contenedores con docker-compose...\e[0m\n"
+                                                sudo docker-compose down
+                                                read -n 1 -p $'\nPresiona una tecla para volver al menú...\n'
+                                                ;;
+
+
+					6)	echo -e "\n\n\e[1mEjecutando - Crear un usuario de administración para web...\e[0m\n"               
 		       	                        sudo docker exec -ti decide_web ./manage.py createsuperuser
 		               	                read -n 1 -p $'\nPresiona una tecla para volver al menú...\n'
-		                       	        ;;	
-
-					6)      echo -e "\nEjecutando - Eliminar todas las imágenes sin uso\n"
-					
-						read -rp $'Importante: sólo se borrarán aquellas imágenes que no se estén ejecutándo contenedores. ¿Estás seguro de querer continuar? (Y/n): ' opc;
-
-						if [ $opc = "Y" ] || [ $opc = "y" ];
-						then				
-							sudo docker image prune -af
-						fi
-
-						read -n 1 -p $'\nPresiona una tecla para volver al menú...\n'
-						;;
-					
-					7)	echo -e "\nEjecutando - Resetear Docker\n"
+		                       	        ;;
 		
-						read -rp $'\nImportante: se borrará todas las imágenes y contenedores. ¿Estás seguro de querer continuar? (Y/n): ' opc;
-
-						if [ $opc = "Y" ] || [ $opc = "y" ];
-		               	                then
-		                       	                sudo docker stop $(sudo docker ps -aq)
-		                               	        sudo docker system prune -af
-							sudo docker volume prune -f
-						       	# sudo docker rmi $(sudo docker images -q) --> sudo docker system prune -a
-						fi
-
-						read -n 1 -p $'\nPresiona una tecla para volver al menú...\n'
-						;;
-				
-					8)	echo -e "\nEjecutando - Eliminar volúmenes \n"
-						read -rp $'Importante: los volúmenes guardan datos persistentes importantes para los contenedores. ¿Estás seguro de querer continuar? (Y/n): ' opc;
-						if [ $opc = "Y" ] || [ $opc = "y" ];
-						then
-							sudo docker volume prune -f
-						fi
-						read -n 1 -p $'\nPresiona una tecla para volver al menú...\n'
-						;;
-		
-					9)	echo -e "\nEjecutando - Desactivar demonio de Docker...\n"
+					9)	echo -e "\n\n\e[1mEjecutando - Desactivar demonio de Docker...\e[0m\n"
 						sudo systemctl stop docker
 						;;
 
