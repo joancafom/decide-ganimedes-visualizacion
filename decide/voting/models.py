@@ -7,6 +7,7 @@ from base import mods
 from base.models import Auth, Key
 from postproc.models import PostProcType
 
+
 class Voting(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField(blank=True, null=True)
@@ -110,6 +111,7 @@ class Voting(models.Model):
     def __str__(self):
         return self.name
 
+
 class Question(models.Model):
     voting = models.ForeignKey(Voting, null=True, related_name='questions', on_delete = models.CASCADE)
     # Automatic assignment for the question number on save
@@ -139,6 +141,7 @@ class Question(models.Model):
     def __str__(self):
         return '{} ({})'.format(self.desc, self.number)
 
+
 @receiver(post_save, sender=Question)
 def check_question(sender, instance, **kwargs):
     if instance.yes_no_question==True and instance.options.all().count()==0:
@@ -146,6 +149,7 @@ def check_question(sender, instance, **kwargs):
         op1.save()
         op2 = QuestionOption(question=instance, number=2, option="No") 
         op2.save()
+
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
@@ -164,7 +168,7 @@ class QuestionOption(models.Model):
     team = models.IntegerField(blank=True, null=True)
     
     def save(self):
-        #Automatic assignment for the question number
+        # Automatic assignment for the question number
         if not self.number:
             options = self.question.options.all()
             if options:

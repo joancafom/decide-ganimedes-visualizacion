@@ -22,23 +22,26 @@ class StoreTextCase(BaseTestCase):
 
     def setUp(self):
         super().setUp()
-        self.question = Question(desc='qwerty')
-        self.question.save()
         self.voting = Voting(pk=5001,
                              name='voting example',
-                             question=self.question,
                              postproc_type=PostProcType.IDENTITY,
                              start_date=timezone.now(),
                              )
         self.voting.save()
+        self.question = Question(desc='qwerty', voting=self.voting)
+        self.question.save()
+
+
 
     def tearDown(self):
         super().tearDown()
 
     def gen_voting(self, pk):
-        voting = Voting(pk=pk, name='v1', question=self.question, postproc_type=PostProcType.IDENTITY,
+        voting = Voting(pk=pk, name='v1', postproc_type=PostProcType.IDENTITY,
                         start_date=timezone.now(), end_date=timezone.now() + datetime.timedelta(days=1))
         voting.save()
+        q = Question(desc='qwerty', voting=voting)
+        q.save()
 
     def get_or_create_user(self, pk):
         user, _ = User.objects.get_or_create(pk=pk)
@@ -204,10 +207,6 @@ class StoreTextCase(BaseTestCase):
         # Generating votes
         votings, voters = self.gen_votes()
 
-        # user login
-        user = self.get_or_create_user(voters[0])
-        self.login(user=user.username)
-        # voters request
         response = self.client.get('/store/users/voting/{}/'.format(votings[2]))
 
         # assert response

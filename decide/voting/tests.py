@@ -47,7 +47,7 @@ class VotingTestCase(BaseTestCase):
         a.save()
         v.auths.add(a)
 
-        return v
+        return v, q
 
     def create_voters(self, v):
         for i in range(100):
@@ -64,13 +64,14 @@ class VotingTestCase(BaseTestCase):
         user.save()
         return user
 
-    def store_votes(self, v):
+    def store_votes(self, v, q):
         voters = list(Census.objects.filter(voting_id=v.id))
         voter = voters.pop()
 
         clear = {}
-        
-        for opt in v.question.options.all():
+
+        options = QuestionOption.objects.filter(question=q)
+        for opt in options:
             clear[opt.number] = 0
             for i in range(random.randint(0, 5)):
                 a, b = self.encrypt_msg(opt.number, v)
@@ -85,17 +86,17 @@ class VotingTestCase(BaseTestCase):
                 voter = voters.pop()
                 mods.post('store', json=data)
                 
-        return clear
+        return clear, options
 
     def test_complete_voting(self):
-        v = self.create_voting()
+        v, q = self.create_voting()
         self.create_voters(v)
 
         v.create_pubkey()
         v.start_date = timezone.now()
         v.save()
 
-        clear = self.store_votes(v)
+        clear, options = self.store_votes(v, q)
 
         self.login()  # set token
         v.tally_votes(self.token)
@@ -104,13 +105,11 @@ class VotingTestCase(BaseTestCase):
         tally.sort()
         tally = {k: len(list(x)) for k, x in itertools.groupby(tally)}
 
-        for q in v.questions.all():
-            for opt in q.options.all():
-                self.assertEqual(tally.get(opt.number, 0), clear.get(opt.number, 0))
+        for opt in options:
+            self.assertEqual(tally.get(opt.number, 0), clear.get(opt.number, 0))
 
-        for q in v.questions.all():
-            for opt in v.postproc[str(q.id)]:
-                self.assertEqual(tally.get(opt["number"], 0), opt["votes"])
+        for opt in v.postproc[str(q.id)]:
+            self.assertEqual(tally.get(opt["number"], 0), opt["votes"])
 
     def test_create_voting_from_api(self):
         data = {'name': 'Example'}
@@ -139,7 +138,7 @@ class VotingTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 201)
 
     def test_update_voting(self):
-        voting = self.create_voting()
+        voting, question = self.create_voting()
 
         data = {'action': 'start'}
         #response = self.client.post('/voting/{}/'.format(voting.pk), data, format='json')
