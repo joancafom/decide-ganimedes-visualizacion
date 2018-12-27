@@ -33,13 +33,14 @@ class VotingTestCase(BaseTestCase):
         return k.encrypt(msg)
 
     def create_voting(self):
-        q = Question(desc='test question')
+        v = Voting(name='test voting', postproc_type=PostProcType.IDENTITY)
+        v.save()
+
+        q = Question(desc='test question', voting=v)
         q.save()
         for i in range(5):
-            opt = QuestionOption(question=q, option='option {}'.format(i+1))
+            opt = QuestionOption(question=q, option='option {}'.format(i + 1))
             opt.save()
-        v = Voting(name='test voting', question=q, postproc_type=PostProcType.IDENTITY)
-        v.save()
 
         a, _ = Auth.objects.get_or_create(url=settings.BASEURL,
                                           defaults={'me': True, 'name': 'test auth'})
@@ -68,6 +69,7 @@ class VotingTestCase(BaseTestCase):
         voter = voters.pop()
 
         clear = {}
+        
         for opt in v.question.options.all():
             clear[opt.number] = 0
             for i in range(random.randint(0, 5)):
@@ -82,6 +84,7 @@ class VotingTestCase(BaseTestCase):
                 self.login(user=user.email)
                 voter = voters.pop()
                 mods.post('store', json=data)
+                
         return clear
 
     def test_complete_voting(self):
@@ -101,11 +104,13 @@ class VotingTestCase(BaseTestCase):
         tally.sort()
         tally = {k: len(list(x)) for k, x in itertools.groupby(tally)}
 
-        for q in v.question.options.all():
-            self.assertEqual(tally.get(q.number, 0), clear.get(q.number, 0))
+        for q in v.questions.all():
+            for opt in q.options.all():
+                self.assertEqual(tally.get(opt.number, 0), clear.get(opt.number, 0))
 
-        for q in v.postproc:
-            self.assertEqual(tally.get(q["number"], 0), q["votes"])
+        for q in v.questions.all():
+            for opt in v.postproc[str(q.id)]:
+                self.assertEqual(tally.get(opt["number"], 0), opt["votes"])
 
     def test_create_voting_from_api(self):
         data = {'name': 'Example'}
@@ -125,21 +130,10 @@ class VotingTestCase(BaseTestCase):
         data = {
             'name': 'Example',
             'desc': 'Description example',
-            'question': 'I want a ',
-            'question_opt': ['cat', 'dog', 'horse'],
+            'questions': ['I want a '],
+            'question_opts': [['cat', 'dog', 'horse']],
             'postproc_type': PostProcType.IDENTITY,
         }
-        
-        """
-        NUEVO FORMATO DE LOS DATOS:
-        data = {
-            'name': 'Example',
-            'desc': 'Description example',
-            'questions': ['I want a ', 'I like ',],
-            'question_opts': [['cat', 'dog', 'horse'],["hamburguer", "pizza"],],
-            'postproc_type': PostProcType.IDENTITY,
-        }
-        """
 
         response = self.client.post('/voting/', data, format='json')
         self.assertEqual(response.status_code, 201)
