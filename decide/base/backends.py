@@ -1,5 +1,5 @@
 from django.contrib.auth.backends import ModelBackend
-
+from rest_framework.authtoken.models import Token
 from base import mods
 from django.contrib.auth import get_user_model
 
@@ -15,26 +15,35 @@ class AuthBackend(ModelBackend):
     for future admin queries.
     '''
 
-    def new_authenticate(self, request, email=None, password=None, **kwargs):
-        if email is None:
-            email = kwargs.get(UserModel.USERNAME_FIELD)
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        
+        if username is None:
+            username = kwargs.get(UserModel.USERNAME_FIELD)
         try:
-            user = UserModel._default_manager.get_by_natural_key(email)
+            user = UserModel._default_manager.get_by_natural_key(username)
         except UserModel.DoesNotExist:
             # Run the default password hasher once to reduce the timing
             # difference between an existing and a nonexistent user (#20760).
             UserModel().set_password(password)
         else:
-            if user.check_password(password) and super.user_can_authenticate(user):
-                u = user
+            is_active = getattr(user, 'is_active', None)
+            if user.check_password(password) and is_active:
+                # data = {
+                #      'email': username,
+                #      'password': password                     
+                #      }
 
-                # only doing this for the admin web interface
-                if u and request.content_type == 'application/x-www-form-urlencoded':
-                    data = {
-                        'email': email,
-                        'password': password,
-                    }
-                    token = mods.post('authentication', entry_point='/login/', json=data)
-                    request.session['auth-token'] = token['token']
-
-                return u
+        #     serializer = self.serializer_class(data=request.data,
+        #                                    context={'request': request})
+        # serializer.is_valid(raise_exception=True)
+        # user = serializer.validated_data['user']
+            # serializer_class = AuthTokenSerializer            
+            # serializer = serializer_class(data=data, context={'request': request})
+            # if serializer.is_valid():
+            #     user = serializer.validated_data['user']
+                token, created = Token.objects.get_or_create(user=user)
+                token=token.key
+                print(token)
+#               token = mods.post('authentication', entry_point='/login/', json=data)
+                request.session['auth-token'] = token
+                return user
