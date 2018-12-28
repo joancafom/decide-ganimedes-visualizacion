@@ -198,7 +198,7 @@ STATS_NAMES = [
 
 CACHE_TIMEOUT = 10
 
-def get_statistics(vid):
+def get_statistics(vid, counter=0):
     
     #Obtenemos las estadísticas de la votación
     stats = {}
@@ -254,17 +254,31 @@ def get_statistics(vid):
         stats['men_percentage'] = sexes_percentages['M']
         stats['nonbinary_percentage'] = sexes_percentages['N']
 
-        cache.set_many(stats, timeout=CACHE_TIMEOUT)
+        #Cambiamos los valores None por 'None' (str)
+        #para poder guardarlos en caché sin problemas
+        processed_stats = { k: v if v is not None else 'None' for k,v in stats.items()}
+
+        cache.set_many(processed_stats, timeout=CACHE_TIMEOUT)
 
     else:
 
         #Las estadísticas deberían estar en caché...
-        cached_stats = cache.get_many(STATS_NAMES)
+        cached_raw_stats = cache.get_many(STATS_NAMES)
+
+        #Cambiamos los valores 'None' por None (NoneType)
+        #para finalizar la conversión
+        cached_stats = { k: v if v != 'None' else None for k,v in cached_raw_stats.items()}
 
         #Si no se encuentran todas, puede que haya expirado mientras
         #realizábamos la comprobación. Volvemos a calcularlas entonces
         if cached_stats is None or len(cached_stats) != len(STATS_NAMES):
-            get_statistics(vid)
+
+            #Si se han producido 2 llamadas recursivas, la caché está
+            #corrupta, procedemos a limpiarla
+            if counter >= 2:
+                cache.clear()
+
+            get_statistics(vid, counter=counter+1)
         else:
             stats = cached_stats
     
