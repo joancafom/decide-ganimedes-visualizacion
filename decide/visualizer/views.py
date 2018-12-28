@@ -196,18 +196,20 @@ STATS_NAMES = [
     'nonbinary_percentage'
 ]
 
-CACHE_TIMEOUT = 10
+CACHE_TIMEOUT = 20
 
 def get_statistics(vid, counter=0):
-    
-    #Obtenemos las estadísticas de la votación
+    """ Obtiene o calcula las estadísticas dada una votación vid:int
+    como un diccionario con el nombre de la estadística como 
+    clave y su dato como valor."""
+
+    #Estadísticas de la votación
     stats = {}
 
-    #Comprobamos si las estadísticas están en caché intentando
-    #acceder a una de ellas
-    in_cache = cache.get('census_size')
+    #Comprobamos si las estadísticas están en caché
+    cached_raw_stats = cache.get(str(vid))
 
-    if(in_cache is None):
+    if(cached_raw_stats is None):
         # No existen las estadísticas en caché
 
         #Estadísticas básicas: tamaño del censo, personas que han
@@ -258,29 +260,21 @@ def get_statistics(vid, counter=0):
         #para poder guardarlos en caché sin problemas
         processed_stats = { k: v if v is not None else 'None' for k,v in stats.items()}
 
-        cache.set_many(processed_stats, timeout=CACHE_TIMEOUT)
+        cache.set(str(vid), processed_stats, timeout=CACHE_TIMEOUT)
 
     else:
-
         #Las estadísticas deberían estar en caché...
-        cached_raw_stats = cache.get_many(STATS_NAMES)
 
         #Cambiamos los valores 'None' por None (NoneType)
-        #para finalizar la conversión
-        cached_stats = { k: v if v != 'None' else None for k,v in cached_raw_stats.items()}
+        stats = { k: v if v != 'None' else None for k,v in cached_raw_stats.items()}
 
-        #Si no se encuentran todas, puede que haya expirado mientras
-        #realizábamos la comprobación. Volvemos a calcularlas entonces
-        if cached_stats is None or len(cached_stats) != len(STATS_NAMES):
+        #Si no se encuentran todas, la caché está corrupta y debemos volver
+        #a calcularlas
+        if stats is None or len(stats) != len(STATS_NAMES):
 
-            #Si se han producido 2 llamadas recursivas, la caché está
-            #corrupta, procedemos a limpiarla
-            if counter >= 2:
-                cache.clear()
-
-            get_statistics(vid, counter=counter+1)
-        else:
-            stats = cached_stats
+            #Borramos el registro actual para proceder al nuevo cálculo
+            cache.delete(str(vid))
+            get_statistics(vid)
     
     return stats
 
