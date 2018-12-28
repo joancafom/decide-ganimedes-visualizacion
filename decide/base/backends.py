@@ -28,22 +28,8 @@ class AuthBackend(ModelBackend):
         else:
             is_active = getattr(user, 'is_active', None)
             if user.check_password(password) and is_active:
-                # data = {
-                #      'email': username,
-                #      'password': password                     
-                #      }
-
-        #     serializer = self.serializer_class(data=request.data,
-        #                                    context={'request': request})
-        # serializer.is_valid(raise_exception=True)
-        # user = serializer.validated_data['user']
-            # serializer_class = AuthTokenSerializer            
-            # serializer = serializer_class(data=data, context={'request': request})
-            # if serializer.is_valid():
-            #     user = serializer.validated_data['user']
+                #Token for everybody. In the future can be useful to make a vote.
                 token, created = Token.objects.get_or_create(user=user)
                 token=token.key
-                print(token)
-#               token = mods.post('authentication', entry_point='/login/', json=data)
                 request.session['auth-token'] = token
                 return user
