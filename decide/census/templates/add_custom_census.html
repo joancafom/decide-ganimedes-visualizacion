@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Creación de censos mediante filtros{% endblock %}
+
+{% block content %}
+    <div>
+        <h3>Añadiendo votantes a censos</h3>
+        <form action="{% url 'addCustomCensus' %}" method="POST">
+            {% csrf_token %}
+            <table>{{ form.as_table }}</table>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+{% endblock %}

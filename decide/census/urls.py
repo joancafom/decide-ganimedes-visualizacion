@@ -1,4 +1,5 @@
 from django.urls import path, include
+from census.views import addCustomCensus
 from . import views
 
 
@@ -7,5 +8,6 @@ urlpatterns = [
     path('<int:voting_id>/', views.CensusDetail.as_view(), name='census_detail'),
     path('addAllRegistered/', views.addAllRegistered, name='addAllRegistered'),
     path('addAllInCity/', views.addAllInCity, name='addAllInCity'),
-    path('addAllBySex/', views.addAllBySex, name='addAllBySex')
+    path('addAllBySex/', views.addAllBySex, name='addAllBySex'),
+    path('addCustomCensus', addCustomCensus, name='addCustomCensus'),
 ]
