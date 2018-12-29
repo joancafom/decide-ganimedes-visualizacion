@@ -215,16 +215,18 @@ def get_statistics(vid, counter=0):
         #Estadísticas básicas: tamaño del censo, personas que han
         #votado y participación
         census = mods.get('census', params={'voting_id': vid})
-        voters = get_stub_info('voters', vid)
-        no_voters = list(set(census['voters']) - set(voters))
+        voters_raw = mods.get('store',entry_point='/users/voting/{}/'.format(vid) )
+        voters_id = [v['id'] for v in voters_raw]
+        no_voters = list(set(census['voters']) - set(voters_id))
+
         stats['census_size'] = len(census['voters'])
-        stats['voters_turnout'] = get_stub_info('turnout', vid)
+        stats['voters_turnout'] = len(voters_id)
         if stats['census_size'] != 0:
             stats['participation_ratio'] = round((stats['voters_turnout'] / stats['census_size']) * 100, 2)
         else:
             stats['participation_ratio'] = 0
 
-        voters_ages = get_stub_info('ages', vid, voters)
+        voters_ages = get_stub_info('ages', vid, voters_id)
         no_voters_ages = get_stub_info('ages', vid, no_voters)
         (voters_age_dist, voters_age_mean) = age_distribution(voters_ages)
         stats['voters_age_dist'] = voters_age_dist
@@ -232,10 +234,9 @@ def get_statistics(vid, counter=0):
         stats['no_voters_age_mean'] = mean(no_voters_ages)
 
         #Estadísticas avanzadas de votación II
-        votos = Vote.objects.filter(voting_id=vid).all()
         votantes =  []
-        for v in votos:
-            user = User.objects.filter(id = v.voter_id).all()
+        for v_id in voters_id:
+            user = User.objects.filter(id = v_id).all()
             votantes.append(user)
         sexes_total = get_stub_info('sexes', vid, census['voters'])
         sexes_empty = {
@@ -280,15 +281,11 @@ def get_statistics(vid, counter=0):
 
 # Stub Methods
 # Simulamos la llamada a otros módulos mientras estos implementan sus cambios
-from store.models import Vote
 from authentication.models import User
 
 def get_stub_info(stub_info, vid, id_list = []):
 
-    if stub_info == "turnout":
-        return Vote.objects.filter(voting_id=vid).count()
-
-    elif stub_info == 'sexes':
+    if stub_info == 'sexes':
         voters = User.objects.filter(id__in=id_list).all()
 
         res = {
@@ -317,11 +314,6 @@ def get_stub_info(stub_info, vid, id_list = []):
                 res[years] = res[years] + 1
             else:
                 res[years] = 1
-
-        return res
-    elif stub_info == 'voters':
-        voters = Vote.objects.filter(voting_id=vid).values_list('voter_id', flat=True).all()
-        res = list(voters)
 
         return res
     else:
