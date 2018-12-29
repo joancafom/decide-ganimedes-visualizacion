@@ -175,6 +175,7 @@ def addCustomCensus(request):
             city_election = form.cleaned_data['city']
             age_initial_range_election = form.cleaned_data['age_initial_range']
             age_final_range_election = form.cleaned_data['age_final_range']
+            voting = form.cleaned_data['voting'].__getattribute__('pk')
 
             # Paso 2: Filtrando los votantes seleccionados...
 
@@ -209,15 +210,13 @@ def addCustomCensus(request):
 
                     print("Todos los voters_ids: " + str(voters_ids))
 
-                    voting_id = 999  # Esto es temporal hasta que se añada la funcionalidad del voting
-
                     for voter_id in voters_ids:
 
                         # Comprobamos que sea único
 
-                        if not is_exists_census(voting_id, voter_id):
+                        if not is_exists_census(voting, voter_id):
 
-                            census = Census(voting_id=voting_id, voter_id=voter_id)
+                            census = Census(voting_id=voting, voter_id=voter_id)
                             census.save()
 
             return redirect("/admin/census/census")                  # TODO: cambiar redirección

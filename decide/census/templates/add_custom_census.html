@@ -4,11 +4,32 @@
 
 {% block content %}
     <div>
-        <h3>Añadiendo votantes a censos</h3>
-        <form action="{% url 'addCustomCensus' %}" method="POST">
-            {% csrf_token %}
-            <table>{{ form.as_table }}</table>
-            <input type="submit" value="Submit">
-        </form>
+        <h4>Censando votantes en una votación</h4>
+
+        <div>
+            <form action="{% url 'addCustomCensus' %}" method="POST">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td><label>{{ form.voting.label }}</label>{{ form.voting }}</td>
+                    </tr>
+                </table>
+                <h5>Filtrado</h5>
+                <table>
+                    <tr>
+                        <td colspan="2"><label>{{ form.sex.label }}</label>{{ form.sex }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><label>{{ form.city.label }}</label>{{ form.city }}</td>
+                    </tr>
+                    <tr>
+                        <td><label>{{ form.age_initial_range.label}}</label>{{ form.age_initial_range }}</td>
+                        <td><label>{{ form.age_final_range.label }}</label>{{ form.age_final_range }}</td>
+                    </tr>
+                </table>
+                <br/>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
     </div>
 {% endblock %}
