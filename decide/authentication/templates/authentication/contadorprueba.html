@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block content %}
+    <h1>prueba</h1>
+    <input type="text" id="email" name="email"/>
+        <br/>
+        <input type="text" id="password" name="password"/>
+        <br/>
+        <br/>
+          
+        <input type="text" id="user1" name="user1"/>
+        <br/>
+        <input type="text" id="user2" name="user2"/>
+        <br/>
+        <input type="submit" value="go" onClick="login()"/>
+    
+{% endblock %}
+
+{% block extrabody %} 
+<script>
+    var token = null;
+    var user = null;
+    
+    function postData(url, data) {
+          // Default options are marked with *
+          var fdata = {
+            body: JSON.stringify(data),
+            headers: {
+              'content-type': 'application/json',
+            },
+            method: 'POST',
+          };
+
+          if (token) {
+              fdata.headers['Authorization'] = 'Token ' + token;
+          }
+
+          return fetch(url, fdata)
+          .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                return Promise.reject(response.statusText);
+            }
+          });
+        }
+     function send(){               
+        var data = {
+                user1: document.querySelector("#user1").value,
+                user2: document.querySelector("#user2").value,
+            };
+            postData("{{auth_url}}" + "/authentication/contador/", data)
+              .then(data => {
+                alert("enviado");
+              })
+              .catch(error => {
+                alert("error" + error);
+                console.error(error);
+              });
+        }
+        function login() {
+            var data = {
+                email: document.querySelector("#email").value,
+                password: document.querySelector("#password").value,
+            };
+            postData("{{auth_url}}" + "/authentication/login/", data)
+              .then(data => {
+                document.cookie = 'decide='+data.token+';';
+                token = data.token;
+                send();
+              })
+              .catch(error => {
+                alert("{% trans "Error: " %}" + error);
+                console.error(error);
+              });
+        }
+
+</script>
+{% endblock %}

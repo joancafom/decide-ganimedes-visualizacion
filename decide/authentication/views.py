@@ -24,6 +24,8 @@ from rest_framework.views import APIView
 
 from base import mods
 from django.contrib.auth import get_user_model
+from django.db.models import Count, Q
+from django.db.models.functions import TruncMonth
 
 from django.shortcuts import render
 
@@ -35,6 +37,37 @@ class GetUserView(APIView):
         tk = get_object_or_404(Token, key=key)
         return Response(UserSerializer(tk.user, many=False).data)
 
+
+class GetContadorView(APIView):
+    def post(self, request):
+        #prueba se recibe
+        print('aquí')
+        # #################
+        lista= request.data.get('user1', '')
+        print(lista)
+        #prueba filtro
+        id_list = [1, 2, 3]
+        objects = User.objects.filter(id__in=id_list)
+        #prueba query
+        queryset = User.objects.filter(id__in=id_list).annotate(
+            total_entries=Count('id'),
+            total_man=Count('id', filter=Q(sex='M')),
+            total_woman=Count('id', filter=Q(sex='W')),
+            total_non_binary=Count('id', filter=Q(sex='N')),
+            )
+        objects = dict([(obj.id, obj) for obj in queryset])
+        print(objects)
+        return response({})
+
+
+
+class GetContadorPruebaView(TemplateView):
+    template_name = 'authentication/contadorprueba.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        return context
 
 class LogoutView(APIView):
     def post(self, request):
