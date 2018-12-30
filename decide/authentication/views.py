@@ -40,24 +40,34 @@ class GetUserView(APIView):
 
 class GetContadorView(APIView):
     def post(self, request):
-        #prueba se recibe
-        print('aquí')
-        # #################
-        lista= request.data.get('user1', '')
-        print(lista)
-        #prueba filtro
-        id_list = [1, 2, 3]
+        ############################################
+        #
+        # This method receives a request with tuple 'lista'
+        # 'lista' value is a list of users id
+        # This method returns 
+        #
+        #############################################
+
+        #rcv        
+        id_list= request.data.get('lista', '')
+        id_list = list(map(int, id_list))
+        
+        #filtered users
         objects = User.objects.filter(id__in=id_list)
-        #prueba query
-        queryset = User.objects.filter(id__in=id_list).annotate(
-            total_entries=Count('id'),
-            total_man=Count('id', filter=Q(sex='M')),
-            total_woman=Count('id', filter=Q(sex='W')),
-            total_non_binary=Count('id', filter=Q(sex='N')),
-            )
-        objects = dict([(obj.id, obj) for obj in queryset])
-        print(objects)
-        return response({})
+        
+        #count        
+        num_total=objects.count()
+        objectsM = objects.filter(sex='M').count()
+        objectsW = objects.filter(sex='W').count()
+        objectsN = User.objects.filter(sex='N').count()
+
+        context = {
+               
+               'sex' : { 'man' : objectsM, 'woman' : objectsW,'non-binary' : objectsN, 'total' : num_total },
+            }      
+        
+
+        return Response(context)
 
 
 

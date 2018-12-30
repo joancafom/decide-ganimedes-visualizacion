@@ -9,12 +9,15 @@
         <br/>
         <br/>
           
-        <input type="text" id="user1" name="user1"/>
+        <input type="number" min="0" step="1" id="user1" name="user1"/>
         <br/>
-        <input type="text" id="user2" name="user2"/>
+        <input type="number" min="0" step="1" id="user2" name="user2"/>
         <br/>
         <input type="submit" value="go" onClick="login()"/>
-    
+
+        {% if sex %}
+        <h1>{{ sex.man }}</h1>
+        {% endif %}
 {% endblock %}
 
 {% block extrabody %} 
@@ -49,6 +52,7 @@
         var data = {
                 user1: document.querySelector("#user1").value,
                 user2: document.querySelector("#user2").value,
+                lista: [document.querySelector("#user1").value,document.querySelector("#user2").value]
             };
             postData("{{auth_url}}" + "/authentication/contador/", data)
               .then(data => {
