@@ -28,7 +28,7 @@ from django.db.models import Count, Q
 from django.db.models.functions import TruncMonth
 
 from django.shortcuts import render
-
+from datetime import date,  timedelta
 User=get_user_model()
     
 class GetUserView(APIView):
@@ -38,46 +38,64 @@ class GetUserView(APIView):
         return Response(UserSerializer(tk.user, many=False).data)
 
 
-class GetContadorView(APIView):
-    def post(self, request):
-        ############################################
-        #
-        # This method receives a request with tuple 'lista'
-        # 'lista' value is a list of users id
-        # This method returns 
-        #
-        #############################################
 
-        #rcv        
-        id_list= request.data.get('lista', '')
-        id_list = list(map(int, id_list))
-        
-        #filtered users
-        objects = User.objects.filter(id__in=id_list)
-        
-        #count        
-        num_total=objects.count()
-        objectsM = objects.filter(sex='M').count()
-        objectsW = objects.filter(sex='W').count()
-        objectsN = User.objects.filter(sex='N').count()
+def contador(request):
+    ##############################################################
+    #    # This method receives a request with tuple 'list'
+    # 'list' value is a list of users id
+    # This method returns a dictionary with keys:
+    # 'man', 'woman','non-binary','total','minor', and 'fullage'
+    #############################################################
+    id_list=[]
+    #rcv   
+    #TODO fake id_list . Change at integration moment (visualizer)     
+    # if request:
+    #     id_list= request.data.get('list', '')
+    id_list=['2','4','3']
+    id_list = list(map(int, id_list))
 
-        context = {
-               
-               'sex' : { 'man' : objectsM, 'woman' : objectsW,'non-binary' : objectsN, 'total' : num_total },
-            }      
-        
+    #filtered users. In this way, we call only one time to db
+    users = User.objects.filter(id__in=id_list)
+    
+    #count gender python    
+    num_total=users.count()
+    objectsM = users.filter(sex= User.SEX_OPTIONS[0][0]).count()
+    objectsW = users.filter(sex=User.SEX_OPTIONS[1][0]).count()
+    objectsN = users.filter(sex=User.SEX_OPTIONS[2][0]).count()
 
-        return Response(context)
+    #count age        
+    today = date.today()
+    age_max = 18
+    date_lim = date(today.year - age_max - 1, today.month, today.day) + timedelta(days = 1)
+    #TODO rango
+    objects_minor = users.filter(birthdate=date_lim).count()
+    objects_fullage = users.filter(birthdate= date_lim).count()
+
+    #count ( only 1 db). Grouping by date, and inside the date by gender
+    #nowdays this is not used, but could be useful for future develop        
+    queryset = User.objects.filter(id__in=id_list).annotate(
+        date=TruncMonth('birthdate'),
+        ).values('date').annotate(
+        total_entries=Count('id'),
+        total_m=Count('id', filter=Q(sex=User.SEX_OPTIONS[0][0])),
+        total_w=Count('id', filter=Q(sex=User.SEX_OPTIONS[1][0])),
+        total_n=Count('id', filter=Q(sex=User.SEX_OPTIONS[2][0])),
+        )
+    
+
+    data = { 'man' : objectsM,
+     'woman' : objectsW,
+     'non-binary' : objectsN, 
+     'total' : num_total,
+     'minor' : objects_minor,
+     'fullage' : objects_fullage
+     }
+  
+    return Response({'data': data})
 
 
 
-class GetContadorPruebaView(TemplateView):
-    template_name = 'authentication/contadorprueba.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
-        return context
 
 class LogoutView(APIView):
     def post(self, request):
@@ -139,7 +157,8 @@ def nuevo_usuario(request):
         formulario = UserCreateForm(request.POST)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/admin')
+            return HttpResponseRedirect('/')
     else:
         formulario = UserCreateForm()
     return render(request, 'authentication/nuevo_usuario.html', {'formulario':formulario})
+
