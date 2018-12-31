@@ -31,5 +31,6 @@ class AuthBackend(ModelBackend):
                 #Token for everybody. In the future can be useful to make a vote.
                 token, created = Token.objects.get_or_create(user=user)
                 token=token.key
+                request.session.flush()
                 request.session['auth-token'] = token
                 return user
