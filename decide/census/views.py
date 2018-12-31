@@ -26,7 +26,7 @@ from django.views.generic import TemplateView
 
 from django.http import HttpResponse
 from django.template import loader
-import csv
+import csv, io
 
 
 def addAllRegistered(request):
@@ -165,7 +165,7 @@ class CensusDetail(generics.RetrieveDestroyAPIView):
 
 # Formularios
 
-def addCustomCensus(request):
+def add_custom_census(request):
 
     if request.method == 'POST':                                    # Petición POST
         form = CensusAddMultipleVotersForm(request.POST)
@@ -233,7 +233,7 @@ def addCustomCensus(request):
     return render(request, template_name='add_custom_census.html', context=context)
 
 
-def exportCSV(request):
+def export_csv(request):
 
     # Paso 1: creamos un HTTPResponse con el apropiado CSV Header
 
@@ -254,6 +254,33 @@ def exportCSV(request):
         writer.writerow([row.id, str(row.voting_id), row.voter_id])
 
     return response
+
+
+def import_csv(request):
+
+    # Paso 1: obtenemos el fichero CSV
+
+    csv_file = request.FILES['file']
+
+    # Paso 2: verificación del fichero CSV
+
+    if not csv_file.name.endswith('.csv'):
+        return redirect("/census/addCustomCensus")
+
+    # Paso 3: persistemos los cambios en la base de datos
+
+    data_set = csv_file.read().decode('UTF-8')
+    io_string = io.StringIO(data_set)
+    next(io_string)
+
+    for column in csv.reader(io_string, delimiter=',', quotechar='|'):
+        _, created = Census.objects.update_or_create(
+            id=column[0],
+            voting_id=column[1],
+            voter_id=column[2],
+        )
+
+    return redirect("/admin/census/census")
 
 
 # Métodos auxiliares
