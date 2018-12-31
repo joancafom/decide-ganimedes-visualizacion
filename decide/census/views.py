@@ -25,6 +25,8 @@ from authentication import *
 from django.views.generic import TemplateView
 
 from django.http import HttpResponse
+from django.template import loader
+import csv
 
 
 def addAllRegistered(request):
@@ -231,8 +233,30 @@ def addCustomCensus(request):
     return render(request, template_name='add_custom_census.html', context=context)
 
 
-# Métodos auxiliares
+def exportCSV(request):
 
+    # Paso 1: creamos un HTTPResponse con el apropiado CSV Header
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="census.csv"'
+
+    # Paso 2: capturamos todos los datos
+
+    census = Census.objects.all()
+    cabecera = [field.attname for field in Census._meta.get_fields()]
+
+    # Paso 3: escribimos el fichero CSV
+
+    writer = csv.writer(response)
+    writer.writerow(cabecera)
+
+    for row in census:
+        writer.writerow([row.id, str(row.voting_id), row.voter_id])
+
+    return response
+
+
+# Métodos auxiliares
 
 # Comprueba si el censo existe en la base de datos
 
