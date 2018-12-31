@@ -14,7 +14,7 @@ from rest_framework.status import (
 
 from base.perms import CensusPermissions
 from census import models
-from census.forms import CensusAddMutipleVotersForm
+from census.forms import CensusAddMultipleVotersForm
 from .models import Census
 
 from voting.models import Voting
@@ -166,7 +166,7 @@ class CensusDetail(generics.RetrieveDestroyAPIView):
 def addCustomCensus(request):
 
     if request.method == 'POST':                                    # Petición POST
-        form = CensusAddMutipleVotersForm(request.POST)
+        form = CensusAddMultipleVotersForm(request.POST)
 
         # Paso 1: Comprobando que los datos se han añadido al formulario correctamente
 
@@ -222,7 +222,7 @@ def addCustomCensus(request):
             return redirect("/admin/census/census")                  # TODO: cambiar redirección
 
     else:                                                            # Petición GET
-        form = CensusAddMutipleVotersForm()
+        form = CensusAddMultipleVotersForm()
 
     context = {
         'form': form,

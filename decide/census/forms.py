@@ -41,13 +41,13 @@ class CensusAddMultipleVotersForm(forms.Form):
 
     sex = forms.MultipleChoiceField(label='Sex', choices=SEX_OPTIONS, required=False)
 
-    # city = forms.CharField(label='City', widget=forms.TextInput(attrs={'placeholder': 'Ej: Sevilla'}), required=False)
-    # forms.TextInput (attrs={'class':'some_class', 'id':'some_id'}))
-    city = ModelMultipleChoiceFieldByCity(label='City',
-                                          queryset=User.objects.all().distinct().filter(~Q(city='')).order_by('city'),
-                                          required=False)
+    city = forms.CharField(label='City', widget=forms.TextInput(attrs={'placeholder': 'Ej: Sevilla'}), required=False)
 
-    age_initial_range = forms.DateField(label='Edad inicial:',
+    # city = ModelMultipleChoiceFieldByCity(label='City',
+    #                                      queryset=User.objects.all().distinct().filter(~Q(city='')).order_by('city'),
+    #                                      required=False)
+
+    age_initial_range = forms.DateField(label='Edad inicial',
                                         widget=forms.TextInput(attrs={'placeholder': 'Ej: 22/12/1990'}),
                                         input_formats=DATE_INPUT_FORMATS, required=False)
 

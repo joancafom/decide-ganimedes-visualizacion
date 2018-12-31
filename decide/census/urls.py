@@ -9,5 +9,5 @@ urlpatterns = [
     path('addAllRegistered/', views.addAllRegistered, name='addAllRegistered'),
     path('addAllInCity/', views.addAllInCity, name='addAllInCity'),
     path('addAllBySex/', views.addAllBySex, name='addAllBySex'),
-    path('addCustomCensus', addCustomCensus, name='addCustomCensus'),
+    path('addCustomCensus', addCustomCensus, name='addCustomCensus')
 ]
