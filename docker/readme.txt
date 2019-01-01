@@ -44,25 +44,27 @@ Interfaz de usuario:
  									      | 0)  Salir                                                            |
  									      |                                                                      | 
 									      +----------------------------------------------------------------------+
- +----------------------------------------------------------------------+
- |              Panel de Administración - Decide-Ganimedes              |
- +----------------------------------------------------------------------+
- | 1) Listar imágenes, contenedores, volúmenes y redes                  |
- | 2) Eliminar componentes de docker                                    |
- |                                                                      |
- | 3) Encender contenedores con docker-compose                          |
- | 4) Compilar contenedores con docker-compose                          |
- | 5) Apagar contenedores con docker-compose                            |
- |                                                                      |
- | 6) Crear un usuario de administración para web                       |
- |                                                                      |
- | 9) Desactivar demonio de docker                                      |
- |                                                                      |
- | Estado del demonio de docker: ACTIVO                                 |
- |                                                                      |
- | 0)  Salir                                                            |
- |                                                                      |
- +----------------------------------------------------------------------+
++----------------------------------------------------------------------+
+|              Panel de Administración - Decide-Ganimedes              |
++----------------------------------------------------------------------+
+| 1) Listar imágenes, contenedores, volúmenes y redes                  |
+| 2) Eliminar componentes de docker sin uso                            |
+|                                                                      |
+| 3) Encender contenedores con docker-compose                          |
+| 4) Compilar contenedores con docker-compose                          |
+| 5) Apagar contenedores con docker-compose                            |
+| 6) Eliminar contenedores con docker-compose                          |
+| 7) Visualizar logs con docker-compose                                |
+|                                                                      |
+| 8) Crear un usuario de administración para web                       |
+|                                                                      |
+| 9) Desactivar demonio de docker                                      |
+|                                                                      |
+| Estado del demonio de docker: ACTIVO                                 |
+|                                                                      |
+| 0)  Salir                                                            |
+|                                                                      |
++----------------------------------------------------------------------+
 
  
 
@@ -74,9 +76,11 @@ A continuación se detallan cada una de las acciones con el demonio de Docker AC
  1) Listar imágenes, contenedores, volúmenes y redes: muestra información de las imágenes, contenedores, volúmenes y redes desplegadas en el sistema.
  2) Eliminar componentes de docker: despliega un menú que permite escoger qué elementos sin uso podemos eliminar.
  3) Encender contenedores con docker-compose: su propio nombre lo explica.
- 4) Compilar contenedores con docker-compose: su propio nombre lo explica. Permite seleccionar si la compilación es interactiva para nostrar posibles errores.
+ 4) Compilar contenedores con docker-compose: su propio nombre lo explica. 
  5) Apagar contenedores con docker-compose: su propio nombre lo explica.
- 6) Crear un usuario de administración para web: permite crear un usuario de administración en la web de docker basada en Django.
+ 6) Eliminar contenedores con docker-compose: su propio nombre lo explica.
+ 7) Visualizar logs con docker-compose: su propio nombre lo indica. Permite elegir que se muestren los logs en vivo.
+ 8) Crear un usuario de administración para web: permite crear un usuario de administración en la web de docker basada en Django.
  9) Desactivar demonio de Docker: su propio nombre lo explica. 
 
 A continuación se detallan cada una de las acciones con el demonio de Docker INACTIVO:
