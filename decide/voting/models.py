@@ -7,6 +7,7 @@ from base import mods
 from base.models import Auth, Key
 from postproc.models import PostProcType
 
+
 class Voting(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField(blank=True, null=True)
@@ -82,23 +83,26 @@ class Voting(models.Model):
 
     def do_postproc(self):
         tally = self.tally
-        options = self.question.options.all()
+        questions = self.questions.all()
 
-        opts = []
-        for opt in options:
-            if isinstance(tally, list):
-                votes = tally.count(opt.number)
-            else:
-                votes = 0
-            opts.append({
-                'option': opt.option,
-                'number': opt.number,
-                'votes': votes,
-                'gender': opt.gender,
-                'team': opt.team,
-            })
+        qsts = []
+        for qst in questions:
+            opts = []
+            for opt in qst.options.all():
+                if isinstance(tally, list):
+                    votes = tally.count(opt.number)
+                else:
+                    votes = 0
+                opts.append({
+                    'option': opt.option,
+                    'number': opt.number,
+                    'votes': votes,
+                    'gender': opt.gender,
+                    'team': opt.team,
+                })
+            qsts.append({'id': qst.id, 'options': opts, 'seats': qst.seats})
 
-        data = { 'type': self.postproc_type, 'options': opts, 'seats': self.question.seats }
+        data = { 'type': self.postproc_type, 'questions': qsts }
         postp = mods.post('postproc', json=data)
 
         self.postproc = postp
@@ -106,6 +110,7 @@ class Voting(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Question(models.Model):
     voting = models.ForeignKey(Voting, null=True, related_name='questions', on_delete = models.CASCADE)
@@ -136,6 +141,7 @@ class Question(models.Model):
     def __str__(self):
         return '{} ({})'.format(self.desc, self.number)
 
+
 @receiver(post_save, sender=Question)
 def check_question(sender, instance, **kwargs):
     if instance.yes_no_question==True and instance.options.all().count()==0:
@@ -143,6 +149,7 @@ def check_question(sender, instance, **kwargs):
         op1.save()
         op2 = QuestionOption(question=instance, number=2, option="No") 
         op2.save()
+
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
@@ -161,7 +168,7 @@ class QuestionOption(models.Model):
     team = models.IntegerField(blank=True, null=True)
     
     def save(self):
-        #Automatic assignment for the question number
+        # Automatic assignment for the question number
         if not self.number:
             options = self.question.options.all()
             if options:
