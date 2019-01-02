@@ -151,7 +151,6 @@ class CensusDetail(generics.RetrieveDestroyAPIView):
         except ObjectDoesNotExist:
             return Response('Invalid voter', status=ST_401)
         return Response('Valid voter')
-<<<<<<< HEAD
 
 
 # Formularios
