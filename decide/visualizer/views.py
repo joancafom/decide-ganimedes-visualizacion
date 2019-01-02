@@ -44,7 +44,7 @@ class VisualizerView(TemplateView):
                     context['stats_' + str(e)] = v
 
             else:
-                print("hola")
+                
                 #Votación terminada
                 self.template_name = "visualizer/ended.html"
 
