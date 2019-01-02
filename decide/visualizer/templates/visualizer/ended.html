@@ -15,17 +15,36 @@
         <h4>{{ voting.name }}</h4>
         <h5>{% trans "Results: " %}</h5>
     </div>
-        <!-- Nuevo mostrado de resultados en funcion de más de una pregunta -->
-    <ul>
-        {% for question in voting.questions %}
-            <p>{{question.number}} - {{question.desc}}</p>
-            {% with voting.postproc|get_value:question.number as values %}
-                    {% for value in values %}
-                        <li><p>{{value.option}} - ({{value.votes}})</p></li>
-                    {% endfor %}
-            {% endwith %}
-        {% endfor %}
-    </ul>
+    
+    <!-- Nuevo mostrado de resultados en funcion de más de una pregunta -->
+
+    {% with voting.postproc|get_first as firstVote %}
+        <!-- Para votaciones Weight -->
+        {% if firstVote.0.weight != None %}
+            <ul>
+                {% for question in voting.questions %}
+                    <p>{{question.number}} - {{question.desc}}</p>
+                    {% with voting.postproc|get_value:question.number as values %}
+                        {% for value in values %}
+                            <li><p>{{value.option}} - Total: ({{value.postproc}}) - Número de votos: ({{value.votes}})</p></li>
+                        {% endfor %}
+                    {% endwith %}
+                {% endfor %}
+            </ul>
+        <!-- Para el resto de votaciones -->
+        {% else %}
+            <ul>
+                {% for question in voting.questions %}
+                    <p>{{question.number}} - {{question.desc}}</p>
+                    {% with voting.postproc|get_value:question.number as values %}
+                        {% for value in values %}
+                            <li><p>{{value.option}} - ({{value.votes}})</p></li>
+                        {% endfor %}
+                    {% endwith %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
     
     {% for q in voting.questions %}
         <p>{{q.desc}}</p>
@@ -86,7 +105,7 @@
     {% elif firstVote.0.gender != None %}
         <!--TODO Pintado de grafica para Parity -->
 
-    {% elif firstVote.0.gender == None and firstVote.team == None %}
+    {% elif firstVote.0.gender == None and firstVote.0.team == None and firstVote.0.weight == None %}
 
     <!--Pintado de gráfica para Identity-->
     {% for q in voting.questions %}
@@ -134,6 +153,66 @@
 
         {% endwith %}
     {% endfor %}
+
+    {% elif firstVote.0.team == None and firstVote.0.gender == None and firstVote.0.weight != None %}
+
+        <!--Pintado de gráfica para Weight-->
+
+        {% for q in voting.questions %}
+            {% with voting.postproc|get_value:q.number as values %}
+                <script>
+                    var ctx = document.getElementById("resultados{{q.number}}");
+        
+        
+                    function getRandomColor() {
+                        var r = Math.floor(Math.random() * 255);
+                        var g = Math.floor(Math.random() * 255);
+                        var b = Math.floor(Math.random() * 255);
+                        return "rgb(" + r + "," + g + "," + b + ", 0.5)";
+                    }
+                    
+                    var colors = [];
+        
+                    colors.push(getRandomColor());
+                    colors.push(getRandomColor());
+        
+                
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [{% for option in values %}{% if forloop.first %}"{{option.option}}"{% else %},"{{option.option}}"{% endif %}{% endfor %}],
+                        datasets: [{
+                            label: 'Total',
+                            data: [{% for option in values %}{% if forloop.first %}{{option.postproc}}{% else %},{{option.postproc}}{% endif %}{% endfor %}],
+                            backgroundColor: colors[0],
+                            borderWidth: 1
+                        }, {
+                            label: 'Número de votos',
+                            data: [{% for option in values %}{% if forloop.first %}{{option.votes}}{% else %},{{option.votes}}{% endif %}{% endfor %}],
+                            backgroundColor: colors[1],
+                            borderWidth: 1
+                        }]},
+                    
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }],
+                                xAxes: [{
+                                    ticks: {
+                                        autoSkip:false
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                
+                </script>
+
+            {% endwith %}
+        {% endfor %}
 
     {% else %}
     
