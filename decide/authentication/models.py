@@ -5,6 +5,7 @@ from .managers import UserManager
 from datetime import date
 from django.utils.translation import ugettext_lazy as _
 
+
 # Create your models here.
 class User(AbstractBaseUser, PermissionsMixin):
     SEX_OPTIONS = (
