@@ -24,33 +24,12 @@ before_script:
 script:
   - python ./decide/manage.py makemigrations
   - python ./decide/manage.py migrate
-  - python ./decide/manage.py compilemessages
   - python ./decide/manage.py test ./decide
-  - if [[ $TRAVIS_BRANCH == "master" ]]; then git archive --format zip --output ./decide.zip master; fi
-
-before_deploy:
-- git config --local user.name davigldom
-- git config --local user.email davigldom@gmail.com
-- export YEAR=`date +"%Y"`  
-# - export GIT_TAG=v2.0.$TRAVIS_BUILD_NUMBER-$YEAR
-- export GIT_TAG=v2.0.0-$YEAR
-- git tag -a $GIT_TAG -m "Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
-
-deploy:
-  provider: releases
-  api-key:
-    secure: GqFjUaFQDruoLpPtCfDBm3oTUOxjgyr/jshqt3TM5IBzVkYXJ8GMBSMJBCYbhApztyRvRIJ6asbQ93UNAfK1lFU4TklnfeWp2vYIt3IOnF9Z7+GnIIkUdhyCFm+JQ2epWSEGCCShrqSwWdv2A/4pYlccCGGmyJBXQIRP3eJeLKmop1WehqVY6ZEvgKGMUhRc8/NtBNrgd3dDa/LnYmlgBfdz7ZHh0QDHOJIYGocyY83XO/C4FbI/EZF1hoibuhHZs67sUy8fE+zh1YCJocStuM4yAxO4n15lbRaUCy6r1s4MPNXFJINzG6TZYoFq9IjwHf742s80Mv4l4l+UW+Q1oUKU6IqGt98OLEZ1+d+g2Y52pcIUKgu2FhHF43u+zDvYQ7PMd0yoLVj6ZwI/xkJPEZQDHi60JFXHm/sySK9YgZSDOmRLMOMDr87XQ348M6BtGBnlXFuf8+ddg060wjdeoIkHTaMX/rteFB3vfmKacqUS4pZ9TlDVbpSmsGbPZJavVWlWQ/MiUcusiTB+vFuEmesItPcsWfjfAwStmScZ7ir8367hEcvQZ4oAvnLAbjFJbFLBTDhlKXx0eY3aXnJGzUrMEb27tSLbuLlyL4mIdXJUq2Wmsa7DlwR/+Sp8tYVdHaoGrGaiJoYRXlbrLAA1khbDYLjL+dRqAns499kHdYw=
-  file: "./decide.zip"
-  skip_cleanup: true
-  on:
-    branch: master
-    tags: false
 
 notifications:
-  email: false
+    email: false
     
 branches:
-  only:
-  - master
-  - develop
-    
+    only:
+    - master
+    - develop

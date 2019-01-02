@@ -19,6 +19,7 @@ from django.urls import path, include
 from rest_framework_swagger.views import get_swagger_view
 from django.conf.urls import url, include
 from base import views
+from django.conf.urls.i18n import i18n_patterns
 
 
 schema_view = get_swagger_view(title='Decide API')
@@ -27,7 +28,7 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('admin/', admin.site.urls),
     path('doc/', schema_view),
-    path(r'i18n/', include('django.conf.urls.i18n'))
+    path(r'i18n/', include('django.conf.urls.i18n')),
 ]
 
 for module in settings.MODULES:
