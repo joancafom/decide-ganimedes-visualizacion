@@ -37,13 +37,13 @@ msgstr ""
 
 #: .\authentication\serializers.py:16 .\booth\templates\booth\booth.html:129
 msgid "Email"
-msgstr "Correo electrónico"
+msgstr "Correu electrònic"
 
 #: .\authentication\serializers.py:18
 #: .\authentication\templates\authentication\signup.html:11
 #: .\booth\templates\booth\booth.html:137
 msgid "Password"
-msgstr "Contraseña"
+msgstr "Contrasenya"
 
 #: .\authentication\serializers.py:32
 msgid "Unable to log in with provided credentials."
@@ -55,43 +55,43 @@ msgstr ""
 
 #: .\authentication\templates\authentication\signup.html:8
 msgid "Username"
-msgstr "Usuario"
+msgstr ""
 
 #: .\authentication\templates\authentication\signup.html:14
 msgid "Submit"
-msgstr "Enviar"
+msgstr ""
 
 #: .\booth\templates\booth\booth.html:142
 msgid "Login"
-msgstr "Iniciar Sesión"
+msgstr "Iniciar Sessió"
 
 #: .\booth\templates\booth\booth.html:187
 msgid "Answer with voice"
-msgstr "Responder con voz"
+msgstr "Respondre amb veu"
 
 #: .\booth\templates\booth\booth.html:196
 msgid "Logout"
-msgstr "Cerrar Sesión"
+msgstr "Tancar Sessió"
 
 #: .\booth\templates\booth\booth.html:199
 msgid "Send vote"
-msgstr "Enviar voto"
+msgstr "Enviar vot"
 
 #: .\booth\templates\booth\booth.html:209
 msgid "Speech Synthesis not supported"
-msgstr "Síntesis de voz no soportada"
+msgstr "La síntesi de veu no és compatible"
 
 #: .\booth\templates\booth\booth.html:210
 msgid "Your browser does not support speech synthesis."
-msgstr "Su navegador no soporta la síntesis de voz."
+msgstr "El vostre navegador no admet la síntesi de veu."
 
 #: .\booth\templates\booth\booth.html:211
 msgid "We recommend you use Google Chrome."
-msgstr "Le recomendamos utilizar Google Chrome."
+msgstr "Us recomanem que feu servir Google Chrome."
 
 #: .\booth\templates\booth\booth.html:440
 msgid "Congratulations. Your vote has been sent"
-msgstr "Felicidades. Tu voto ha sido enviado."
+msgstr "Felicitacions. S'ha enviat el vostre vot"
 
 #: .\booth\templates\booth\booth.html:444
 #: .\booth\templates\booth\booth.html:473
@@ -101,100 +101,100 @@ msgstr "Error"
 
 #: .\booth\templates\booth\booth.html:449
 msgid "You must select an option for each question."
-msgstr "Debes seleccionar una opción para cada pregunta."
+msgstr "Heu de seleccionar una opció per a cada pregunta."
 
 #: .\booth\templates\booth\booth.html:489
 msgid "Enter an email and a password."
-msgstr "Introduzca un correo electrónico y una contraseña."
+msgstr "Introduïu un correu electrònic i una contrasenya."
 
 #: .\booth\templates\booth\booth.html:492
 msgid "The voting can not be accessed because it has not started."
-msgstr "No se puede acceder a la votación porque no ha comenzado."
+msgstr "La votació no es pot accedir perquè no s'ha iniciat."
 
 #: .\booth\templates\booth\booth.html:494
 msgid "The voting can not be accessed because it has ended."
-msgstr "No se puede acceder a la votación porque ha finalizado."
+msgstr "La votació no es pot accedir perquè s'ha acabat."
 
 #: .\booth\templates\booth\booth.html:497
 msgid ""
 "This vote does not contain any questions, so it can not be accessed yet. Try "
 "it again later."
-msgstr "Esta votación no contiene preguntas, por lo que aún no se puede acceder. Inténtalo de nuevo más tarde."
+msgstr "Aquesta votació no conté cap pregunta, de manera que no es pot accedir-hi encara. Torneu-ho a provar més tard."
 
 #: .\decide\settings.py:142
 msgid "English"
-msgstr "Inglés"
+msgstr "Anglès"
 
 #: .\decide\settings.py:143
 msgid "Spanish"
-msgstr "Español"
+msgstr "Espanyol"
 
 #: .\decide\settings.py:144
 msgid "Catalan"
-msgstr "Catalán"
+msgstr "Català"
 
 #: .\visualizer\templates\visualizer\ended.html:15
 #: .\visualizer\templates\visualizer\ended_export.html:6
 msgid "Results: "
-msgstr "Resultados"
+msgstr "Resultats"
 
 #: .\visualizer\templates\visualizer\ended.html:152
 #: .\visualizer\templates\visualizer\ongoing.html:95
 msgid "Download results as .pdf"
-msgstr "Descargar los resultados en formato .pdf"
+msgstr "Baixeu els resultats com .pdf"
 
 #: .\visualizer\templates\visualizer\ended.html:154
 #: .\visualizer\templates\visualizer\ongoing.html:97
 msgid "Download results as .csv"
-msgstr "Descargar los resultados en formato .csv"
+msgstr "Baixeu els resultats com .csv"
 
 #: .\visualizer\templates\visualizer\not_started.html:16
 msgid "Voting not started"
-msgstr "La votación no ha comenzado"
+msgstr "No s'ha iniciat la votació"
 
 #: .\visualizer\templates\visualizer\ongoing.html:14
 msgid "In Progress"
-msgstr "En progreso"
+msgstr "En progrés"
 
 #: .\visualizer\templates\visualizer\ongoing.html:21
 #: .\visualizer\templates\visualizer\ongoing_export.html:6
 msgid "Stats"
-msgstr "Estadisticas"
+msgstr "Estadístiques"
 
 #: .\visualizer\templates\visualizer\ongoing.html:25
 #: .\visualizer\templates\visualizer\ongoing_export.html:8
 msgid "Census Size:"
-msgstr "Tamaño del censo:"
+msgstr "Mida del cens:"
 
 #: .\visualizer\templates\visualizer\ongoing.html:26
 #: .\visualizer\templates\visualizer\ongoing_export.html:9
 msgid "Voters Turnout:"
-msgstr "Número de votantes:"
+msgstr "Participació"
 
 #: .\visualizer\templates\visualizer\ongoing.html:27
 #: .\visualizer\templates\visualizer\ongoing_export.html:10
 msgid "Participation:"
-msgstr "Porcentaje de participación:"
+msgstr "Participació"
 
 #: .\visualizer\templates\visualizer\ongoing.html:42
 msgid "Interested in the participation according to genders? Check it out!"
-msgstr "¿Quieres saber la participación por género? ¡Míralo!"
+msgstr "Està interessat en la participació segons els sexes? Comprova-ho!"
 
 #: .\visualizer\templates\visualizer\ongoing.html:46
 msgid "Women"
-msgstr "Femenino"
+msgstr "Dones"
 
 #: .\visualizer\templates\visualizer\ongoing.html:47
 msgid "Non-Binary"
-msgstr "No binario"
+msgstr "No binari"
 
 #: .\visualizer\templates\visualizer\ongoing.html:48
 msgid "Men"
-msgstr "Masculino"
+msgstr "Homes"
 
 #: .\visualizer\templates\visualizer\ongoing.html:51
 msgid "women voted"
-msgstr "mujeres votaron"
+msgstr "les dones van votar"
 
 #: .\visualizer\templates\visualizer\ongoing.html:51
 #: .\visualizer\templates\visualizer\ongoing.html:52
@@ -204,11 +204,11 @@ msgstr "del total"
 
 #: .\visualizer\templates\visualizer\ongoing.html:52
 msgid "non-binary voted"
-msgstr "no binario votaron"
+msgstr "votació no binària"
 
 #: .\visualizer\templates\visualizer\ongoing.html:53
 msgid "men voted"
-msgstr "hombres votaron"
+msgstr "els homes van votar"
 
 #: .\visualizer\templates\visualizer\ongoing.html:61
 msgid "to"
@@ -218,48 +218,48 @@ msgstr "a"
 #: .\visualizer\templates\visualizer\ongoing.html:74
 #: .\visualizer\templates\visualizer\ongoing.html:87
 msgid "years old"
-msgstr "años"
+msgstr "anys"
 
 #: .\visualizer\templates\visualizer\ongoing.html:70
 msgid "The average age of people who voted is..."
-msgstr "La edad media de los votantes es..."
+msgstr "L'edat mitjana de les persones que van votar és ..."
 
 #: .\visualizer\templates\visualizer\ongoing.html:76
 msgid "Nobody has voted yet :("
-msgstr "Nadie ha votado aún :("
+msgstr "Ningú ha votat encara :("
 
 #: .\visualizer\templates\visualizer\ongoing.html:83
 msgid "The average age of people who didn't vote is..."
-msgstr "La edad media de los votantes que aún no han votado es..."
+msgstr "L'edat mitjana de les persones que no van votar és ..."
 
 #: .\visualizer\templates\visualizer\ongoing.html:89
 msgid "Everyone has voted already :)"
-msgstr "Ya han votado todos :)"
+msgstr "Tothom ha votat ja :)"
 
 #: .\visualizer\templates\visualizer\ongoing_export.html:5
 msgid "Voting is open"
-msgstr "La votación esta abierta"
+msgstr "La votació està oberta"
 
 #: .\visualizer\templates\visualizer\ongoing_export.html:12
 msgid "Voter's Mean Age:"
-msgstr "Edad media de los votantes:"
+msgstr "Edat Mitjana de l'elector:"
 
 #: .\visualizer\templates\visualizer\ongoing_export.html:15
 msgid "Non-Voter's Mean Age:"
-msgstr "Edad media de los no votantes:"
+msgstr "Edat mitjana no votant:"
 
 #: .\visualizer\templates\visualizer\ongoing_export.html:17
 msgid "Voter's Age Analysis:"
-msgstr "Analisis de la edad de los votantes:"
+msgstr "Anàlisi de l'edat dels votants:"
 
 #: .\visualizer\templates\visualizer\ongoing_export.html:24
 msgid "Women participation:"
-msgstr "Participación femenina:"
+msgstr "Participació de les dones:"
 
 #: .\visualizer\templates\visualizer\ongoing_export.html:25
 msgid "Non-binary participation:"
-msgstr "Participación de genéro no binario:"
+msgstr "Participació no binària:"
 
 #: .\visualizer\templates\visualizer\ongoing_export.html:26
 msgid "Men participation:"
-msgstr "Participación masculina:"
+msgstr "Participació dels homes:"
