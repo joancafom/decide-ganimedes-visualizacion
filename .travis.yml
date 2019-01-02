@@ -32,8 +32,7 @@ before_deploy:
 - git config --local user.name davigldom
 - git config --local user.email davigldom@gmail.com
 - export YEAR=`date +"%Y"`  
-# - export GIT_TAG=v2.0.$TRAVIS_BUILD_NUMBER-$YEAR
-- export GIT_TAG=v2.0.0-$YEAR
+- export GIT_TAG=v2.0.$TRAVIS_BUILD_NUMBER-$YEAR
 - git tag -a $GIT_TAG -m "Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
 
 deploy:
