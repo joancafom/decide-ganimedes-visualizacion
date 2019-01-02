@@ -38,14 +38,25 @@
     </head>
 
     <body onload="initMaterialize()">
-        
+        <!--
         <ul id="dropdown1" class="dropdown-content">
-                <li><a href="#!">Español</a></li>
-                <li><a href="#!">Inglés</a></li>
-                <li class="divider"></li>
-                <li><a href="#!">Catalán</a></li>
+                <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}" />
+            <div class="selectLanguage">
+                <select name="language" onchange="this.form.submit()">>
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% for lang in LANGUAGES %}
+                        <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                            {{ lang.1 }} ({{ lang.0 }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form> 
         </ul>
-
+    -->
         <nav class="menu">
                 <div class="nav-wrapper teal darken-3">
                     <a href="/" class="brand-logo right">Ganímedes<i class="material-icons right">data_usage</i></a>
@@ -59,23 +70,9 @@
                         </ul>
                 </div>
         </nav>
-
-        <!-- <form action="{% url 'set_language' %}" method="post">
-            {% csrf_token %}
-            <input name="next" type="hidden" value="{{ redirect_to }}" />
-            <div class="selectLanguage">
-                <select name="language">
-                    {% get_current_language as LANGUAGE_CODE %}
-                    {% get_available_languages as LANGUAGES %}
-                    {% for lang in LANGUAGES %}
-                        <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                            {{ lang.1 }} ({{ lang.0 }})
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-            <input type="submit" value="Go" />
-        </form> -->
+    
+       
+        
         <style>
         .language {
             width:115px;
@@ -90,6 +87,7 @@
         
         </style>
          
+            
         <script type="text/javascript" src="{% static "decide/js/materialize.js"%}"></script>
 
 
@@ -115,8 +113,7 @@
                     </div> 
                 <a href="#" class="brand-logo center">Ganímedes</a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        {% block menu_options %}
-                        {% endblock %}
+                        
                     </ul>
                 </div>
             </div>
