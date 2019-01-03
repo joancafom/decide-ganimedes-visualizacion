@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 import datetime
 import pytz
 from django.utils import timezone
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 User=get_user_model()
 class UserCreateForm(UserCreationForm):
@@ -61,3 +62,20 @@ class UserCreateForm(UserCreationForm):
             
             if birthdate > now:
                 self.add_error('birthdate', _('Future date not posible'))
+
+
+class UserChangeForm(forms.ModelForm):
+    """A form for updating users. Includes all the fields on
+    the user, but replaces the password field with admin's
+    password hash display field.
+    """
+    password = ReadOnlyPasswordHashField()
+
+    class Meta:
+        model = User
+        fields = ('email', 'password', 'birthdate', 'is_active')
+
+    def clean_password(self):
+        # Regardless of what the user provides, return the initial value.
+        return self.initial["password"]
+
