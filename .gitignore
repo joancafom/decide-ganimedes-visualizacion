@@ -95,8 +95,7 @@ ENV/
 .vscode/*
 
 # Heroku
-Procfile
-runtime.txt
+# /decide/local_settings_heroku.py
 
 #sqlite3
 db.sqlite3

@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
-
+{% load i18n static %}
 {% block title %}Nuevo usuario{% endblock %}
 
 {% block content %}
-    <h1>Registra un nuevo usuario</h1>
+
+    <h1>{% trans "Sign up a new user" %}</h1>
     <form id='formulario' method='post' action=''>
         {% csrf_token %}
         <table>{{formulario}}</table>
-        <p><input type='submit' value='Registrar' /></p>
+        <button class="btn waves-effect waves-light" type="submit" name="action" >{% trans 'Submit' %}
+            <i class="material-icons right">send</i>
+        </button>
     </form>
 {% endblock %}
