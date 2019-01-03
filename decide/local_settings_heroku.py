@@ -13,8 +13,6 @@ MODULES = [
     'voting',
 ]
 
-BASEURL = 'https://ganimedes-authentication.herokuapp.com/'
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
