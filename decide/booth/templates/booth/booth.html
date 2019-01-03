@@ -326,7 +326,6 @@
         		postData("{{store_url}}" + "/store/", data)
                   .then(data => {
                 	  alert("{% trans "Congratulations. Your vote has been sent" %}")
-                      console.log(v);
                   })
                   .catch(error => {
                 	  alert("{% trans "Error: " %}" + error);
