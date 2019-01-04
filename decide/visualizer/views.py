@@ -203,33 +203,37 @@ STATS_NAMES = [
     'nonbinary_percentage'
 ]
 
-CACHE_TIMEOUT = 10
+CACHE_TIMEOUT = 20
 
-def get_statistics(vid):
-    
-    #Obtenemos las estadísticas de la votación
+def get_statistics(vid, counter=0):
+    """ Obtiene o calcula las estadísticas dada una votación vid:int
+    como un diccionario con el nombre de la estadística como 
+    clave y su dato como valor."""
+
+    #Estadísticas de la votación
     stats = {}
 
-    #Comprobamos si las estadísticas están en caché intentando
-    #acceder a una de ellas
-    in_cache = cache.get('census_size')
+    #Comprobamos si las estadísticas están en caché
+    cached_raw_stats = cache.get(str(vid))
 
-    if(in_cache is None):
+    if(cached_raw_stats is None):
         # No existen las estadísticas en caché
 
         #Estadísticas básicas: tamaño del censo, personas que han
         #votado y participación
         census = mods.get('census', params={'voting_id': vid})
-        voters = get_stub_info('voters', vid)
-        no_voters = list(set(census['voters']) - set(voters))
+        voters_raw = mods.get('store',entry_point='/users/voting/{}/'.format(vid) )
+        voters_id = [v['id'] for v in voters_raw]
+        no_voters = list(set(census['voters']) - set(voters_id))
+
         stats['census_size'] = len(census['voters'])
-        stats['voters_turnout'] = get_stub_info('turnout', vid)
+        stats['voters_turnout'] = len(voters_id)
         if stats['census_size'] != 0:
             stats['participation_ratio'] = round((stats['voters_turnout'] / stats['census_size']) * 100, 2)
         else:
             stats['participation_ratio'] = 0
 
-        voters_ages = get_stub_info('ages', vid, voters)
+        voters_ages = get_stub_info('ages', vid, voters_id)
         no_voters_ages = get_stub_info('ages', vid, no_voters)
         (voters_age_dist, voters_age_mean) = age_distribution(voters_ages)
         stats['voters_age_dist'] = voters_age_dist
@@ -237,10 +241,9 @@ def get_statistics(vid):
         stats['no_voters_age_mean'] = mean(no_voters_ages)
 
         #Estadísticas avanzadas de votación II
-        votos = Vote.objects.filter(voting_id=vid).all()
         votantes =  []
-        for v in votos:
-            user = User.objects.filter(id = v.voter_id).all()
+        for v_id in voters_id:
+            user = User.objects.filter(id = v_id).all()
             votantes.append(user)
         sexes_total = get_stub_info('sexes', vid, census['voters'])
         sexes_empty = {
@@ -261,33 +264,35 @@ def get_statistics(vid):
         stats['men_percentage'] = sexes_percentages['M']
         stats['nonbinary_percentage'] = sexes_percentages['N']
 
-        cache.set_many(stats, timeout=CACHE_TIMEOUT)
+        #Cambiamos los valores None por 'None' (str)
+        #para poder guardarlos en caché sin problemas
+        processed_stats = { k: v if v is not None else 'None' for k,v in stats.items()}
+
+        cache.set(str(vid), processed_stats, timeout=CACHE_TIMEOUT)
 
     else:
-
         #Las estadísticas deberían estar en caché...
-        cached_stats = cache.get_many(STATS_NAMES)
 
-        #Si no se encuentran todas, puede que haya expirado mientras
-        #realizábamos la comprobación. Volvemos a calcularlas entonces
-        if cached_stats is None or len(cached_stats) != len(STATS_NAMES):
+        #Cambiamos los valores 'None' por None (NoneType)
+        stats = { k: v if v != 'None' else None for k,v in cached_raw_stats.items()}
+
+        #Si no se encuentran todas, la caché está corrupta y debemos volver
+        #a calcularlas
+        if stats is None or len(stats) != len(STATS_NAMES):
+
+            #Borramos el registro actual para proceder al nuevo cálculo
+            cache.delete(str(vid))
             get_statistics(vid)
-        else:
-            stats = cached_stats
     
     return stats
 
 # Stub Methods
 # Simulamos la llamada a otros módulos mientras estos implementan sus cambios
-from store.models import Vote
 from authentication.models import User
 
 def get_stub_info(stub_info, vid, id_list = []):
 
-    if stub_info == "turnout":
-        return Vote.objects.filter(voting_id=vid).count()
-
-    elif stub_info == 'sexes':
+    if stub_info == 'sexes':
         voters = User.objects.filter(id__in=id_list).all()
 
         res = {
@@ -316,11 +321,6 @@ def get_stub_info(stub_info, vid, id_list = []):
                 res[years] = res[years] + 1
             else:
                 res[years] = 1
-
-        return res
-    elif stub_info == 'voters':
-        voters = Vote.objects.filter(voting_id=vid).values_list('voter_id', flat=True).all()
-        res = list(voters)
 
         return res
     else:
