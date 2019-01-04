@@ -279,4 +279,3 @@ def import_csv(request):
 
 def is_exists_census(voting_id, voter_id):
     return Census.objects.filter(voting_id=voting_id, voter_id=voter_id)
-
