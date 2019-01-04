@@ -1,11 +1,17 @@
 ---
-name: Informe de bug
-about: Informe sobre un bug en nuestro proyecto.
+name: Informe de bug para replicar
+about: Informe sobre un bug en nuestro proyecto para replicar al repositorio padre
+  de Decide-Ganímedes.
 title: ''
-labels: bug
+labels: bug, para replicar
 assignees: javirogo, Rubentoro, davigldom, mrchavea, carmenJaraAlvarez
 
 ---
+
+**Incidencia para replicar en el repositorio padre de Decide-Ganímedes**
+
+### Módulos implicados
+_Lista de los módulos implicados en esta incidencia_
 
 ### Descripción del error
 _Descripción clara y concisa sobre el error en cuestión_
