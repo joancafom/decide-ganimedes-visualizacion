@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from django.http import Http404, HttpResponseBadRequest
 from django.core.cache import cache
+from django.template.defaulttags import register
 
 from base import mods
 from django import template
@@ -22,6 +23,7 @@ class VisualizerView(TemplateView):
         try:
             r = mods.get('voting', params={'id': vid})
             context['voting'] = r[0]
+            
 
             # Elegimos la plantilla a renderizar en base al estado
             # de la votación
