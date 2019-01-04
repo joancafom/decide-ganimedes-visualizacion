@@ -28,17 +28,30 @@ class Render:
         votacion = params['voting']
         writer = csv.writer(response)
 
-        writer.writerow([votacion['name'], votacion['question']['desc']])
-
         if path == 'visualizer/ended_export.html':
             
-            writer.writerow(['Opción', 'Número de votos'])
-            resultados = params['voting']['postproc']
+            writer.writerow([votacion['name']])
+            writer.writerow(['Resultados'])
 
-            for r in resultados:
-                writer.writerow([r['option'], r['votes']])
+            p = 0
+
+            for q in votacion['questions']:
+                r = 0
+                p = p + 1
+                writer.writerow([q['number'], q['desc']])
+                writer.writerow(['Opción', 'Número de votos'])
+
+                for k, v in votacion['postproc'].items():
+                    r = r + 1
+
+                    if p == r:
+                        for o in v:
+                            writer.writerow([o['option'], o['postproc']])
         
         elif path == 'visualizer/ongoing_export.html':
+
+            writer.writerow([votacion['name']])
+            writer.writerow(['Votación en curso'])
 
             writer.writerow(['Estadísticas'])
             writer.writerow(['Tamaño del censo', str(params['stats_census_size'])])
