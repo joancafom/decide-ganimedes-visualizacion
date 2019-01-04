@@ -41,6 +41,11 @@ class VisualizerView(TemplateView):
                 for e,v in stats.items():
                     context['stats_' + str(e)] = v
 
+            elif r[0]['postproc'] is None and r[0]['end_date'] is not None:
+
+                #Recuento no realizado
+                self.template_name = "visualizer/not_tally.html"
+
             else:
                 
                 #Votación terminada

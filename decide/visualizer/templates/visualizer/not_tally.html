@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}
+{% endblock %}
+{% block menu_options %}
+{% endblock %}
+{% block content %}
+    <div>
+        <h4>{{ voting.name }}</h4>
+        <br>
+            <div>
+                <span>
+                    <p>{% trans "Votes have not been counted yet. Please try again later" %}</p>
+                </span>
+            </div>
+    </div>
+
+{% endblock %}
