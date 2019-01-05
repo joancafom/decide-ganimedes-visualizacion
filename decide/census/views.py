@@ -279,3 +279,15 @@ def import_csv(request):
 
 def is_exists_census(voting_id, voter_id):
     return Census.objects.filter(voting_id=voting_id, voter_id=voter_id)
+
+def viewVoters(request):
+
+    users = []
+    census = set(Census.objects.filter(voting_id=request.GET.get('voting_id')))
+
+    for censo in census:
+
+        usuario = User.objects.get(id=censo.voter_id)
+        users.append(usuario)
+
+    return render(request, "view_voters.html", {'users': users})
