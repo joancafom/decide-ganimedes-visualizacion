@@ -11,5 +11,6 @@ urlpatterns = [
     path('addAllBySex/', views.addAllBySex, name='addAllBySex'),
     path('addCustomCensus', add_custom_census, name='addCustomCensus'),
     path('exportCensus', export_csv, name='exportCSV'),
-    path('importCensus', import_csv, name='importCSV')
+    path('importCensus', import_csv, name='importCSV'),
+    path('viewVoters/', views.viewVoters, name='viewVoters')
 ]
