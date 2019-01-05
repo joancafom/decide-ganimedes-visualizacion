@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# Migrará automáticamente la base de datos.
+# Creará un superusuario para la aplicación django en caso de que se pida.
+#######################################################################
+#Or if you are using a unix-like OS you can run the following script (inside your project dir):
+#cd $repositorio
+#find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+#find . -path "*/migrations/*.pyc"  -delete
+#cd ../..
+#2. Drop the current database
+#sudo -u postgres -h localhost psql -c "DROP DATABASE decide"
+
+#python manage.py makemigrations
+#python manage.py migrate
+#######################################################################
+
+# RELLENAR LAS SIGUIENTES VARIABLES CON NUESTRAS RUTAS
+
+readonly entorno_virtual=~/librerias/env/bin
+readonly repositorio=~/repo/decide-ganimedes-autenticacion
+readonly iniciar_entorno=true
+readonly borrar_bd=true
+readonly borrar_migraciones=true
+readonly compilar_mensajes=false
+
+# Paramos el servicio de docker, si estuviese encendido
+echo "Parando servicio de docker"
+service docker stop
+
+
+if [ "$borrar_migraciones" = true ]; then
+	find . -path "$repositorio/*/migrations/*.py" -not -name "__init__.py" -delete
+	find . -path "$repositorio/*/migrations/*.pyc" -delete
+	echo "Migraciones borradas correctamente."
+fi
+
+if [ "$borrar_bd" = true ]; then
+	sudo -u postgres -h localhost psql -c "DROP DATABASE decide"
+	sudo -u postgres -h localhost psql -c "create database decide owner 'decide'"
+	echo "Base de datos borrada y creada correctamente."
+fi
+
+
+if [ "$iniciar_entorno" = true ]; then
+	echo "Iniciando entorno virtual"
+	
+	# Iniciamos el entorno virtual
+	source $entorno_virtual/activate
+fi
+
+$repositorio/decide/manage.py makemigrations
+$repositorio/decide/manage.py migrate
+
+if [ "$compilar_mensajes" = true ]; then
+	echo "Compilando mensajes."
+	$repositorio/decide/manage.py compilemessages
+	echo "Mensajes compilados."
+fi
+
+echo "¿Desea crear un super usuario por defecto? (U: admin@decide.com | P: practica) (s/N)"
+read create
+if [ "$create" = "s" ] || [ "$create" = "S" ] ; then
+	echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin@decide.com', 'practica')" | python3 $repositorio/decide/manage.py shell
+else
+	$repositorio/decide/manage.py createsuperuser
+fi
+
+$repositorio/decide/manage.py runserver
+
+echo "Finalizado script de migración."
