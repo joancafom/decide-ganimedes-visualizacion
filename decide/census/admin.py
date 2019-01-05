@@ -11,5 +11,6 @@ class CensusAdmin(admin.ModelAdmin):
 
     delete_confirmation_template = "delete_census.html"
     object_history_template = "census_history.html"
+    change_list_template = "main_index.html"
 
 admin.site.register(Census, CensusAdmin)
