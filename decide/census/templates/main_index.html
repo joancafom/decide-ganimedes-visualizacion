@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+{% include 'admin/change_list.html' %}
+{% load i18n admin_urls static admin_list %}
+
+{% block content %}
+  
+  <a href="/admin/logout" class="waves-effect waves-light btn">Log out</a>
+  <br><br>
+  <nav>
+    <div class="nav-wrapper">
+      <div class="col s1">
+        <a href="/admin" class="breadcrumb">Home
+        <a href="/admin/census/census" class="breadcrumb">Census</a>
+      </div>
+    </div>
+  </nav>
+
+    <div class="nav-wrapper">    
+      <form id="changelist-form" method="post"{% if cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
+      {% if cl.formset %}
+        <div id="searchbar">
+      {{ cl.formset.management_form }}
+      </div>
+      {% endif %}
+      </form>
+        </div>
+      </form>
+    </div>
+  
+<div class="nav-wrapper"> 
+    <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
+      {% block search %}{% search_form cl %}{% endblock %}
+      {% block date_hierarchy %}{% date_hierarchy cl %}{% endblock %}
+    </div>
+</div>  
+
+<br>
+<br>
+<a href="/census/createCensus/" class="waves-effect waves-light btn">{% trans 'Add census' %}</a>
+<br>
+<br>
+
+<div id="changelist-filter">
+            <h3>{% trans 'Filter' %}</h3>
+            {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
+</div>
+
+<table>
+        <thead>
+          <tr>
+              <th>{% trans 'Voting' %}</th>
+              <th>{% trans 'Voters' %}</th>
+              <th>{% trans 'Export' %}</th>
+              <th>{% trans 'Edit' %}</th>
+              <th>{% trans 'Delete' %}</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        {% for object in cl.result_list %}
+        <tr>
+        <td>{{ object.voting_id }}</td>
+        <td><a href="/census/viewVoters?voting_id={{ object.voting_id }}" class="waves-effect waves-light btn">{% trans 'View Voters' %}</a></td>
+        <td><a href="" class="waves-effect waves-light btn">{% trans 'Export census' %}</a></td>
+        <td><a href="{{ object.id }}/change/" class="waves-effect waves-light btn">{% trans 'Edit census' %}</a></td>
+        <td><a href="{{ object.id }}/delete/" class="waves-effect waves-light btn">{% trans 'Delete census' %}</a></td>
+        </tr>
+        
+        {% endfor %}
+          
+        </tbody>
+      </table>
+
+{% endblock %}
