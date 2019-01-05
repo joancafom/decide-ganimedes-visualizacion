@@ -291,3 +291,9 @@ def viewVoters(request):
         users.append(usuario)
 
     return render(request, "view_voters.html", {'users': users})
+
+def passVotings(request):
+    
+    votings = Voting.objects.all()
+
+    return render(request, "add_custom_census.html", {'votings': votings})
