@@ -8,7 +8,7 @@ assignees: javirogo, Rubentoro, davigldom, mrchavea, carmenJaraAlvarez
 
 ---
 
-**[Incidencia replicada desde el repositorio padre de Decide-Ganímedes](AÑADIR_URL)**
+**Incidencia para replicar en el repositorio padre de Decide-Ganímedes**
 
 ### Módulos implicados
 _Lista de los módulos implicados en esta incidencia_
