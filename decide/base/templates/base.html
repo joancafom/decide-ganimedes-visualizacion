@@ -41,7 +41,12 @@
 
         <nav class="menu">
                 <div class="nav-wrapper blue-grey darken-2">
-                    <a href="/" class="brand-logo right">Ganímedes<i class="material-icons right">data_usage</i></a>
+                        {% if user.is_authenticated %}
+                        <div class="userEmail right">
+                        <i class="material-icons left">account_circle</i><span> {{ user.email }}</span><a class="right" href="{% url 'logout' %}"><i class="material-icons right">power_settings_new</i></a>
+                        </div>
+                        {% endif %}
+                        <a href="/" class="brand-logo center">Ganímedes<i class="material-icons right">data_usage</i></a>
                         <ul id="nav-mobile" class="left hide-on-med-and-down">
                             {% block menu_options %}
                             <li>
