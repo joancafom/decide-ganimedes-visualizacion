@@ -69,29 +69,48 @@ class VotingTestCase(BaseTestCase):
         user.save()
         return user
 
-    def store_votes(self, v, q):
+    def store_votes(self, v, q1, q2):
         voters = list(Census.objects.filter(voting_id=v.id))
         voter = voters.pop()
 
-        clear = {}
+        clear1 = {}
+        clear2 = {}
 
-        options = QuestionOption.objects.filter(question=q)
-        for opt in options:
-            clear[opt.number] = 0
+        votes = []
+
+        options1 = QuestionOption.objects.filter(question=q1)
+        for opt in options1:
+            clear1[opt.number] = 0
             for i in range(random.randint(0, 5)):
                 a, b = self.encrypt_msg(opt.number, v)
                 data = {
                     'voting': v.id,
                     'voter': voter.voter_id,
-                    'votes': [{'a': a, 'b': b}],
+                    'votes': [{"a": a, "b": b}],
                 }
-                clear[opt.number] += 1
+                clear1[opt.number] += 1
                 user = self.get_or_create_user(voter.voter_id)
                 self.login(user=user.email)
                 voter = voters.pop()
                 mods.post('store', json=data)
-                
-        return clear, options
+
+        options2 = QuestionOption.objects.filter(question=q2)
+        for opt in options2:
+            clear2[opt.number] = 0
+            for i in range(random.randint(0, 5)):
+                a, b = self.encrypt_msg(opt.number, v)
+                data = {
+                    'voting': v.id,
+                    'voter': voter.voter_id,
+                    'votes': [{"a": a, "b": b}],
+                }
+                clear2[opt.number] += 1
+                user = self.get_or_create_user(voter.voter_id)
+                self.login(user=user.email)
+                voter = voters.pop()
+                mods.post('store', json=data)
+
+        return clear1, clear2, options1, options2
 
     def test_complete_voting(self):
         v, q1, q2 = self.create_voting()
@@ -101,8 +120,7 @@ class VotingTestCase(BaseTestCase):
         v.start_date = timezone.now()
         v.save()
 
-        c1, o1 = self.store_votes(v, q1)
-        c2, o2 = self.store_votes(v, q2)
+        c1, c2, o1, o2 = self.store_votes(v, q1, q2)
 
         self.login()  # set token
         v.tally_votes(self.token)
