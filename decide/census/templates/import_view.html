@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+{% include 'admin/change_list.html' %}
+{% load i18n admin_urls static admin_list %}
+
+{% block content %}
+  
+  <a href="/admin/logout" class="waves-effect waves-light btn">Log out</a>
+  <br><br>
+  <nav>
+    <div class="nav-wrapper">
+      <div class="col s1">
+        <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
+        <a href="" class="breadcrumb">{% trans 'Import Census' %}</a>
+      </div>
+    </div>
+  </nav>
+
+    <div class="nav-wrapper">    
+      <form id="changelist-form" method="post"{% if cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
+      {% if cl.formset %}
+        <div id="searchbar">
+      {{ cl.formset.management_form }}
+      </div>
+      {% endif %}
+      </form>
+        </div>
+      </form>
+    </div>
+  
+{% if errors %}
+    <p class="errornote">
+    {% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+    </p>
+    {{ adminform.form.non_field_errors }}
+    <br>
+    <br>
+{% endif %}
+
+<div>
+    <h5>Importar CSV</h5>
+    Elija el archivo CSV con los censos a importar en el sistema.
+    <br>
+    <form action="{% url 'importCSV' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="file-field input-field">
+      <div class="btn">
+        <span>File</span>
+        <input type="file" name="file">
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text">
+      </div>
+    </div>
+      <p>Solo acepta ficheros CSV</p>
+      <button type="save" class="waves-effect waves-dark btn">Upload CSV</button>
+    </form>
+    <br/><br/>
+</div>
+
+{% endblock %}
