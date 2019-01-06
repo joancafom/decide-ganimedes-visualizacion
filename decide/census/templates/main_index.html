@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 {% load i18n static %}
-{% include 'admin/change_list.html' %}
-{% load i18n admin_urls static admin_list %}
 
 {% block content %}
   
@@ -15,18 +13,6 @@
       </div>
     </div>
   </nav>
-
-    <div class="nav-wrapper">    
-      <form id="changelist-form" method="post"{% if cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
-      {% if cl.formset %}
-        <div id="searchbar">
-      {{ cl.formset.management_form }}
-      </div>
-      {% endif %}
-      </form>
-        </div>
-      </form>
-    </div>
   
 {% if errors %}
     <p class="errornote">
@@ -39,7 +25,7 @@
 
 <br>
 <br>
-<a href="{% url 'passVotings' %}" class="waves-effect waves-light btn">{% trans 'Add census with filters' %}</a> <a href="{% url 'addCustomCensus' %}" class="waves-effect waves-light btn">{% trans 'Add custom census' %}</a> <a href="{% url 'exportCSVView' %}" class="waves-effect waves-light btn">{% trans 'Export census' %}</a> <a href="{% url 'importCSVView' %}" class="waves-effect waves-light btn">{% trans 'Import census' %}</a><br>
+<a href="{% url 'passVotings' %}" class="waves-effect waves-light btn">{% trans 'Add census with filters' %}</a> <a href="{% url 'addCustomCensus' %}" class="waves-effect waves-light btn">{% trans 'Add custom census' %}</a> <a href="{% url 'exportCSVView' %}" class="waves-effect waves-light btn">{% trans 'Export all' %}</a> <a href="{% url 'importCSVView' %}" class="waves-effect waves-light btn">{% trans 'Import all' %}</a><br>
 <br>
 
 <table class="centered">
