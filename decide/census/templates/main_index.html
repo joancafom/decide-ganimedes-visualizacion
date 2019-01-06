@@ -10,8 +10,7 @@
   <nav>
     <div class="nav-wrapper">
       <div class="col s1">
-        <a href="/admin" class="breadcrumb">Home
-        <a href="/admin/census/census" class="breadcrumb">Census</a>
+        <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
       </div>
     </div>
   </nav>
@@ -28,48 +27,46 @@
       </form>
     </div>
   
-<div class="nav-wrapper"> 
-    <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
-      {% block search %}{% search_form cl %}{% endblock %}
-      {% block date_hierarchy %}{% date_hierarchy cl %}{% endblock %}
-    </div>
-</div>  
+{% if errors %}
+    <p class="errornote">
+    {% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+    </p>
+    {{ adminform.form.non_field_errors }}
+    <br>
+    <br>
+{% endif %}
 
 <br>
 <br>
-<a href="add/" class="waves-effect waves-light btn">{% trans 'Add census' %}</a>
-<br>
+<a href="{% url 'passVotings' %}" class="waves-effect waves-light btn">{% trans 'Add census with filters' %}</a> <a href="{% url 'addCustomCensus' %}" class="waves-effect waves-light btn">{% trans 'Add custom census' %}</a> <a href="{% url 'exportCSVView' %}" class="waves-effect waves-light btn">{% trans 'Export census' %}</a> <a href="{% url 'importCSVView' %}" class="waves-effect waves-light btn">{% trans 'Import census' %}</a><br>
 <br>
 
-<div id="changelist-filter">
-            <h3>{% trans 'Filter' %}</h3>
-            {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
-</div>
-
-<table>
+<table class="centered">
         <thead>
           <tr>
               <th>{% trans 'Voting' %}</th>
               <th>{% trans 'Voters' %}</th>
-              <th>{% trans 'Export' %}</th>
               <th>{% trans 'Edit' %}</th>
               <th>{% trans 'Delete' %}</th>
           </tr>
         </thead>
         <tbody>
 
-        {% for object in cl.result_list %}
+
+        {% for object in census %}
         <tr>
         <td>{{ object.voting_id }}</td>
-        <td><a href="/census/viewVoters?voting_id={{ object.voting_id }}" class="waves-effect waves-light btn">{% trans 'View Voters' %}</a></td>
-        <td><a href="" class="waves-effect waves-light btn">{% trans 'Export census' %}</a></td>
-        <td><a href="{{ object.id }}/change/" class="waves-effect waves-light btn">{% trans 'Edit census' %}</a></td>
-        <td><a href="{{ object.id }}/delete/" class="waves-effect waves-light btn">{% trans 'Delete census' %}</a></td>
+        <td><a href="{% url 'viewVoters' %}?voting_id={{ object.voting_id }}" class="waves-effect waves-light btn">{% trans 'View Voters' %}</a></td>
+        <td><a href="/admin/census/census/{{ object.id }}/change" class="waves-effect waves-light btn">{% trans 'Edit census' %}</a></td>
+        <td><a href="/admin/census/census/{{ object.id }}/delete/" class="waves-effect waves-light btn">{% trans 'Delete census' %}</a></td>
         </tr>
-        
+
         {% endfor %}
+
           
         </tbody>
       </table>
+
+
 
 {% endblock %}

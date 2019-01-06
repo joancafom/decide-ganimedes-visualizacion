@@ -10,8 +10,7 @@
   <nav>
     <div class="nav-wrapper">
       <div class="col s1">
-        <a href="/admin" class="breadcrumb">Home
-        <a href="/admin/census/census" class="breadcrumb">Census</a>
+        <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
         <a href="" class="breadcrumb">{% trans "Delete census" %}</a>
       </div>
     </div>
@@ -55,7 +54,7 @@
     <i class="material-icons right">send</i>
   </button>
         
-  <a href="/admin/census/census" class="waves-effect waves-light btn">{% trans "No, take me back" %}</a>
+  <a href="{% url 'listCensus' %}" class="waves-effect waves-light btn">{% trans "No, take me back" %}</a>
 </div> 
 </form>
 

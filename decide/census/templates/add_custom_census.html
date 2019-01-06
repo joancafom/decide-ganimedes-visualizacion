@@ -3,6 +3,18 @@
 {% block title %}Creación de censos mediante filtros{% endblock %}
 
 {% block content %}
+
+<a href="/admin/logout" class="waves-effect waves-light btn">Log out</a>
+  <br><br>
+  <nav>
+    <div class="nav-wrapper">
+      <div class="col s1">
+        <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
+        <a href="" class="breadcrumb">{% trans 'Add custom census' %}</a>
+      </div>
+    </div>
+  </nav>
+
     <div>
         <h4>Censando votantes en una votación</h4>
 
@@ -33,22 +45,5 @@
             <br/><br/>
         </div>
 
-        <h4>Pruebas temporales (hasta que se implemente el menú principal)</h4>
-        <div>
-            <h5>Exportar CSV</h5>
-            <button onclick="window.location='{% url 'exportCSV' %}'"
-                    title="Exportar CSV" class="button">
-                    Exportar CSV
-            </button>
-
-            <h5>Importar CSV</h5>
-            <form action="{% url 'importCSV' %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="file" name="file">
-                <p>Solo acepta ficheros CSV</p>
-                <button type="save">Upload CSV</button>
-            </form>
-            <br/><br/>
-        </div>
     </div>
 {% endblock %}
