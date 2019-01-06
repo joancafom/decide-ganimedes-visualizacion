@@ -297,3 +297,16 @@ def passVotings(request):
     votings = Voting.objects.all()
 
     return render(request, "add_custom_census.html", {'votings': votings})
+
+def export_csv_view(request):
+
+    return render(request, "export_view.html")
+
+def import_csv_view(request):
+
+    return render(request, "import_view.html")
+
+def list_census(request):
+
+    census = Census.objects.all()
+    return render(request,"main_index.html",{'census': census})
