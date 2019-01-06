@@ -9,8 +9,9 @@ class CensusAdmin(admin.ModelAdmin):
 
     search_fields = ('voter_id', )
 
-    delete_confirmation_template = "delete_census.html"
+    delete_confirmation_template = "admin_delete_census.html"
     object_history_template = "census_history.html"
+    change_form_template = "admin_edit_census.html"
     change_list_template = "admin_index.html"
 
 admin.site.register(Census, CensusAdmin)

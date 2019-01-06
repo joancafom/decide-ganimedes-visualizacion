@@ -10,6 +10,7 @@
   <nav>
     <div class="nav-wrapper">
       <div class="col s1">
+        <a href="/admin" class="breadcrumb">Home</a>
         <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
       </div>
     </div>
@@ -57,8 +58,8 @@
         <tr>
         <td>{{ object.voting_id }}</td>
         <td><a href="{% url 'viewVoters' %}?voting_id={{ object.voting_id }}" class="waves-effect waves-light btn">{% trans 'View Voters' %}</a></td>
-        <td><a href="/admin/census/census/{{ object.id }}/change" class="waves-effect waves-light btn">{% trans 'Edit census' %}</a></td>
-        <td><a href="/admin/census/census/{{ object.id }}/delete/" class="waves-effect waves-light btn">{% trans 'Delete census' %}</a></td>
+        <td><a href="{% url 'editCensus' %}?id={{ object.id }}" class="waves-effect waves-light btn">{% trans 'Edit census' %}</a></td>
+        <td><a href="{% url 'deleteCensus' %}?id={{ object.id }}" class="waves-effect waves-light btn">{% trans 'Delete census' %}</a></td>
         </tr>
 
         {% endfor %}

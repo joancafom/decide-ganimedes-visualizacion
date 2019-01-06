@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n static %}
 {% block title %}Creación de censos mediante filtros{% endblock %}
 
 {% block content %}
@@ -9,8 +9,9 @@
   <nav>
     <div class="nav-wrapper">
       <div class="col s1">
+        <a href="/admin" class="breadcrumb">Home</a>
         <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
-        <a href="" class="breadcrumb">{% trans 'Add custom census' %}</a>
+        <a href="" class="breadcrumb">{% trans "Add custom census" %}</a>
       </div>
     </div>
   </nav>
@@ -35,15 +36,20 @@
                         <td colspan="2"><label>{{ form.city.label }}</label>{{ form.city }}</td>
                     </tr>
                     <tr>
+                    <div class="datepicker">
                         <td><label>{{ form.age_initial_range.label}}</label>{{ form.age_initial_range }}</td>
+                    </div>
+                    <div class="datepicker">
                         <td><label>{{ form.age_final_range.label }}</label>{{ form.age_final_range }}</td>
+                    </div>
                     </tr>
                 </table>
                 <br/>
-                <input type="submit" value="Submit">
+                <button class="btn waves-effect waves-light" type="submit" value="Submit">{% trans "Create census" %}<i class="material-icons right">send</i></button>
             </form>
             <br/><br/>
         </div>
 
     </div>
+
 {% endblock %}

@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, render
 from rest_framework import generics
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 from rest_framework.status import (
         HTTP_201_CREATED as ST_201,
         HTTP_204_NO_CONTENT as ST_204,
@@ -46,7 +47,7 @@ def addAllRegistered(request):
     else:
         messages.add_message(request, messages.ERROR, "Permission denied")
 
-    return redirect('/admin/census/census')
+    return redirect('listCensus')
 
 
 def addAllBySex(request):
@@ -74,7 +75,7 @@ def addAllBySex(request):
         messages.add_message(request, messages.ERROR, "Permission denied")
 
     #return redirect('/census/?voting_id=' + voting_id)
-    return redirect('/admin/census/census')
+    return redirect('listCensus')
 
 
 def addAllInCity(request):
@@ -102,7 +103,7 @@ def addAllInCity(request):
         messages.add_message(request, messages.ERROR, "Permission denied")
 
     #return redirect('/census/?voting_id=' + voting_id)
-    return redirect('/admin/census/census')
+    return redirect('listCensus')
 
 
 class CensusCreate(generics.ListCreateAPIView):
@@ -211,7 +212,7 @@ def add_custom_census(request):
                             census = Census(voting_id=voting, voter_id=voter_id)
                             census.save()
 
-            return redirect("/admin/census/census")                  # TODO: cambiar redirección
+            return redirect('listCensus')                  # TODO: cambiar redirección
 
     else:                                                            # Petición GET
         form = CensusAddMultipleVotersForm()
@@ -270,7 +271,7 @@ def import_csv(request):
             voter_id=column[2],
         )
 
-    return redirect("/admin/census/census")
+    return redirect('listCensus')
 
 
 # Métodos auxiliares
@@ -293,14 +294,19 @@ def viewVoters(request):
     return render(request, "view_voters.html", {'users': users})
 
 def passVotings(request):
-    
-    votings = Voting.objects.all()
 
-    return render(request, "add_custom_census.html", {'votings': votings})
+    votings = Voting.objects.all()
+    if votings:
+        
+        return render(request, "add_census_filtros_simples.html", {'votings': votings})
+
+    else:
+        messages.add_message(request, messages.ERROR, "There are no votings available")
+        return redirect('listCensus')
 
 def export_csv_view(request):
 
-    return render(request, "export_view.html")
+    return render(request, "export_view.html")            
 
 def import_csv_view(request):
 
@@ -310,3 +316,56 @@ def list_census(request):
 
     census = Census.objects.all()
     return render(request,"main_index.html",{'census': census})
+
+def edit_census(request):
+
+
+    n_id = request.GET.get('id')
+    users = User.objects.all()
+    votings = Voting.objects.all()
+    census = get_object_or_404(Census,id=n_id)
+
+    if users:
+        if votings:
+            return render(request, 'edit_census.html',{'census': census, 'users':users, 'votings':votings})
+        else:
+            messages.add_message(request, messages.ERROR, "There are no votings available.")
+            return redirect('listCensus')
+    else:
+        messages.add_message(request, messages.ERROR, "There are no users available.")
+        return redirect('listCensus')
+
+
+def delete_census(request):
+
+    n_id = request.GET.get('id')
+    census = get_object_or_404(Census,id=n_id)
+
+    return render(request, 'delete_census.html',{'census': census})
+
+def save_edited_census(request):
+
+    
+        census_id = request.GET.get('id')
+        voting_id = request.GET.get('voting_id')
+        voter_id = request.GET.get('voter_id')
+        census = get_object_or_404(Census,id=census_id)
+        voting = get_object_or_404(Voting,id=voting_id)
+        voter = get_object_or_404(User,id=voter_id)
+
+        census.voting_id = voting_id
+        census.voter_id = voter_id
+        census.save()
+
+        return redirect('listCensus')
+
+
+def delete_selected_census(request):
+
+    census_id = request.GET.get('id')
+    
+    census = get_object_or_404(Census,id=census_id)
+
+    census.delete()
+
+    return redirect('listCensus')

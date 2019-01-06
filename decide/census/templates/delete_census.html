@@ -10,6 +10,7 @@
   <nav>
     <div class="nav-wrapper">
       <div class="col s1">
+        <a href="/admin" class="breadcrumb">Home</a>
         <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
         <a href="" class="breadcrumb">{% trans "Delete census" %}</a>
       </div>
@@ -19,7 +20,7 @@
 
 <div id="delete-block">
 
-<h5><p>{% blocktrans with escaped_object=object %}Are you sure you want to delete the {{ object_name }} "{{ escaped_object }}"? All of the following related items will be deleted:{% endblocktrans %}</p></h5>
+<h5><p>{% blocktrans with escaped_object=object %}Are you sure you want to delete this census? All of the following related items will be deleted:{% endblocktrans %}</p></h5>
 <br>
 <br>
 <br>
@@ -27,7 +28,6 @@
 <table class="centered responsive-table">
 <thead>
           <tr>
-              <th>{% trans "Name" %}</th>
               <th>{% trans "ID" %}</th>
               <th>{% trans "Voting ID" %}</th>
           </tr>
@@ -35,9 +35,8 @@
 
         <tbody>
           <tr>
-            <td>{{ object_name }}</td>
-            <td>{{object.id}}</td>
-            <td>{{object.voting_id}}</td>
+            <td>{{census.id}}</td>
+            <td>{{census.voting_id}}</td>
           </tr>
          
         </tbody>
@@ -46,11 +45,13 @@
 
 <br>
 
-<form method="post">{% csrf_token %}
+<form action="{% url 'deleteSelectedCensus' %} " method="get">
+
 <div id="delete-confirmation">
   <h5>{% trans "Be careful: this action cannot be undone!" %}</h5>
   <br>
-  <button class="btn waves-effect waves-light" type="submit" name="action">{% trans "Yes, I'm sure" %}
+  <input type="hidden" name="id" value="{{census.id}}" />
+  <button class="btn waves-effect waves-light" type="submit">{% trans "Yes, I'm sure" %}
     <i class="material-icons right">send</i>
   </button>
         

@@ -9,8 +9,9 @@
   <nav>
     <div class="nav-wrapper">
       <div class="col s1">
+        <a href="/admin" class="breadcrumb">Home</a>
         <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
-        <a href="" class="breadcrumb"> {% if add %}{% blocktrans with name=opts.verbose_name %} Add {{ name }}{% endblocktrans %}{% else %}{{ original|truncatewords:"18" }}{% endif %}</a>
+        <a href="" class="breadcrumb"> {% trans 'Create census with filters' %}</a>
       </div>
     </div>
   </nav>
@@ -25,10 +26,7 @@
 {% endif %}
   <br>
   <br>
-  {% if change %}<a href="{% url 'history' %}" class="waves-effect waves-light btn">{% trans 'History' %}</a>  
-  <br>
-  <br>
-  {% endif %}
+  
 
   <h5>{% trans "Choose one of the filters below to create the census." %}</h5>
 
@@ -42,11 +40,11 @@
       <option value="{{ voting.id }}">{{ voting.name }}</option>
       {% endfor %}
     </select>
-    <label for="numberinput1">{% trans 'Voting ID' %}</label>
+    <label for="numberinput1">{% trans 'Voting' %}</label>
   </div>
     
     <div id="city-choice">
-          <input type="text" name="city">
+          <input type="text" name="city" required="required">
           <label for="city">{% trans 'City' %}</label>
     <br>
     <button class="btn waves-effect waves-light" type="submit" >{% trans 'Create census' %}
@@ -70,7 +68,7 @@
       <option value="{{ voting.id }}">{{ voting.name }}</option>
       {% endfor %}
     </select>
-    <label for="numberinput2">{% trans 'Voting ID' %}</label>
+    <label for="numberinput2">{% trans 'Voting' %}</label>
   </div>
     
     <div id="sex-choice">
@@ -79,18 +77,19 @@
       <option value="W">{% trans 'Female' %}</option>
       <option value="N">{% trans 'Non-binary' %}</option>
     </select>
-    
     <br>
     <button class="btn waves-effect waves-light" type="submit" >{% trans 'Create census' %}
     <i class="material-icons right">send</i>
     </button>
-    <br>
     </div>
   </form>
   <br>
   <br>
   <br>
   <br>
+
+  
+
 
   <form action="{% url 'addAllRegistered' %}" method="get">
 
@@ -103,7 +102,7 @@
       <option value="{{ voting.id }}">{{ voting.name }}</option>
       {% endfor %}
     </select>
-    <label for="numberinput3">{% trans 'Voting ID' %}</label>
+    <label for="numberinput3">{% trans 'Voting' %}</label>
   </div>
 
     <div id="all-users-choice">
