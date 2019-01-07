@@ -106,9 +106,9 @@ class PostProcView(APIView):
         mujeres = []
         for opt in options:
             if opt['gender']:  # si la opcion es un hombre, añadelo a la lista hombres, si no, a mujer.
-                hombres.append({**opt, 'postproc': opt['votes']})
+                hombres.append(opt)
             else:
-                mujeres.append({**opt, 'postproc': opt['votes']})
+                mujeres.append(opt)
 
         hombres.sort(key=lambda x: -x['votes'])  # lista Ordenada de hombres por numero de votos
         mujeres.sort(key=lambda x: -x['votes'])  # lista Ordenada de mujeres por numero de votos
@@ -139,7 +139,7 @@ class PostProcView(APIView):
             if opt not in res:
                 res.append(opt)
 
-        return Response(res)
+        return res
 
     def post(self, request):
         t = request.data.get('type', PostProcType.IDENTITY)

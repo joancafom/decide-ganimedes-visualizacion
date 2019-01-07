@@ -163,10 +163,10 @@ class PostProcTestCase(APITestCase):
                 {
                     'number': 1,
                     'options': [
-                        {'option': 'Option 1', 'number': 1, 'votes': 10, 'genre': True},
-                        {'option': 'Option 2', 'number': 2, 'votes': 5, 'genre': True},
-                        {'option': 'Option 3', 'number': 3, 'votes': 13, 'genre': False},
-                        {'option': 'Option 4', 'number': 4, 'votes': 2, 'genre': False},
+                        {'option': 'Option 1', 'number': 1, 'votes': 10, 'gender': True},
+                        {'option': 'Option 2', 'number': 2, 'votes': 5, 'gender': True},
+                        {'option': 'Option 3', 'number': 3, 'votes': 13, 'gender': False},
+                        {'option': 'Option 4', 'number': 4, 'votes': 2, 'gender': False},
                     ],
                 },
             ],
@@ -178,10 +178,10 @@ class PostProcTestCase(APITestCase):
                 {
                     'number': 1,
                     'options': [
-                        {'option': 'Option 3', 'number': 3, 'votes': 13, 'genre': False},
-                        {'option': 'Option 1', 'number': 1, 'votes': 10, 'genre': True},
-                        {'option': 'Option 2', 'number': 2, 'votes': 5, 'genre': True},
-                        {'option': 'Option 4', 'number': 4, 'votes': 2, 'genre': False},
+                        {'option': 'Option 3', 'number': 3, 'votes': 13, 'gender': False},
+                        {'option': 'Option 1', 'number': 1, 'votes': 10, 'gender': True},
+                        {'option': 'Option 2', 'number': 2, 'votes': 5, 'gender': True},
+                        {'option': 'Option 4', 'number': 4, 'votes': 2, 'gender': False},
                     ],
                 },
             ],
