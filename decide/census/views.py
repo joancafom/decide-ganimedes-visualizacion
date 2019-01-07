@@ -27,6 +27,8 @@ from django.views.generic import TemplateView
 from django.http import HttpResponse
 from django.template import loader
 import csv, io
+from datetime import datetime
+from census.utils import check_str_is_int
 
 
 def addAllRegistered(request):
@@ -105,6 +107,54 @@ def addAllInCity(request):
     #return redirect('/census/?voting_id=' + voting_id)
     return redirect('listCensus')
 
+
+def addAllByAge(request):
+
+    if request.user.is_staff:
+        voting_id = request.GET.get('voting_id')
+
+        list_voting = set(Voting.objects.all().values_list('id', flat=True))
+
+        if int(voting_id) in list_voting:
+            younger = request.GET.get('younger')
+            older = request.GET.get('older')
+
+            if older is None: #Comprobando que la edad no este vacía.
+                older = '200'
+
+            if younger is None:
+                younger = '-1'
+
+            if check_str_is_int(older) and check_str_is_int(younger): #Comprobando que en caso de tener un valor sea un entero.
+
+                now1 = datetime.now()
+                now2 = now1
+                superior_limit = now1.replace(year=now1.year-int(younger))
+                lower_limit = now2.replace(year=now2.year-int(older))
+
+                voters = User.objects.filter(birthdate__gte=lower_limit)
+                voters = voters.filter(birthdate__lte=superior_limit)
+
+                if voters:
+                    for voter in voters:
+
+                        try:
+                            census = Census(voting_id=int(voting_id), voter_id=voter.id)
+                            census.save()
+
+                        except IntegrityError:
+                            continue
+
+            else:
+                messages.add_message(request, messages.ERROR, "Age is not an integer")
+
+        else:
+            messages.add_message(request, messages.ERROR, "Invalid voting id")
+
+    else:
+        messages.add_message(request, messages.ERROR, "Permission denied")
+
+    return redirect('/admin/census/census')
 
 class CensusCreate(generics.ListCreateAPIView):
     permission_classes = (CensusPermissions,)

@@ -4,11 +4,13 @@ from . import views
 
 
 urlpatterns = [
+
     path('', views.CensusCreate.as_view(), name='census_create'),
     path('<int:voting_id>/', views.CensusDetail.as_view(), name='census_detail'),
     path('addAllRegistered/', views.addAllRegistered, name='addAllRegistered'),
     path('addAllInCity/', views.addAllInCity, name='addAllInCity'),
     path('addAllBySex/', views.addAllBySex, name='addAllBySex'),
+    path('addAllByAge/', views.addAllByAge, name='addAllByAge'),
     path('addCustomCensus', add_custom_census, name='addCustomCensus'),
     path('exportCensus', export_csv, name='exportCSV'),
     path('importCensus', import_csv, name='importCSV'),
@@ -20,5 +22,6 @@ urlpatterns = [
     path('editCensus', views.edit_census, name='editCensus'),
     path('deleteCensus', views.delete_census, name='deleteCensus'),
     path('saveEditedCensus', views.save_edited_census, name='saveEditedCensus'),
-    path('deleteSelectedCensus', views.delete_selected_census, name='deleteSelectedCensus')
+    path('deleteSelectedCensus', views.delete_selected_census, name='deleteSelectedCensus'),
+
 ]
