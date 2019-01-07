@@ -4,15 +4,15 @@
 
 {% block content %}
   
-  
+ <div class="container">
   <a href="/admin/logout" class="waves-effect waves-light btn">Log out</a>
   <br><br>
   <nav>
-    <div class="nav-wrapper">
-      <div class="col s1">
-        <a href="/admin" class="breadcrumb">Home</a>
+    <div class="nav-wrapper row teal darken-3">
+      <div class="col s12">
+        <div class="col s12"><a href="/admin" class="breadcrumb">Home</a>
         <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
-        <a href="" class="breadcrumb">{% trans "Delete census" %}</a>
+      </div>
       </div>
     </div>
   </nav>
@@ -49,7 +49,7 @@
 
 <div id="delete-confirmation">
   <h5>{% trans "Be careful: this action cannot be undone!" %}</h5>
-  <br>
+  <br/>
   <input type="hidden" name="id" value="{{census.id}}" />
   <button class="btn waves-effect waves-light" type="submit">{% trans "Yes, I'm sure" %}
     <i class="material-icons right">send</i>
@@ -58,5 +58,5 @@
   <a href="{% url 'listCensus' %}" class="waves-effect waves-light btn">{% trans "No, take me back" %}</a>
 </div> 
 </form>
-
+<div>
 {% endblock %}

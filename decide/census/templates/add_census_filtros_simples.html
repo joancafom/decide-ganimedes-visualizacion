@@ -3,33 +3,35 @@
 {% include 'admin/change_form.html' %}
 
 {% block content %}
-
+ <div class="container">
   <a href="/admin/logout" class="waves-effect waves-light btn">Log out</a>
   <br><br>
   <nav>
-    <div class="nav-wrapper">
-      <div class="col s1">
-        <a href="/admin" class="breadcrumb">Home</a>
+    <div class="nav-wrapper row teal darken-3">
+      <div class="col s12">
+        <div class="col s12"><a href="/admin" class="breadcrumb">Home</a>
         <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
-        <a href="" class="breadcrumb"> {% trans 'Create census with filters' %}</a>
+        <a href="" class="breadcrumb">{% trans "Create census" %}</a>
+      </div>
       </div>
     </div>
   </nav>
 
-  {% if errors %}
-    <p class="errornote">
-    {% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
-    </p>
-    {{ adminform.form.non_field_errors }}
-    <br>
-    <br>
-{% endif %}
+{% for message in messages %}
+
+    <div class="alert alert-success">
+        <a class="close" href="#" data-dismiss="alert">×</a>
+
+        {{ message }}
+
+            </div>
+{% endfor %}
   <br>
   <br>
   
 
   <h5>{% trans "Choose one of the filters below to create the census." %}</h5>
-
+<div class="section">
   <form action="{% url 'addAllInCity' %}" method="get">
     <p>
         <span><h4>{% trans 'Create census with users from this city' %}</h4></span>
@@ -47,19 +49,20 @@
     <div id="city-choice">
         <label for="city">{% trans 'City' %}</label>
         <input type="text" name="city" required="required" placeholder="{% trans 'Ex: Sevilla' %}">
-          
-    <br>
+    <br/>      
+    <br/>
     <button class="btn waves-effect waves-light" type="submit" >{% trans 'Create census' %}
     <i class="material-icons right">send</i>
     </button>
     <br>
     </div>
   </form>
-  <br>
-  <br>
-  <br>
-  <br>
+  <br/>
 
+</div>
+  <div class="divider"></div>
+  <br/>
+<div class="section">
   <form action="{% url 'addAllBySex' %}" method="get">
     <div id="numberinput2">
     <p>
@@ -88,10 +91,11 @@
     </div>
   </form>
   <br>
-  <br>
-  <br>
-  <br>
 
+</div>
+<div class="divider"></div>
+<br/>
+<div class="section">
    <form action="{% url 'addAllByAge' %}" method="get">
 
     <div id="numberinput4">
@@ -113,17 +117,21 @@
     <br>
     <label for="older">{% trans 'To this age' %}</label>
     <input type="number" name="older" id="older" min="0">  
-
-    <br>
+    <br/>
+    <br/>
     <button class="btn waves-effect waves-light" type="submit" >{% trans 'Create census' %}
     <i class="material-icons right">send</i>
     </button>
-    <br>
+    <br/>
     </div>
 
   </form>
+</div>
+<br/>
+<div class="divider"></div>
+<br/>
 
-
+<div class="section">
   <form action="{% url 'addAllRegistered' %}" method="get">
 
     <div id="numberinput3">
@@ -149,9 +157,10 @@
     </div>
 
   </form>
-  
+  </div>
   <br>
   <br>
   <a class="btn waves-effect waves-light" href="{% url 'listCensus' %}">{% trans 'Back' %}</a>
+</div>
 
 {% endblock %}
