@@ -50,6 +50,28 @@
     </head>
 
     <body onload="initMaterialize()">
+    
+        <script>
+                window.fbAsyncInit = function() {
+                    FB.init({
+                    appId      : '{your-app-id}',
+                    cookie     : true,
+                    xfbml      : true,
+                    version    : '{api-version}'
+                    });
+                    
+                    FB.AppEvents.logPageView();   
+                    
+                };
+                
+                (function(d, s, id){
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {return;}
+                    js = d.createElement(s); js.id = id;
+                    js.src = "https://connect.facebook.net/en_US/sdk.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));
+            </script>
 
         <nav class="menu">
                 <div class="nav-wrapper blue-grey darken-2">
@@ -65,6 +87,7 @@
                             <div class="userEmail right">
                                 <a href="{% url 'social:begin' 'google-oauth2' %}"><img class="left social-icon" src="{% static 'decide/img/google_icon.png'%}"/></a>
                                 <a href="{% url 'social:begin' 'github' %}"><img class="left social-icon" src="{% static 'decide/img/github_icon.png'%}"/></a>
+                                <a href="{% url 'social:begin' 'facebook' %}"><img class="left social-icon" src="{% static 'decide/img/Facebook.png'%}"/></a>
                                 <a href="/admin"><img class="left admin-icon" src="{% static 'decide/img/django_icon.png'%}"/></a>
                                 <a href="/authentication/form-login?next={{request.path}}"><i class="material-icons right">send</i></a>
                                 <a href="/authentication/signup/"><i class="material-icons right">account_circle</i></a>                                
