@@ -1,42 +1,33 @@
 {% extends "base.html" %}
 {% load i18n static %}
+{% load custom_tags %}
 {% block extrahead %}
-    <link type="text/css" rel="stylesheet" href="{% static "decide/css/booth/booth.css"%}"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'decide/css/booth/booth.css'%}"/>
 {% endblock %}
 {% block content %}
+
+    {% if user.is_authenticated == False %}
+    <script>
+        window.location.replace("/authentication/form-login?next={{request.path}}");
+    </script>
+    {% endif %}
+
+    {% get_current_language as LANGUAGE_CODE %}
     
     <h3 class="center-align titulo">{{ voting.name }}</h3><br>
     <p class="center-align flow-text descripcion">{{voting.desc}}</p>
 
-    <div id="login" class="container">
-        <div class="row center-align">
-            <div class="row">
-                <div class="col m2"></div>
-                <div class="input-field col m8 s12">
-                    <input id="email" type="email" class="validate" name="email">
-                    <label for="email">{% trans "Email" %}</label>
-                </div>
-                <div class="col m2"></div>
-            </div>
-            <div class="row">
-                <div class="col m2"></div>
-                <div class="input-field col m8 s12">
-                  <input id="password" type="password" class="validate" name="password">
-                  <label for="password">{% trans "Password" %}</label>
-                </div>
-                <div class="col m2"></div>
-            </div>
-            <div class="row">
-                <button class="btn waves-effect waves-light" onClick="decideLogin()" type="submit" name="action">{% trans "Login" %}
-                    <i class="material-icons right">send</i>
-                </button>
-            </div>
-        </div>
-    </div>
+    {% if voting.start_date == None %}
+        <h4>{% trans 'The voting can not be accessed because it has not started.' %}</h4>
+    {% elif voting.end_date != None %}
+        <h4>{% trans 'The voting can not be accessed because it has ended. You can access to the results in the following link: ' %}<a href="/visualizer/{{voting.id}}">{% trans 'Results' %}</a></h4>
+    {% elif voting.questions.length is empty %}
+        <h4>{% trans 'This vote does not contain any questions, so it can not be accessed yet. Try it again later.' %}</h4>
+    {% else %}
+  
     <div id="voting">
         
-            
-            {% for question in voting.questions %}
+        {% for question in voting.questions %}
             <div class="row pregunta">
             <div class="col m1 l2"></div>
             <div class="col s12 m10 l8">
@@ -81,12 +72,9 @@
         {% endfor %}
         
         <div id="btnSend" class="row center-align">
-            <button class="btn waves-effect waves-light red" type="submit" name="action" onclick="decideLogout()">{% trans "Logout" %}
-                <i class="material-icons right">close</i>
-            </button>
             <button class="btn waves-effect waves-light" type="submit" name="action" onclick="decideSend()">{% trans "Send vote" %}
                     <i class="material-icons right">send</i>
-            </button>
+            </button> 
         </div>
         
     </div>
@@ -105,11 +93,9 @@
     //Script para modal
     var modal = document.getElementById('myModal');
     var span = document.getElementsByClassName("close")[0];
-
     span.onclick = function() {
     modal.style.display = "none";
     }
-
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
@@ -136,7 +122,6 @@
             }
             sintentizarVoz(texto)
         }
-
         function sintentizarVoz(texto) {
             if ("speechSynthesis" in window) {
                 var msg = new SpeechSynthesisUtterance();
@@ -192,19 +177,15 @@
                     $(text).prop("checked", true)
                 }
             }
-
         }
         //Funcion que devuelve true si contiene el 65% de la respuesta
         function comprobarRespuesta(o, r) {
             res = false
             opcion = o.replace('.','').replace(',', '').replace('¿', '').replace('?', '')
             respuesta = r.replace('.','').replace(',', '').replace('¿', '').replace('?', '')
-
             arrayOpcion = opcion.split(' ')
             arrayRespuesta = respuesta.split(' ')
-
             cont = 0
-
             for(i = 0; i < arrayOpcion.length; i++){
                 for(j = 0; j < arrayRespuesta.length; j++){
                     if(arrayOpcion[i].indexOf(arrayRespuesta[j]) != -1){
@@ -215,7 +196,6 @@
             }
             porcentaje =  cont / arrayOpcion.length
             console.log(porcentaje)
-
             if (porcentaje > 0.70) {
                 res = true
             }
@@ -226,6 +206,7 @@
         }
         </script>
 
+    {% endif %}
 {% endblock %}
 
 {% block extrabody %}
@@ -239,18 +220,21 @@
 
     <!-- ElGamal encrypt -->
     <script src="{% static "crypto/elgamal.js" %}"></script>
-
+    
     <script>
+        var sessionToken = null;
+        "{% if request.session|get_value_from_dict:'auth-token' %}"
+            sessionToken = "{{ request.session|get_value_from_dict:'auth-token' }}"
+        "{% endif %}"
+
         ElGamal.BITS = {{ KEYBITS }};
         var bigpk = {
             p: BigInt.fromJSONObject("{{voting.pub_key.p}}"),
             g: BigInt.fromJSONObject("{{voting.pub_key.g}}"),
             y: BigInt.fromJSONObject("{{voting.pub_key.y}}"),
         };
-
         var token = null;
         var user = null;
-
         function postData(url, data) {
           // Default options are marked with *
           var fdata = {
@@ -261,10 +245,9 @@
             method: 'POST',
           };
 
-          if (token) {
-              fdata.headers['Authorization'] = 'Token ' + token;
-          }
-
+            if (sessionToken) {
+                fdata.headers['Authorization'] = 'Token ' + sessionToken;
+            }
           return fetch(url, fdata)
           .then(response => {
             if (response.status === 200) {
@@ -274,13 +257,11 @@
             }
           });
         }
-
         function decideEncrypt(text) {
             var bigmsg = BigInt.fromJSONObject(text);
             var cipher = ElGamal.encrypt(bigpk, bigmsg);
             return cipher;
         }
-
 		function decideSend() {
         	
         	// Number of questions of the voting
@@ -315,118 +296,28 @@
         		}
         		
         		// Generate the data
-        		var data = {
+                var data = {
                 	votes: encryptedVotes,
-               	 	voting: {{voting.id}},
-                	voter: user.id,
-                	token: token
+               	 	voting: "{{voting.id}}",
+                	voter: "{{ request.session|get_value_from_dict:'_auth_user_id' }}",
+                	token: sessionToken,
             	}
         		
         		// Post the generated data
         		postData("{{store_url}}" + "/store/", data)
                   .then(data => {
-                	  alert("{% trans "Congratulations. Your vote has been sent" %}")
-                      console.log(v);
+                	  alert("{% trans 'Congratulations. Your vote has been sent' %}")
                   })
                   .catch(error => {
-                	  alert("{% trans "Error: " %}" + error);
+                	  alert("{% trans 'Error: ' %}" + error);
                 	  console.error(error);
                   });
         		
         	} else {
-        		alert("{% trans "You must select an option for each question." %}")
+        		alert("{% trans 'You must select an option for each question.' %}")
         	}
         	
         }
-
-        {% get_current_language as LANGUAGE_CODE %}
-        
-        function decideLogout() {
-            var data = { token: token };
-            postData("{{auth_url}}" +  "/authentication/logout/", data);
-
-            token = null;
-            user = null;
-            document.cookie = 'decide=;';
-            panel('login');
-        }
-
-        function decideUser() {
-            var data = { token: token };
-            postData("{{auth_url}}"  +  "/authentication/getuser/", data)
-              .then(data => {
-                user = data;
-                panel('voting');
-              }).catch(error => {
-                alert("{% trans "Error: " %}" + error);
-              });
-        }
-
-        function decideLogin() {
-        	
-       		var data = {
-	                email: document.querySelector("#email").value,
-	                password: document.querySelector("#password").value,
-	            };
-        	
-        	var questions = "{{voting.questions}}"
-        	var v_start_date = "{{voting.start_date}}"
-        	var v_end_date = "{{voting.end_date}}"
-        	
-        	if(data["email"] == "" || data["password"] == "") {
-        		alert("{% trans "Enter an email and a password." %}")
-        	} else {
-        		if(v_start_date == "None"){
-        			alert("{% trans "The voting can not be accessed because it has not started." %}")
-        		} else if(v_end_date != "None") {
-        			alert("{% trans "The voting can not be accessed because it has ended." %}")
-        		} else {
-	        		if(questions.length == 2) {
-	        			alert("{% trans "This vote does not contain any questions, so it can not be accessed yet. Try it again later." %}")
-	        		} else {
-			            postData("{{auth_url}}" +  "/authentication/login/", data)
-			              .then(data => {
-			                document.cookie = 'decide='+data.token+';';
-			                token = data.token;
-			                decideUser();
-			              })
-			              .catch(error => {
-			                alert("{% trans "Error: " %}" + error);
-			                console.error(error);
-			              });
-	        		}
-        		}
-	    	}
-        }
-
-        function panel(p) {
-            switch(p) {
-                case 'login':
-                    document.querySelector("#voting").style.display = "none";
-                    document.querySelector("#login").style.display = "block";
-                    break;
-                case 'voting':
-                default:
-                    document.querySelector("#voting").style.display = "block";
-                    document.querySelector("#login").style.display = "none";
-                    break;
-            };
-        }
-
-        function init() {
-            panel('login');
-
-            var cookies = document.cookie.split("; ");
-            cookies.forEach((c) => {
-                var cs = c.split("=");
-                if (cs[0] == 'decide' && cs[1]) {
-                    token = cs[1];
-                    decideUser();
-                }
-            });
-        }
-
-        init();
     </script>
 </body>
 {% endblock %}
