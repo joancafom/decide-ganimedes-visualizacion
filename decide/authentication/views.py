@@ -45,6 +45,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from .tokens import account_activation_token
 from django.utils.encoding import force_bytes
+from django.template import Context, loader
 
 
 User=get_user_model()
@@ -194,7 +195,9 @@ def nuevo_usuario(request):
             to_email = formulario.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+            template = loader.get_template("authentication/confirm_email.html")
+            return HttpResponse(template.render())
+            #return HttpResponse('Please confirm your email address to complete the registration')
 
     else:
         formulario = UserCreateForm()
@@ -216,11 +219,9 @@ class Activate(APIView):
             user.is_active = True
             user.save()
             login(request, user)
-            login(request, user)
-            # return redirect('home')
-            return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
-            # form = PasswordChangeForm(request.user)
-            # return render(request, 'activation.html', {'form': form})
+            template = loader.get_template("authentication/acc_active_email.html")
+            return HttpResponse(template.render())
+
 
         else:
             return HttpResponse('Activation link is invalid!')
