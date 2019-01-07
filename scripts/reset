@@ -49,6 +49,7 @@ if [ "$iniciar_entorno" = true ]; then
 	source $entorno_virtual/activate
 fi
 
+pip3 install -r $repositorio/requirements.txt
 $repositorio/decide/manage.py makemigrations
 $repositorio/decide/manage.py migrate
 
