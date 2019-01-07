@@ -76,8 +76,6 @@ class VotingTestCase(BaseTestCase):
         clear1 = {}
         clear2 = {}
 
-        votes = []
-
         options1 = QuestionOption.objects.filter(question=q1)
         for opt in options1:
             clear1[opt.number] = 0
@@ -132,13 +130,11 @@ class VotingTestCase(BaseTestCase):
         for opt in o1:
             self.assertEqual(tally.get(opt.number, 0), c1.get(opt.number, 0))
 
-        for opt in v.postproc[str(q1.id)]:
-            self.assertEqual(tally.get(opt["number"], 0), opt["votes"])
-
         for opt in o2:
             self.assertEqual(tally.get(opt.number, 0), c2.get(opt.number, 0))
 
-        for opt in v.postproc[str(q2.id)]:
+        for qst in v.postproc['questions']:
+            for opt in qst['options']:
                 self.assertEqual(tally.get(opt["number"], 0), opt["votes"])
 
     def test_create_voting_from_api(self):

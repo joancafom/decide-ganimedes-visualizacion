@@ -97,8 +97,9 @@ class Voting(models.Model):
                     'votes': votes,
                     'gender': opt.gender,
                     'team': opt.team,
+                    'weight': opt.weight,
                 })
-            qsts.append({'id': qst.id, 'options': opts, 'seats': qst.seats})
+            qsts.append({'number': qst.number, 'options': opts, 'seats': qst.seats})
 
         data = { 'type': self.postproc_type, 'questions': qsts }
         postp = mods.post('postproc', json=data)
