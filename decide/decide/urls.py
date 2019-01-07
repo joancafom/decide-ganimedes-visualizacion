@@ -28,6 +28,8 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('admin/', admin.site.urls),
     path('doc/', schema_view),
+    path('accounts/', include('django.contrib.auth.urls')),
+    url(r'^auth/', include('social_django.urls', namespace='social')),
     path(r'i18n/', include('django.conf.urls.i18n')),
 ]
 

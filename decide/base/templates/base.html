@@ -1,4 +1,5 @@
 {% load i18n static %}
+{% load custom_tags %}
 
 <!DOCTYPE html>
 <html>
@@ -21,6 +22,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="utf-8" />
         <title>{% block title %}Decide!{% endblock %}</title>
+        <link rel="shortcut icon" type="image/png" href="{% static 'decide/img/favicon.png'%}"/>
+        <style type="text/css"> 
+            .social-icon {
+                height: 30px;
+                margin-right: 15px;
+                margin-top: 16px;
+            }
+            .admin-icon{
+                height: 30px;
+                margin-top: 16px;
+            }
+        </style>
         {% block extrahead %}
         {% endblock %}
       
@@ -34,32 +47,52 @@
               $('select').formSelect();
             });
         </script>
-          
     </head>
 
     <body onload="initMaterialize()">
 
         <nav class="menu">
-                <div class="nav-wrapper teal darken-3">
-                    <a href="/" class="brand-logo right">Ganímedes<i class="material-icons right">data_usage</i></a>
+                <div class="nav-wrapper blue-grey darken-2">
+                        {% if user.is_authenticated %}
+                            <div class="userEmail right">
+                                <a href="/admin"><img class="left social-icon" src="{% static 'decide/img/django_icon.png'%}"/></a>
+                                <i class="material-icons left">account_circle</i>
+                                <span> {{ user.email }}</span>
+                                <a class="right" href="{% url 'logout' %}"><i class="material-icons right">power_settings_new</i></a>
+                            </div>
+                        {% endif %}
+                        {% if user.is_authenticated == False %}
+                            <div class="userEmail right">
+                                <a href="{% url 'social:begin' 'google-oauth2' %}"><img class="left social-icon" src="{% static 'decide/img/google_icon.png'%}"/></a>
+                                <a href="{% url 'social:begin' 'github' %}"><img class="left social-icon" src="{% static 'decide/img/github_icon.png'%}"/></a>
+                                <a href="/admin"><img class="left admin-icon" src="{% static 'decide/img/django_icon.png'%}"/></a>
+                                <a href="/authentication/form-login?next={{request.path}}"><i class="material-icons right">send</i></a>
+                                <a href="/authentication/signup/"><i class="material-icons right">account_circle</i></a>                                
+                            </div>
+                        {% endif %}
+                        <a href="/" class="brand-logo center">Ganímedes<i class="material-icons right">data_usage</i></a>
                         <ul id="nav-mobile" class="left hide-on-med-and-down">
                             {% block menu_options %}
                             <li>
-                                <div class="col s12 language1">
-                                    <select class="browser-default" name="language" onchange="this.form.submit()">
-                                        {% get_current_language as LANGUAGE_CODE %}
-                                        {% get_available_languages as LANGUAGES %}
-                                        {% for lang in LANGUAGES %}
-                                        <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected disabled hidden {% endif %}>
-                                            {{ lang.1 }}
-                                        </option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
+                                <form action="{% url 'set_language' %}" method="post">
+                                    {% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ redirect_to }}" />
+                                    <div class="col s12 language1">
+                                        <select class="browser-default" name="language" onchange="this.form.submit()">
+                                            {% get_current_language as LANGUAGE_CODE %}
+                                            {% get_available_languages as LANGUAGES %}
+                                            {% for lang in LANGUAGES %}
+                                            <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected disabled hidden {% endif %}>
+                                                {{ lang.1 }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </form>
                             </li>
-                            <li><a href="sass.html">Link 1</a></li>
-                            <li><a href="badges.html">Link 2</a></li>
-                            <li><a href="collapsible.html">Link 3</a></li>
+                            <li><a href="/booth/3/">Booth</a></li>
+                            <li><a href="#">Link 2</a></li>
+                            <li><a href="#">Link 3</a></li>
                             {% endblock %}
                         </ul>
                 </div>
@@ -93,7 +126,7 @@
             {% endblock %}
         </div>
         <div class="decideFooter">
-            <footer class="page-footer teal darken-3">
+            <footer class="page-footer blue-grey darken-2">
                     <div class="container">
                     <div class="row">
                         <div class="col l6 s12">

@@ -71,10 +71,6 @@ msgstr "Fechas posteriores no validas"
 msgid "Is active"
 msgstr "Está activo"
 
-#: authentication/models.py:21
-msgid "Avatar"
-msgstr "Avatar"
-
 #: authentication/models.py:22
 msgid "Is staf"
 msgstr "Is staf"

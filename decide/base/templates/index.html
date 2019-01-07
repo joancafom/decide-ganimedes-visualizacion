@@ -1,19 +1,15 @@
 {% extends 'base.html' %}
 {% load i18n static %}
-
-{% block title %}{% endblock %}
+{% load custom_tags %}
   
 {% block content %}
 
-    
 <div class="parallax-container">
     <div class="parallax" ><img src="static/decide/img/3406.jpg" alt="My image"/></div>
   </div>
   <div class="section white">
     <div class="row container">
-      <h2 class="header">{% trans "Welcome" %}</h2>
-        <a class="waves-effect waves-light btn-small" href="#"><i class="material-icons right">account_circle</i>{% trans 'Sign in' %}</a>
-        <a class="waves-effect waves-light btn-small" href="authentication/nuevo-usuario/"><i class="material-icons right">account_circle</i>{% trans 'Sign up' %}</a>
+      <h2 class="header">{% trans "Welcome" %}{% if user.is_authenticated %}, {{ user.first_name }}{% endif %}</h2>
     </div>
   </div>  
         <br>

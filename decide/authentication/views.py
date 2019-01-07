@@ -11,7 +11,7 @@ from django.http import Http404, HttpResponseRedirect
 
 from .forms import UserCreateForm
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 
 from rest_framework import parsers, renderers
@@ -55,8 +55,6 @@ class GetUserView(APIView):
         key = request.data.get('token', '')
         tk = get_object_or_404(Token, key=key)
         return Response(UserSerializer(tk.user, many=False).data)
-
-
 
 def contador(request):
     ##############################################################
@@ -116,22 +114,17 @@ def contador(request):
   
     return Response({'data': data})
 
-
-
-
-
 class LogoutView(APIView):
     def post(self, request):
         key = request.data.get('token', '')
         try:
             tk = Token.objects.get(key=key)
             tk.delete()
+            logout(request)
         except ObjectDoesNotExist:
             pass
 
         return Response({})
-
-
 
 class ObtainAuthToken(APIView):
     throttle_classes = ()
@@ -170,12 +163,22 @@ class ObtainAuthToken(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
+        login(request, user)
         return Response({'token': token.key})
 
+class ObtainAuthTokenRRSS(APIView):  
+    def get(self, request, *args, **kwarsg):
+        if((request.session.has_key('google-oauth2_state')) or (request.session.has_key('github_state'))):
+            user = User.objects.get(pk=request.session['_auth_user_id'])
+            token, created = Token.objects.get_or_create(user=user)
+            request.session['auth-token'] = token.key
+        return HttpResponseRedirect(request.GET.get('next', '/'))
+
+obtain_auth_token_rrss = ObtainAuthTokenRRSS.as_view()
 
 obtain_auth_token = ObtainAuthToken.as_view()
 
-def nuevo_usuario(request):
+def signUp(request):
     if request.method == 'POST':
         formulario = UserCreateForm(request.POST)
         if formulario.is_valid():
@@ -201,7 +204,7 @@ def nuevo_usuario(request):
 
     else:
         formulario = UserCreateForm()
-    return render(request, 'authentication/nuevo_usuario.html', {'formulario':formulario})
+    return render(request, 'authentication/signup.html', {'formulario':formulario})
 
     
 
@@ -232,3 +235,7 @@ class Activate(APIView):
             user = form.save()
             update_session_auth_hash(request, user) # Important, to update the session with the new password
             return HttpResponse('Password changed successfully')
+
+            
+def form_login(request):
+    return render(request, 'authentication/login.html')

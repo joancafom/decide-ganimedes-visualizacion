@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
 
     'corsheaders',
     'django_filters',
@@ -55,6 +56,11 @@ REST_FRAMEWORK = {
 }
 
 AUTHENTICATION_BACKENDS = [
+    'social_core.backends.open_id.OpenIdAuth',  # for Google authentication
+    'social_core.backends.google.GoogleOpenId',  # for Google authentication
+    'social_core.backends.google.GoogleOAuth2',  # for Google authentication
+    'social_core.backends.github.GithubOAuth2',  # for Github authentication
+    'social_core.backends.facebook.FacebookOAuth2',  # for Facebook authentication
     'base.backends.AuthBackend',
 ]
 
@@ -96,6 +102,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -161,10 +169,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Avatar files
-AVATAR_ROOT = os.path.join(BASE_DIR, 'authentication/avatars')
-AVATAR_URL = '/authentication/avatars/'
-
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
 
@@ -173,18 +177,11 @@ if 'TRAVIS' in os.environ:
         from local_settings_travis import *
     except ImportError:
         print("local_settings_travis.py not found")
-elif 'HEROKU_GANIMEDES' in os.environ:
-    try:
-        from settings_heroku import *
-
-        #Heroku (Esta configuración debe ir aquí)
-        import django_heroku
-        django_heroku.settings(locals())
-    except ImportError:
-        print("local_settings_heroku.py not found")
-elif 'HEROKU_LOCAL' in os.environ:
+elif 'HEROKU' in os.environ:
     try:
         from local_settings_heroku import *
+
+        BASEURL = 'https://'+os.environ['REPO_NAME']+'.herokuapp.com/'
 
         #Heroku (Esta configuración debe ir aquí)
         import django_heroku
@@ -205,3 +202,14 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'decideganimedes@gmail.com'
 EMAIL_HOST_PASSWORD = 'decide18-19'
 EMAIL_PORT = 587
+
+LOGIN_REDIRECT_URL = '/authentication/obtain_auth_token_rrss/'
+LOGIN_URL = '/auth/login/google-oauth2/'
+
+LOGOUT_REDIRECT_URL = '/'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='1016450567923-d0li25hpefseismg55uns76k7p38ou2s.apps.googleusercontent.com'  #CLient Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'cuYcihCQQootUwo8dsQ2FToo' #Secret Key
+
+SOCIAL_AUTH_GITHUB_KEY = '5374f0f3acee01f795f6' #Client ID
+SOCIAL_AUTH_GITHUB_SECRET = '057e80e49258b60a09acf76c2ff49fed36fa37b3' #Secret Key

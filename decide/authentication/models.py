@@ -20,7 +20,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     city = models.CharField(_('City'),max_length=80, blank=True)
     sex = models.CharField(_('Sex'),max_length=1, choices=SEX_OPTIONS, null=True)
     is_active = models.BooleanField(_('Is active'),default=True)
-    avatar = models.ImageField(_('Avatar'),upload_to='avatars/', null=True, blank=True)
     is_staff = models.BooleanField(_('Is staf'),default=False)
 
     objects = UserManager()

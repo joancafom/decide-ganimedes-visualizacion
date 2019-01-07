@@ -19,6 +19,10 @@ body{
     margin-bottom: 50px;
 }
 
+.userEmail{
+    margin-right: 4%;
+}
+
 .brand-logo{
     font-family: 'Roboto Slab';
 }
@@ -41,7 +45,8 @@ h5, p{
     {
         color: red;
     }
-or if you want to change field border color then
+    
+/* or if you want to change field border color then */
 .error input, .error select {
 border: 2px red solid;
 }
