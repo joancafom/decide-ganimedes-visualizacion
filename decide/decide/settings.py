@@ -199,3 +199,9 @@ else:
 
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'decideganimedes@gmail.com'
+EMAIL_HOST_PASSWORD = 'decide18-19'
+EMAIL_PORT = 587

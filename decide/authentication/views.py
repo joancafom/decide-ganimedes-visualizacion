@@ -29,6 +29,24 @@ from django.db.models.functions import TruncMonth, TruncYear
 
 from django.shortcuts import render
 from datetime import date,  timedelta
+
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils import six
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.core.mail import EmailMessage
+from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from django.http import HttpResponse
+from django.contrib.auth import get_user_model, login, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from .tokens import account_activation_token
+from django.utils.encoding import force_bytes
+
+
 User=get_user_model()
     
 class GetUserView(APIView):
@@ -160,9 +178,56 @@ def nuevo_usuario(request):
     if request.method == 'POST':
         formulario = UserCreateForm(request.POST)
         if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect('/')
+            user=formulario.save(commit=False)
+            user.is_active = False
+            user.set_unusable_password()
+            user.save()
+
+            # Send an email to the user with the token:
+            mail_subject = 'Activate your account.'
+            current_site = get_current_site(request)
+            uid = urlsafe_base64_encode(force_bytes(user.pk)).decode()
+            token = account_activation_token.make_token(user)
+            activation_link = "http://{0}/authentication/activate/?uid={1}&token={2}".format(current_site, uid, token)
+            message = "Hello,\n {0}".format( activation_link)
+            
+            to_email = formulario.cleaned_data.get('email')
+            email = EmailMessage(mail_subject, message, to=[to_email])
+            email.send()
+            return HttpResponse('Please confirm your email address to complete the registration')
+
     else:
         formulario = UserCreateForm()
     return render(request, 'authentication/nuevo_usuario.html', {'formulario':formulario})
 
+    
+
+class Activate(APIView):
+    def get(self, request):
+        uidb64 = request.GET.get('uid')
+        token = request.GET.get('token')
+        try:
+            uid = force_text(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+        if user is not None and account_activation_token.check_token(user, token):
+            # activate user and login:
+            user.is_active = True
+            user.save()
+            login(request, user)
+            login(request, user)
+            # return redirect('home')
+            return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+            # form = PasswordChangeForm(request.user)
+            # return render(request, 'activation.html', {'form': form})
+
+        else:
+            return HttpResponse('Activation link is invalid!')
+
+    def post(self, request):
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user) # Important, to update the session with the new password
+            return HttpResponse('Password changed successfully')
