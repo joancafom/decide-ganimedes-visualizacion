@@ -27,6 +27,7 @@ from django.http import HttpResponse
 from django.template import loader
 import csv, io
 from datetime import datetime
+from census.utils import check_str_is_int
 
 
 def addAllRegistered(request):
@@ -107,6 +108,7 @@ def addAllInCity(request):
 
 
 def addAllByAge(request):
+
     if request.user.is_staff:
         voting_id = request.GET.get('voting_id')
 
@@ -116,24 +118,34 @@ def addAllByAge(request):
             younger = request.GET.get('younger')
             older = request.GET.get('older')
 
-            now1 = datetime.now()
-            now2=now1
-            superior_limit=now1.replace(year=now1.year-int(younger))
-            lower_limit=now2.replace(year=now2.year-int(older))
+            if older is None: #Comprobando que la edad no este vacía.
+                older = '200'
 
+            if younger is None:
+                younger = '-1'
 
-            voters = User.objects.filter(birthdate__gte=lower_limit)
-            voters = voters.filter(birthdate__lte=superior_limit)
+            if check_str_is_int(older) and check_str_is_int(younger): #Comprobando que en caso de tener un valor sea un entero.
 
-            if voters:
-                for voter in voters:
+                now1 = datetime.now()
+                now2 = now1
+                superior_limit = now1.replace(year=now1.year-int(younger))
+                lower_limit = now2.replace(year=now2.year-int(older))
 
-                    try:
-                        census= Census(voting_id=int(voting_id), voter_id=voter.id)
-                        census.save()
+                voters = User.objects.filter(birthdate__gte=lower_limit)
+                voters = voters.filter(birthdate__lte=superior_limit)
 
-                    except:
-                        continue
+                if voters:
+                    for voter in voters:
+
+                        try:
+                            census = Census(voting_id=int(voting_id), voter_id=voter.id)
+                            census.save()
+
+                        except IntegrityError:
+                            continue
+
+            else:
+                messages.add_message(request, messages.ERROR, "Age is not an integer")
 
         else:
             messages.add_message(request, messages.ERROR, "Invalid voting id")
