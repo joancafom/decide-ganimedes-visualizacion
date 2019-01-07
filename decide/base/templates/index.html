@@ -9,7 +9,7 @@
   </div>
   <div class="section white">
     <div class="row container">
-      <h2 class="header">{% trans "Welcome" %}{% if user.is_authenticated %}, {{ user.first_name }}{% endif %}</h2>
+      <h2 class="header">{% trans "Welcome" %}{% if user.is_authenticated %}{% if user.firs_name != None %}, {{ user.first_name }}{% endif %}{% endif %}</h2>
     </div>
   </div>  
         <br>

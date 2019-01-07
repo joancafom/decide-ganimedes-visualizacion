@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load i18n static %}
+{% load custom_tags %}
 {% block title %}Nuevo usuario{% endblock %}
 
 {% block content %}
-
+{{user.is_authenticated}}
 Please confirm your email address to complete the registration
 {% endblock %}
