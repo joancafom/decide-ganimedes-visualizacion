@@ -156,6 +156,43 @@ class PostProcTestCase(APITestCase):
         values = response.json()
         self.assertEqual(values, expected_result)
 
+    def test_parity(self):
+        data = {
+            'type': PostProcType.PARITY,
+            'questions': [
+                {
+                    'number': 1,
+                    'options': [
+                        {'option': 'Option 1', 'number': 1, 'votes': 10, 'genre': True},
+                        {'option': 'Option 2', 'number': 2, 'votes': 5, 'genre': True},
+                        {'option': 'Option 3', 'number': 3, 'votes': 13, 'genre': False},
+                        {'option': 'Option 4', 'number': 4, 'votes': 2, 'genre': False},
+                    ],
+                },
+            ],
+        }
+
+        expected_result = {
+            'type': PostProcType.PARITY,
+            'questions': [
+                {
+                    'number': 1,
+                    'options': [
+                        {'option': 'Option 3', 'number': 3, 'votes': 13, 'genre': False},
+                        {'option': 'Option 1', 'number': 1, 'votes': 10, 'genre': True},
+                        {'option': 'Option 2', 'number': 2, 'votes': 5, 'genre': True},
+                        {'option': 'Option 4', 'number': 4, 'votes': 2, 'genre': False},
+                    ],
+                },
+            ],
+        }
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+
     def test_weight(self):
         data = {
             'type': PostProcType.WEIGHT,
