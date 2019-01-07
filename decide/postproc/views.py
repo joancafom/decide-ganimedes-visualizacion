@@ -107,21 +107,20 @@ class PostProcView(APIView):
     def post(self, request):
         t = request.data.get('type', PostProcType.IDENTITY)
         qsts = request.data.get('questions', [])
-        results = {}
+        questions = []
 
         for qst in qsts:
             if t == PostProcType.IDENTITY:
-                results[qst['id']] = self.identity(qst['options'])
+                questions.append({'number': qst['number'], 'options': self.identity(qst['options'])})
             elif t == PostProcType.WEIGHT:
-                results[qst['id']] = self.weight(qst['options'])
+                questions.append({'number': qst['number'], 'options': self.weight(qst['options'])})
             elif t == PostProcType.SEATS:
-                sts = qst['seats']
-                results[qst['id']] = self.seats(qst['options'], sts)
+                questions.append({'number': qst['number'], 'options': self.seats(qst['options'], qst['seats']), 'seats': qst['seats']})
             elif t == PostProcType.PARITY:
-                results[qst['id']] = self.parity(qst['options'])
+                questions.append({'number': qst['number'], 'options': self.parity(qst['options'])})
             elif t == PostProcType.TEAM:
-                results[qst['id']] = self.team(qst['options'])
+                questions.append({'number': qst['number'], 'options': self.team(qst['options'])})
             else:
-                results[qst['id']] = self.identity(qst['options'])
+                questions.append({'number': qst['number'], 'options': self.identity(qst['options'])})
 
-        return Response(results)
+        return Response({'questions': questions, 'type': t})
