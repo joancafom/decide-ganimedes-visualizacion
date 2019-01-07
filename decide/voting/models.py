@@ -61,16 +61,14 @@ class Voting(models.Model):
 
         # first, we do the shuffle
         data = { "msgs": votes }
-        response = mods.post('mixnet', entry_point=shuffle_url, baseurl=auth.url, json=data,
-                response=True)
+        response = mods.post('mixnet', entry_point=shuffle_url, baseurl=auth.url, json=data, response=True)
         if response.status_code != 200:
             # TODO: manage error
             pass
 
         # then, we can decrypt that
         data = {"msgs": response.json()}
-        response = mods.post('mixnet', entry_point=decrypt_url, baseurl=auth.url, json=data,
-                response=True)
+        response = mods.post('mixnet', entry_point=decrypt_url, baseurl=auth.url, json=data, response=True)
 
         if response.status_code != 200:
             # TODO: manage error
@@ -170,12 +168,14 @@ class QuestionOption(models.Model):
     def save(self):
         # Automatic assignment for the question number
         if not self.number:
-            options = self.question.options.all()
-            if options:
-                self.number = options.last().number + 1
-            else:
-                self.number = 1
-
+            number = 0
+            questions = self.question.voting.questions.all()
+            for q in questions:
+                options = q.options.all()
+                for op in options:
+                    if op.number and number < op.number:
+                        number = op.number
+            self.number = number + 1
         return super().save()
     
     def __str__(self):
