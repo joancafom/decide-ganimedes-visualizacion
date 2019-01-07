@@ -26,7 +26,7 @@
         <style type="text/css"> 
             .social-icon {
                 height: 30px;
-                margin-right: 15px;
+                margin-left: 15px;
                 margin-top: 16px;
             }
             .admin-icon{
@@ -77,8 +77,15 @@
                 <div class="nav-wrapper blue-grey darken-2">
                         {% if user.is_authenticated %}
                             <div class="userEmail right">
-                                <a href="/admin"><img class="left social-icon" src="{% static 'decide/img/django_icon.png'%}"/></a>
-                                <i class="material-icons left">account_circle</i>
+                                {% if request.session|get_value_from_dict:'google-oauth2_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
+                                    <img class="left social-icon" src="{% static 'decide/img/google_icon.png'%}"/>
+                                {% elif request.session|get_value_from_dict:'github_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
+                                    <img class="left social-icon" src="{% static 'decide/img/github_icon.png'%}"/>
+                                {% elif request.session|get_value_from_dict:'facebook_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
+                                    <img class="left social-icon" src="{% static 'decide/img/Facebook.png'%}"/>
+                                {% else %}
+                                    <i class="material-icons left">account_circle</i>
+                                {% endif %}
                                 <span> {{ user.email }}</span>
                                 <a class="right" href="{% url 'logout' %}"><i class="material-icons right">power_settings_new</i></a>
                             </div>
@@ -88,7 +95,6 @@
                                 <a href="{% url 'social:begin' 'google-oauth2' %}"><img class="left social-icon" src="{% static 'decide/img/google_icon.png'%}"/></a>
                                 <a href="{% url 'social:begin' 'github' %}"><img class="left social-icon" src="{% static 'decide/img/github_icon.png'%}"/></a>
                                 <a href="{% url 'social:begin' 'facebook' %}"><img class="left social-icon" src="{% static 'decide/img/Facebook.png'%}"/></a>
-                                <a href="/admin"><img class="left admin-icon" src="{% static 'decide/img/django_icon.png'%}"/></a>
                                 <a href="/authentication/form-login?next={{request.path}}"><i class="material-icons right">send</i></a>
                                 <a href="/authentication/signup/"><i class="material-icons right">account_circle</i></a>                                
                             </div>
@@ -115,7 +121,7 @@
                             </li>
                             <li><a href="/booth/3/">Booth</a></li>
                             <li><a href="#">Link 2</a></li>
-                            <li><a href="#">Link 3</a></li>
+                            <li><a href="/admin"><img class="admin-icon" src="{% static 'decide/img/django_icon.png'%}"/></a></li>
                             {% endblock %}
                         </ul>
                 </div>
