@@ -149,7 +149,10 @@ class ObtainAuthToken(APIView):
 
 class ObtainAuthTokenRRSS(APIView):  
     def get(self, request, *args, **kwarsg):
-        if((request.session.has_key('google-oauth2_state')) or (request.session.has_key('github_state'))):
+        if(((request.session.has_key('google-oauth2_state')) or 
+            (request.session.has_key('github_state')) or 
+            (request.session.has_key('facebook_state'))) and
+            (request.session.has_key('_auth_user_id'))):
             user = User.objects.get(pk=request.session['_auth_user_id'])
             token, created = Token.objects.get_or_create(user=user)
             request.session['auth-token'] = token.key
