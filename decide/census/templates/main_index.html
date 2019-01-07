@@ -25,7 +25,9 @@
 
 <br>
 <br>
-<a href="{% url 'passVotings' %}" class="waves-effect waves-light btn">{% trans 'Add census with filters' %}</a> <a href="{% url 'addCustomCensus' %}" class="waves-effect waves-light btn">{% trans 'Add custom census' %}</a> <a href="{% url 'exportCSVView' %}" class="waves-effect waves-light btn">{% trans 'Export all' %}</a> <a href="{% url 'importCSVView' %}" class="waves-effect waves-light btn">{% trans 'Import all' %}</a><br>
+<a href="{% url 'passVotings' %}" class="waves-effect waves-light btn">{% trans 'Add census with filters' %}</a> <a href="{% url 'addCustomCensus' %}" class="waves-effect waves-light btn">{% trans 'Add custom census' %}</a> <button onclick="window.location='{% url 'exportCSV' %}'"
+  title="Exportar CSV" class="waves-effect waves-dark btn">
+  {% trans 'Export all' %}</button>  <a href="{% url 'importCSVView' %}" class="waves-effect waves-light btn">{% trans 'Import all' %}</a><br>
 <br>
 
 <table class="centered">
