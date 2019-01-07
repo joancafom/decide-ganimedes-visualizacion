@@ -169,10 +169,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Avatar files
-AVATAR_ROOT = os.path.join(BASE_DIR, 'authentication/avatars')
-AVATAR_URL = '/authentication/avatars/'
-
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
 
@@ -202,13 +198,13 @@ else:
 INSTALLED_APPS = INSTALLED_APPS + MODULES
 
 # url to redirect after successfull login
-LOGIN_REDIRECT_URL = '/'
-LOGIN_URL=' /auth/login/'
+LOGIN_REDIRECT_URL = '/authentication/obtain_auth_token_rrss/'
+LOGIN_URL = '/auth/login/google-oauth2/'
 
 LOGOUT_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='1016450567923-d0li25hpefseismg55uns76k7p38ou2s.apps.googleusercontent.com'  #CLient Key
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'cuYcihCQQootUwo8dsQ2FToo' #Secret Key
 
-SOCIAL_AUTH_GITHUB_KEY = 'eb91be99a21b48b79bb3' #Client ID
-SOCIAL_AUTH_GITHUB_SECRET = 'aca405e388858e00760f6e6a3dd90e47a1938931' #Secret Key
+SOCIAL_AUTH_GITHUB_KEY = '5374f0f3acee01f795f6' #Client ID
+SOCIAL_AUTH_GITHUB_SECRET = '057e80e49258b60a09acf76c2ff49fed36fa37b3' #Secret Key
