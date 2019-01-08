@@ -168,7 +168,10 @@ class ObtainAuthToken(APIView):
 
 class ObtainAuthTokenRRSS(APIView):  
     def get(self, request, *args, **kwarsg):
-        if((request.session.has_key('google-oauth2_state')) or (request.session.has_key('github_state'))):
+        if(((request.session.has_key('google-oauth2_state')) or 
+            (request.session.has_key('github_state')) or 
+            (request.session.has_key('facebook_state'))) and
+            (request.session.has_key('_auth_user_id'))):
             user = User.objects.get(pk=request.session['_auth_user_id'])
             token, created = Token.objects.get_or_create(user=user)
             request.session['auth-token'] = token.key
@@ -184,7 +187,6 @@ def signUp(request):
         if formulario.is_valid():
             user=formulario.save(commit=False)
             user.is_active = False
-            user.set_unusable_password()
             user.save()
 
             # Send an email to the user with the token:
@@ -193,20 +195,17 @@ def signUp(request):
             uid = urlsafe_base64_encode(force_bytes(user.pk)).decode()
             token = account_activation_token.make_token(user)
             activation_link = "http://{0}/authentication/activate/?uid={1}&token={2}".format(current_site, uid, token)
-            message = "Hello,\n {0}".format( activation_link)
+            message = "Thanks you for joining,\n You need to check this link to activate your account:\n {0} \n Best regards. \n Ganímedes team.".format(activation_link)
             
             to_email = formulario.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            template = loader.get_template("authentication/confirm_email.html")
-            return HttpResponse(template.render())
-            #return HttpResponse('Please confirm your email address to complete the registration')
+            # template = loader.get_template("authentication/confirm_email.html")
+            return render(request, "authentication/confirm_email.html")
 
     else:
         formulario = UserCreateForm()
     return render(request, 'authentication/signup.html', {'formulario':formulario})
-
-    
 
 class Activate(APIView):
     def get(self, request):
@@ -218,12 +217,11 @@ class Activate(APIView):
         except(TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
         if user is not None and account_activation_token.check_token(user, token):
-            # activate user and login:
+            # activate user:
             user.is_active = True
             user.save()
-            login(request, user)
-            template = loader.get_template("authentication/acc_active_email.html")
-            return HttpResponse(template.render())
+            # template = loader.get_template("authentication/acc_active_email.html")
+            return render(request, "authentication/acc_active_email.html")
 
 
         else:
@@ -235,7 +233,6 @@ class Activate(APIView):
             user = form.save()
             update_session_auth_hash(request, user) # Important, to update the session with the new password
             return HttpResponse('Password changed successfully')
-
             
 def form_login(request):
     return render(request, 'authentication/login.html')

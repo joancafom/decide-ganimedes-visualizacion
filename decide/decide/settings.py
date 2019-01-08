@@ -145,9 +145,9 @@ AUTH_USER_MODEL = 'authentication.User'
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGES = (
-    ('en-us', _('English')),
-    ('es', _('Spanish')),
-    ('ca', _('Catalan')),
+    ('en-us', 'English'),
+    ('es', 'Español'),
+    ('ca', 'Català'),
 )
 
 LANGUAGE_CODE = 'en-us'
@@ -213,3 +213,11 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'cuYcihCQQootUwo8dsQ2FToo' #Secret Key
 
 SOCIAL_AUTH_GITHUB_KEY = '5374f0f3acee01f795f6' #Client ID
 SOCIAL_AUTH_GITHUB_SECRET = '057e80e49258b60a09acf76c2ff49fed36fa37b3' #Secret Key
+
+SOCIAL_AUTH_FACEBOOK_KEY = '352361078682587'
+SOCIAL_AUTH_FACEBOOK_SECRET = '993e12902a4eda5bcb2b51cbfc021593'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'locale': 'es_ES',
+  'fields': 'id, name, email, age_range'
+}
