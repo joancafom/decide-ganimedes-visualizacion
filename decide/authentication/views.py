@@ -200,14 +200,12 @@ def signUp(request):
             to_email = formulario.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            template = loader.get_template("authentication/confirm_email.html")
-            return HttpResponse(template.render())
+            # template = loader.get_template("authentication/confirm_email.html")
+            return render(request, "authentication/confirm_email.html")
 
     else:
         formulario = UserCreateForm()
     return render(request, 'authentication/signup.html', {'formulario':formulario})
-
-
 
 class Activate(APIView):
     def get(self, request):
@@ -222,8 +220,8 @@ class Activate(APIView):
             # activate user:
             user.is_active = True
             user.save()
-            template = loader.get_template("authentication/acc_active_email.html")
-            return HttpResponse(template.render())
+            # template = loader.get_template("authentication/acc_active_email.html")
+            return render(request, "authentication/acc_active_email.html")
 
 
         else:
@@ -235,7 +233,6 @@ class Activate(APIView):
             user = form.save()
             update_session_auth_hash(request, user) # Important, to update the session with the new password
             return HttpResponse('Password changed successfully')
-
             
 def form_login(request):
     return render(request, 'authentication/login.html')

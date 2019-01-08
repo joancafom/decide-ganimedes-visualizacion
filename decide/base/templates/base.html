@@ -29,9 +29,12 @@
                 margin-left: 15px;
                 margin-top: 16px;
             }
-            .admin-icon{
+            .admin-icon {
                 height: 30px;
                 margin-top: 16px;
+            }
+            .logged-email {
+                margin-left: 10px;
             }
         </style>
         {% block extrahead %}
@@ -86,7 +89,7 @@
                                 {% else %}
                                     <i class="material-icons left">account_circle</i>
                                 {% endif %}
-                                <span> {{ user.email }}</span>
+                                <span class="logged-email">{{ user.email }}</span>
                                 <a class="right" href="{% url 'logout' %}"><i class="material-icons right">power_settings_new</i></a>
                             </div>
                         {% endif %}
@@ -119,7 +122,7 @@
                                     </div>
                                 </form>
                             </li>
-                            <li><a href="/booth/3/">Booth</a></li>
+                            <li><a href="/booth/1/">Booth</a></li>
                             <li><a href="#">Link 2</a></li>
                             <li><a href="/admin"><img class="admin-icon" src="{% static 'decide/img/django_icon.png'%}"/></a></li>
                             {% endblock %}
