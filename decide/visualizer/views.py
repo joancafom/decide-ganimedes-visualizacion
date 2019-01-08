@@ -188,6 +188,33 @@ class VisualizerJson(TemplateView):
 
         return context
 
+
+class VisualizerList(TemplateView):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        try:
+            votings = mods.get('voting')
+            context['votings'] = votings
+
+            endedVotings = []
+            for voting in votings:
+                if voting['end_date'] is not None:
+                    endedVotings.append(voting)
+
+
+            context['existsEnded'] = True if len(endedVotings) else False
+            context['endedVotings'] = endedVotings
+
+            self.template_name = "visualizer/list_ended.html"
+
+        except Exception as e:
+            print(str(e))
+            raise Http404
+        
+        return context
+
 STATS_NAMES = [
     'census_size',
     'voters_turnout',
