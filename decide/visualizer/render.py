@@ -96,18 +96,30 @@ class Render:
             # Descripción del informe
             results_description = {}
             results_description['Votación'] = votacion['name']
+            if votacion['desc']:
+                results_description['Descripción'] = votacion['desc']
             results_description['Id'] = votacion['id']
 
             # Resultados
-            results_results = {}
             resultados = votacion['postproc']
+            preguntas = {}
+            
+            for i,q in enumerate(resultados['questions']):
+                results_results = {}
 
-            for r in resultados:
-                results_results[str(r['option'])] = str(r['votes'])
+                for r in q['options']:
+                    if resultados['type'] == 1 or resultados['type'] == 2:
+                        results_results[str(r['option'])] = "Total: {} - Número de votos: {}".format(r['postproc'], r['votes'])
+                    elif resultados['type'] == 4:
+                         results_results['Equipo ' + str(r['team']) + " - " + str(r['option'])] = r['votes']
+                    else:
+                        results_results[str(r['option'])] = r['votes']
+                
+                preguntas[str(votacion['questions'][i]['desc'])] = results_results
             
             # Composición de la jerarquía
             results_main['Información de la Votación'] = results_description
-            results_main['Resultados'] = results_results
+            results_main['Resultados por Pregunta'] = preguntas
 
             export['Informe de Resultados'] = results_main
 
@@ -117,6 +129,13 @@ class Render:
             
             export = {}
             stats_main = {}
+
+            # Descripción del informe
+            stats_description = {}
+            stats_description['Votación'] = votacion['name']
+            if votacion['desc']:
+                stats_description['Descripción'] = votacion['desc']
+            stats_description['Id'] = votacion['id']
 
             #Estadísticas básicas de una votación
             stats_basicas = {}
@@ -150,6 +169,7 @@ class Render:
 
             #Composición de la jerarquía
             stats_edad['Análisis de la participación según rango etario'] = stats_edad_rango
+            stats_main['Información de la Votación'] = stats_description
             stats_main['Estadísticas básicas de una votación'] = stats_basicas
             stats_main['Estadísticas basadas en la edad'] = stats_edad
             stats_main['Estadísticas basadas en el género'] = stats_genero
