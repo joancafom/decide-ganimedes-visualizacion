@@ -26,6 +26,7 @@
     <div class="social-login">
         <a href="{% url 'social:begin' 'google-oauth2' %}?next=/authentication/obtain_auth_token_rrss/?next={{request.GET.next}}"><img class="social-icon" src="{% static 'decide/img/google_icon.png'%}"/></a>
         <a href="{% url 'social:begin' 'github' %}?next=/authentication/obtain_auth_token_rrss/?next={{request.GET.next}}"><img class="social-icon" src="{% static 'decide/img/github_icon.png'%}"/></a>
+        <a href="{% url 'social:begin' 'facebook' %}?next=/authentication/obtain_auth_token_rrss/?next={{request.GET.next}}"><img class="social-icon" src="{% static 'decide/img/Facebook.png'%}"/></a>
     </div>
     <div id="login" class="container">
         <div class="row center-align">
@@ -46,7 +47,7 @@
                 <div class="col m2"></div>
             </div>
             <div class="row">
-                <button class="btn waves-effect waves-light" onClick="decideLogin()" type="submit" name="action">{% trans "Login" %}
+                <button class="btn waves-effect waves-light" style="background-color: #455a64 !important;" onClick="decideLogin()" type="submit" name="action">{% trans "Login" %}
                     <i class="material-icons right">send</i>
                 </button>
             </div>

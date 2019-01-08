@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-07 23:59+0000\n"
+"POT-Creation-Date: 2019-01-08 00:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,7 +44,7 @@ msgstr "Apellidos"
 
 #: authentication/forms.py:21 authentication/models.py:16
 #: authentication/serializers.py:16
-#: authentication/templates/authentication/login.html:36
+#: authentication/templates/authentication/login.html:37
 msgid "Email"
 msgstr "Correo electrónico"
 
@@ -94,7 +94,7 @@ msgid "A {value_type} identifying this {name}."
 msgstr "A {value_type} identifying this {name}."
 
 #: authentication/serializers.py:18
-#: authentication/templates/authentication/login.html:44
+#: authentication/templates/authentication/login.html:45
 msgid "Password"
 msgstr "Contraseña"
 
@@ -107,39 +107,39 @@ msgid "Must include \"email\" and \"password\"."
 msgstr "Debe incluir \"email\" and \"contraseña\"."
 
 #: authentication/templates/authentication/acc_active_email.html:3
-#: authentication/templates/authentication/confirm_email.html:3
+#: authentication/templates/authentication/confirm_email.html:4
 msgid "New user"
 msgstr "Nuevo usuario"
 
 #: authentication/templates/authentication/acc_active_email.html:9
 msgid "Thank you for your email confirmation. Now you can login your account."
-msgstr ""
-"Gracias por la confirmación del correo electrónico. Ahora puedes iniciar la "
-"sesión de tu cuenta."
+msgstr "Gracias por la confirmación del correo electrónico. Ahora puedes iniciar la sesión de tu cuenta."
 
-#: authentication/templates/authentication/confirm_email.html:9
+#: authentication/templates/authentication/acc_active_email.html:11
+msgid "Go to login"
+msgstr "Iniciar sesión"
+
+#: authentication/templates/authentication/confirm_email.html:7
 msgid "Please confirm your email address to complete the registration"
-msgstr ""
-"Por favor, confirme su dirección de correo electrónico para completar el "
-"registro"
+msgstr "Por favor, confirme su dirección de correo electrónico para completar el registro"
 
 #: authentication/templates/authentication/login.html:25
 msgid "Log in"
 msgstr "Iniciar Sesión"
 
-#: authentication/templates/authentication/login.html:49
+#: authentication/templates/authentication/login.html:50
 msgid "Login"
 msgstr "Iniciar Sesión"
 
-#: authentication/templates/authentication/login.html:92
+#: authentication/templates/authentication/login.html:93
 msgid "Enter an email and a password."
 msgstr "Introduzca un correo electrónico y una contraseña."
 
-#: authentication/templates/authentication/login.html:104
+#: authentication/templates/authentication/login.html:105
 msgid "Error: The credentials are not valid"
 msgstr "Error: Las credenciales no son válidas"
 
-#: authentication/templates/authentication/login.html:107
+#: authentication/templates/authentication/login.html:108
 #: booth/templates/booth/booth.html:312
 msgid "Error: "
 msgstr "Error: "
@@ -148,7 +148,7 @@ msgstr "Error: "
 msgid "Sign up a new user"
 msgstr "Registrar un nuevo usuario"
 
-#: authentication/templates/authentication/signup.html:14
+#: authentication/templates/authentication/signup.html:15
 msgid "Submit"
 msgstr "Enviar"
 

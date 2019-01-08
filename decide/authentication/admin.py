@@ -3,14 +3,16 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from .forms import UserCreateForm, UserCreationForm
+from .forms import UserCreateForm, UserCreationForm, UserChangeForm
 
 from django.contrib.auth import get_user_model 
 
 User=get_user_model()
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
-    form = UserCreateForm
+    form = UserChangeForm
+    add_form = UserCreateForm
+    # form = UserCreateForm
 
     # The fields to be used in displaying the DecideUser model.
     # These override the definitions on the base UserAdmin
