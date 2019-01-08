@@ -21,7 +21,7 @@
         <h4>{% trans 'The voting can not be accessed because it has not started.' %}</h4>
     {% elif voting.end_date != None %}
         <h4>{% trans 'The voting can not be accessed because it has ended. You can access to the results in the following link: ' %}<a href="/visualizer/{{voting.id}}">{% trans 'Results' %}</a></h4>
-    {% elif voting.questions is empty %}
+    {% elif voting.questions|length == 0 %}
         <h4>{% trans 'This vote does not contain any questions, so it can not be accessed yet. Try it again later.' %}</h4>
     {% else %}
   

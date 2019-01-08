@@ -94,7 +94,7 @@
             } else {
                 postData("{{auth_url}}" +  "/authentication/login/", data)
                 .then(data => {
-                    document.cookie = 'decide='+'{{ request.session|get_value_from_dict:"auth-token" }}'+';';
+                    // document.cookie = 'decide='+'{{ request.session|get_value_from_dict:"auth-token" }}'+';';
                     // token = data.token;
                     // decideUser();
                     var next = getParameterByName('next');
