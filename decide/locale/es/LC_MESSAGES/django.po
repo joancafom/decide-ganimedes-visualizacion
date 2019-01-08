@@ -358,3 +358,15 @@ msgstr "Participación de genéro no binario:"
 #: visualizer/templates/visualizer/ongoing_export.html:26
 msgid "Men participation:"
 msgstr "Participación masculina:"
+
+#: .\decide\settings.py:148
+msgid "English"
+msgstr "English"
+
+#: .\decide\settings.py:149
+msgid "Español"
+msgstr "Español"
+
+#: .\decide\settings.py:150
+msgid "Català"
+msgstr "Català"
