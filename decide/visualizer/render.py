@@ -181,14 +181,28 @@ class Render:
 
             #Resultados
             results = ET.SubElement(voting, "results")
-            resultados = votacion['postproc']['questions'][0]['options']
+            questions = votacion['postproc']['questions']
 
-            for r in resultados:
+            for q in questions:
+                pregunta = votacion['questions'][q['number']-1]
+
                 question = ET.SubElement(results, 'question')
-                option = ET.SubElement(question, 'option')
-                option.text = r['option']
-                votes = ET.SubElement(question, 'votes')
-                votes.text = str(r['votes'])
+                desc = ET.SubElement(question, 'desc')
+                desc.text = pregunta['desc']
+                number = ET.SubElement(question, 'number')
+                number.text = str(q['number'])
+                options = ET.SubElement(question, 'options')
+                for o in q['options']:
+                    option = ET.SubElement(options, 'option')
+                    desc = ET.SubElement(option, 'desc')
+                    desc.text = o['option']
+                    if(votacion['postproc']['type'] == 1):
+
+                        postproc = ET.SubElement(option, 'postproc')
+                        postproc.text = str(o['postproc'])
+                    else:
+                        postproc = ET.SubElement(option, 'postproc')
+                        postproc.text = str(o['votes'])
 
 
             #Pasar el XML a String
