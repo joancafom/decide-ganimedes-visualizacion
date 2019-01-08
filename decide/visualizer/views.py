@@ -187,6 +187,51 @@ class VisualizerJson(TemplateView):
             raise Http404
 
         return context
+    
+class VisualizerXml(TemplateView):
+   
+    def get(self, request, **kwargs):
+        context = super().get_context_data(**kwargs)
+        vid = kwargs.get('voting_id', 0)
+
+        try:
+            r = mods.get('voting', params={'id': vid})
+            voting = r[0]
+
+            # Identificamos el estado de la votación
+            if r[0]['start_date'] is None:
+                
+                return HttpResponseBadRequest()
+
+            elif r[0]['end_date'] is None:
+
+                # Votación en proceso
+                voting_status = "ongoing"
+
+                #Obtenemos las estadísticas de la votación
+                stats = get_statistics(vid)
+                stats['voting'] = voting
+
+                return Render.render_xml(voting_status, stats)
+
+            elif r[0]['start_date'] is not None and r[0]['end_date'] is not None:
+                
+                # Impedir la obtención de resultados de votaciones que no han pasado
+                # por tally
+
+                if voting['postproc'] is None:
+                    return HttpResponseBadRequest()
+
+                #Votación terminada
+                voting_status = 'ended'
+
+                return Render.render_xml(voting_status, {'voting':voting})
+
+        except Exception as e:
+            print(str(e))
+            raise Http404
+
+        return context
 
 STATS_NAMES = [
     'census_size',
