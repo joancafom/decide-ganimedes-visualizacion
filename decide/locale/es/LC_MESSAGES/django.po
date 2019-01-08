@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-08 00:32+0000\n"
+"POT-Creation-Date: 2019-01-08 10:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,11 +109,13 @@ msgstr "Debe incluir \"email\" and \"contraseña\"."
 #: authentication/templates/authentication/acc_active_email.html:3
 #: authentication/templates/authentication/confirm_email.html:4
 msgid "New user"
-msgstr "Nuevo usuario"
+msgstr "Nuev@ usuari@"
 
 #: authentication/templates/authentication/acc_active_email.html:9
 msgid "Thank you for your email confirmation. Now you can login your account."
-msgstr "Gracias por la confirmación del correo electrónico. Ahora puedes iniciar la sesión de tu cuenta."
+msgstr ""
+"Gracias por la confirmación del correo electrónico. Ahora puedes iniciar la "
+"sesión de tu cuenta."
 
 #: authentication/templates/authentication/acc_active_email.html:11
 msgid "Go to login"
@@ -121,7 +123,9 @@ msgstr "Iniciar sesión"
 
 #: authentication/templates/authentication/confirm_email.html:7
 msgid "Please confirm your email address to complete the registration"
-msgstr "Por favor, confirme su dirección de correo electrónico para completar el registro"
+msgstr ""
+"Por favor, confirme su dirección de correo electrónico para completar el "
+"registro"
 
 #: authentication/templates/authentication/login.html:25
 msgid "Log in"
@@ -146,11 +150,27 @@ msgstr "Error: "
 
 #: authentication/templates/authentication/signup.html:7
 msgid "Sign up a new user"
-msgstr "Registrar un nuevo usuario"
+msgstr "Registrar nuev@ usuari@"
 
 #: authentication/templates/authentication/signup.html:15
 msgid "Submit"
 msgstr "Enviar"
+
+#: base/templates/base.html:165
+msgid "Footer Content"
+msgstr "Contenido de Pie de página"
+
+#: base/templates/base.html:166
+msgid "Information."
+msgstr "Información."
+
+#: base/templates/base.html:172
+msgid "© 2018 Copyright Text"
+msgstr "© 2018 Copyright Text"
+
+#: base/templates/base.html:173
+msgid "More Links"
+msgstr "Mas hipervínculos"
 
 #: base/templates/index.html:12
 msgid "Welcome"

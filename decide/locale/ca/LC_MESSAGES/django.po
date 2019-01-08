@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-08 00:32+0000\n"
+"POT-Creation-Date: 2019-01-08 10:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,7 +113,9 @@ msgstr "Nou usuari"
 
 #: authentication/templates/authentication/acc_active_email.html:9
 msgid "Thank you for your email confirmation. Now you can login your account."
-msgstr "Gràcies per la vostra confirmació per correu electrònic. Ara podeu iniciar la sessió al vostre compte."
+msgstr ""
+"Gràcies per la vostra confirmació per correu electrònic. Ara podeu iniciar "
+"la sessió al vostre compte."
 
 #: authentication/templates/authentication/acc_active_email.html:11
 msgid "Go to login"
@@ -121,7 +123,8 @@ msgstr "Iniciar Sessió"
 
 #: authentication/templates/authentication/confirm_email.html:7
 msgid "Please confirm your email address to complete the registration"
-msgstr "Confirmeu la vostra adreça de correu electrònic per completar el registre"
+msgstr ""
+"Confirmeu la vostra adreça de correu electrònic per completar el registre"
 
 #: authentication/templates/authentication/login.html:25
 msgid "Log in"
@@ -151,6 +154,22 @@ msgstr "Registra't un nou usuari"
 #: authentication/templates/authentication/signup.html:15
 msgid "Submit"
 msgstr "Presentar"
+
+#: base/templates/base.html:165
+msgid "Footer Content"
+msgstr "Contingut del peu de pàgina"
+
+#: base/templates/base.html:166
+msgid "Information."
+msgstr "Informació."
+
+#: base/templates/base.html:172
+msgid "© 2018 Copyright Text"
+msgstr "© 2018 Copyright Text"
+
+#: base/templates/base.html:173
+msgid "More Links"
+msgstr "Més enllaços"
 
 #: base/templates/index.html:12
 msgid "Welcome"

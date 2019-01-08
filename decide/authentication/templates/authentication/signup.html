@@ -12,7 +12,9 @@
         {% csrf_token %}
         <table>{{formulario}}</table>
         <br>
-        <button class="btn waves-effect waves-light teal" style="background-color: #455a64 !important;" type="submit" name="action" >{% trans 'Submit' %}
+        <button class="btn waves-effect waves-light teal" style="background-color: #455a64 !important; margin-bottom: 80px;" type="submit" name="action" >{% trans 'Submit' %}
         </button>
     </form>
+    
+    
 {% endblock %}
