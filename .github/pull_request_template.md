@@ -1,18 +1,19 @@
-### Descripción del pull request
-_Descripción clara y concisa sobre lo que incluye el pull request, haciendo referencia a las incidencias correspondientes_
+#### ¿Que hace este pull request?
 
-### Motivo del pull request
-_Descripción del motivo para realizar este pull request, por ejemplo, subir los cambios al repositorio padre o implementar tal funcionalidad_
+[Link de la incidencia](LINK_TO_STORY)
 
-### Pruebas y/o revisiones
-_Listado de pruebas y/o revisiones que se deberían comprobar para aceptar este pull request_
+##### ¿Por que estas haciendo el pull request?. Contexto del pull request.
 
-### Capturas de pantalla o códigos importantes
-_Adjuntar capturas de pantallas o trozos de códigos en los que hay que prestar especial atención por su importancia o dificultad_
+#### ¿Por dónde debe empezar el revisor?
 
-### Cambios de configuración
-_Indicar si existen cambios en la configuración de la aplicación, ya sea en la base de datos, en el despliegue, en las variables de entorno,..._
+#### Pasos para la realización de pruebas
+
+#### Capturas de pantalla
 
 ---
 
-_**IMPORTANTE:** Las frases en cursivas son textos de ayuda, por favor, bórrelas antes de crear el pull request. Además, recuerde asignar a los revisores en el apartado "Reviewers"._
+#### Cambios en la base de datos
+
+#### Instrucciones de despliegue
+
+#### Nuevas variables de entorno
