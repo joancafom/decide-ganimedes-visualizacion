@@ -15,7 +15,7 @@
  
     <!-- Nuevo mostrado de resultados en funcion de más de una pregunta -->
     {% if voting.postproc.type != 1 %}
-        <!-- Votación para Weights-->
+        <!-- Para el resto de votaciones -->
         <ul>
             {% for question in voting.questions %}
                 <p>{{question.number}} - {{question.desc}}</p>
@@ -28,8 +28,9 @@
                 
             {% endfor %}
         </ul>
-        <!-- Para el resto de votaciones -->
+       
     {% else %}
+        <!-- Votación para Weights-->
         <ul>
             {% for question in voting.questions %}
                 <p>{{question.number}} - {{question.desc}}</p>
