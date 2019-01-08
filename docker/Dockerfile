@@ -10,7 +10,7 @@ RUN pip install ipython
 
 WORKDIR /app
 
-COPY . .
+RUN git clone https://github.com/decide-ganimedes/decide-ganimedes.git .
 RUN pip install -r requirements.txt
 
 WORKDIR /app/decide

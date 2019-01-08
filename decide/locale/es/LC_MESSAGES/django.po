@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-22 00:24+0100\n"
+"POT-Creation-Date: 2019-01-08 10:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,66 +18,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: authentication/forms.py:12
+#: authentication/forms.py:13
 msgid "Man"
 msgstr "Hombre"
 
-#: authentication/forms.py:13
+#: authentication/forms.py:14
 msgid "Woman"
 msgstr "Mujer"
 
-#: authentication/forms.py:14
+#: authentication/forms.py:15
 msgid "Non-binary"
 msgstr "No binario"
 
-#: authentication/forms.py:16
+#: authentication/forms.py:17
 msgid "Format: dd/mm/YYYY"
 msgstr "Formato: dd/mm/YYYY"
 
-#: authentication/forms.py:18 authentication/models.py:15
+#: authentication/forms.py:19 authentication/models.py:17
 msgid "First name"
 msgstr "Nombre"
 
-#: authentication/forms.py:19 authentication/models.py:16
+#: authentication/forms.py:20 authentication/models.py:18
 msgid "Last name"
 msgstr "Apellidos"
 
-#: authentication/forms.py:20 authentication/models.py:14
-#: authentication/serializers.py:16 booth/templates/booth/booth.html:8
+#: authentication/forms.py:21 authentication/models.py:16
+#: authentication/serializers.py:16
+#: authentication/templates/authentication/login.html:37
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: authentication/forms.py:21 authentication/models.py:17
+#: authentication/forms.py:22 authentication/models.py:19
 msgid "Birthdate"
 msgstr "Fecha de nacimiento"
 
-#: authentication/forms.py:22 authentication/models.py:18
+#: authentication/forms.py:23 authentication/models.py:20
 msgid "City"
 msgstr "Ciudad"
 
-#: authentication/forms.py:23 authentication/models.py:19
+#: authentication/forms.py:24 authentication/models.py:21
 msgid "Sex"
 msgstr "Sexo"
 
-#: authentication/forms.py:53
+#: authentication/forms.py:54
 msgid "Email alredy exits"
 msgstr "El correo electrónico ya existe"
 
-#: authentication/forms.py:63
+#: authentication/forms.py:64
 msgid "Future date not posible"
 msgstr "Fechas posteriores no validas"
 
-#: authentication/models.py:20
+#: authentication/models.py:22
 msgid "Is active"
 msgstr "Está activo"
 
-#: authentication/models.py:21
-msgid "Avatar"
-msgstr "Avatar"
-
-#: authentication/models.py:22
+#: authentication/models.py:23
 msgid "Is staf"
-msgstr "Is staf"
+msgstr "Es personal autorizado"
 
 #: authentication/schemas/inspectors.py:114
 msgid "unique integer value"
@@ -97,8 +94,7 @@ msgid "A {value_type} identifying this {name}."
 msgstr "A {value_type} identifying this {name}."
 
 #: authentication/serializers.py:18
-#: authentication/templates/authentication/signup.html:11
-#: booth/templates/booth/booth.html:11
+#: authentication/templates/authentication/login.html:45
 msgid "Password"
 msgstr "Contraseña"
 
@@ -110,123 +106,127 @@ msgstr "No se puede iniciar sesión con las credenciales provistas"
 msgid "Must include \"email\" and \"password\"."
 msgstr "Debe incluir \"email\" and \"contraseña\"."
 
-#: authentication/templates/authentication/nuevo_usuario.html:9
-msgid "Sign up a new user"
-msgstr "Registrar un nuevo usuario"
+#: authentication/templates/authentication/acc_active_email.html:3
+#: authentication/templates/authentication/confirm_email.html:4
+msgid "New user"
+msgstr "Nuev@ usuari@"
 
-#: authentication/templates/authentication/nuevo_usuario.html:13
-#: base/templates/index.html:16
-msgid "Sign up"
-msgstr "Registrarse"
+#: authentication/templates/authentication/acc_active_email.html:9
+msgid "Thank you for your email confirmation. Now you can login your account."
+msgstr ""
+"Gracias por la confirmación del correo electrónico. Ahora puedes iniciar la "
+"sesión de tu cuenta."
 
-#: authentication/templates/authentication/signup.html:8
-msgid "Username"
-msgstr "Usuario"
-
-#: authentication/templates/authentication/signup.html:14
-msgid "Submit"
-msgstr "Enviar"
-
-#: base/templates/index.html:14
-msgid "Welcome"
-msgstr "Bienvenido"
-
-#: base/templates/index.html:15
-msgid "Sign in"
+#: authentication/templates/authentication/acc_active_email.html:11
+msgid "Go to login"
 msgstr "Iniciar sesión"
 
-#: booth/templates/booth/booth.html:14
-#: .\authentication\schemas\inspectors.py:114
-msgid "unique integer value"
+#: authentication/templates/authentication/confirm_email.html:7
+msgid "Please confirm your email address to complete the registration"
 msgstr ""
+"Por favor, confirme su dirección de correo electrónico para completar el "
+"registro"
 
-#: .\authentication\schemas\inspectors.py:116
-msgid "UUID string"
-msgstr ""
+#: authentication/templates/authentication/login.html:25
+msgid "Log in"
+msgstr "Iniciar Sesión"
 
-#: .\authentication\schemas\inspectors.py:118
-msgid "unique value"
-msgstr ""
-
-#: .\authentication\schemas\inspectors.py:120
-#, python-brace-format
-msgid "A {value_type} identifying this {name}."
-msgstr ""
-
-#: .\authentication\serializers.py:16 .\booth\templates\booth\booth.html:129
-msgid "Email"
-msgstr "Correo electrónico"
-
-#: .\authentication\serializers.py:18
-#: .\authentication\templates\authentication\signup.html:11
-#: .\booth\templates\booth\booth.html:137
-msgid "Password"
-msgstr "Contraseña"
-
-#: .\authentication\serializers.py:32
-msgid "Unable to log in with provided credentials."
-msgstr ""
-
-#: .\authentication\serializers.py:35
-msgid "Must include \"email\" and \"password\"."
-msgstr ""
-
-#: .\authentication\templates\authentication\signup.html:8
-msgid "Username"
-msgstr "Usuario"
-
-#: .\authentication\templates\authentication\signup.html:14
-msgid "Submit"
-msgstr "Enviar"
-
-#: .\booth\templates\booth\booth.html:142
+#: authentication/templates/authentication/login.html:50
 msgid "Login"
 msgstr "Iniciar Sesión"
 
-#: booth/templates/booth/booth.html:18
-msgid "logout"
-msgstr "Cerrar sesión"
-#: .\booth\templates\booth\booth.html:187
+#: authentication/templates/authentication/login.html:93
+msgid "Enter an email and a password."
+msgstr "Introduzca un correo electrónico y una contraseña."
+
+#: authentication/templates/authentication/login.html:105
+msgid "Error: The credentials are not valid"
+msgstr "Error: Las credenciales no son válidas"
+
+#: authentication/templates/authentication/login.html:108
+#: booth/templates/booth/booth.html:312
+msgid "Error: "
+msgstr "Error: "
+
+#: authentication/templates/authentication/signup.html:7
+msgid "Sign up a new user"
+msgstr "Registrar nuev@ usuari@"
+
+#: authentication/templates/authentication/signup.html:15
+msgid "Submit"
+msgstr "Enviar"
+
+#: base/templates/base.html:165
+msgid "Footer Content"
+msgstr "Contenido de Pie de página"
+
+#: base/templates/base.html:166
+msgid "Information."
+msgstr "Información."
+
+#: base/templates/base.html:172
+msgid "© 2018 Copyright Text"
+msgstr "© 2018 Copyright Text"
+
+#: base/templates/base.html:173
+msgid "More Links"
+msgstr "Mas hipervínculos"
+
+#: base/templates/index.html:12
+msgid "Welcome"
+msgstr "Bienvenid@"
+
+#: booth/templates/booth/booth.html:21
+msgid "The voting can not be accessed because it has not started."
+msgstr "No se puede acceder a la votación porque no ha comenzado."
+
+#: booth/templates/booth/booth.html:23
+msgid ""
+"The voting can not be accessed because it has ended. You can access to the "
+"results in the following link: "
+msgstr ""
+"No se puede acceder a la votación porque ya ha terminado. Puedes acceder al "
+"resultado en el siguiente link:"
+
+#: booth/templates/booth/booth.html:23
+msgid "Results"
+msgstr "Resultados"
+
+#: booth/templates/booth/booth.html:25
+msgid ""
+"This vote does not contain any questions, so it can not be accessed yet. Try "
+"it again later."
+msgstr ""
+"Esta votación no contiene preguntas, por lo que aún no se puede acceder. "
+"Inténtalo de nuevo más tarde."
+
+#: booth/templates/booth/booth.html:66
 msgid "Answer with voice"
 msgstr "Responder con voz"
 
-#: .\booth\templates\booth\booth.html:196
-msgid "Logout"
-msgstr "Cerrar Sesión"
-
-#: .\booth\templates\booth\booth.html:199
+#: booth/templates/booth/booth.html:75
 msgid "Send vote"
 msgstr "Enviar voto"
 
-#: .\booth\templates\booth\booth.html:209
+#: booth/templates/booth/booth.html:85
 msgid "Speech Synthesis not supported"
 msgstr "Síntesis de voz no soportada"
 
-#: .\booth\templates\booth\booth.html:210
+#: booth/templates/booth/booth.html:86
 msgid "Your browser does not support speech synthesis."
 msgstr "Su navegador no soporta la síntesis de voz."
 
-#: .\booth\templates\booth\booth.html:211
+#: booth/templates/booth/booth.html:87
 msgid "We recommend you use Google Chrome."
 msgstr "Le recomendamos utilizar Google Chrome."
 
-#: .\booth\templates\booth\booth.html:440
+#: booth/templates/booth/booth.html:309
 msgid "Congratulations. Your vote has been sent"
 msgstr "Felicidades. Tu voto ha sido enviado."
 
-#: .\booth\templates\booth\booth.html:444
-#: .\booth\templates\booth\booth.html:473
-#: .\booth\templates\booth\booth.html:506
-msgid "Error: "
-msgstr "Error"
-
-#: decide/settings.py:143
-msgid "Spanish"
-msgstr "Español"
-
-#: decide/settings.py:144
-msgid "English"
-msgstr "Inglés"
+#: booth/templates/booth/booth.html:317
+msgid "You must select an option for each question."
+msgstr "Debes seleccionar una opción para cada pregunta."
 
 #: visualizer/templates/visualizer/ended.html:15
 #: visualizer/templates/visualizer/ended_export.html:6
@@ -240,56 +240,10 @@ msgstr "Descargar los resultados en formato .pdf"
 
 #: visualizer/templates/visualizer/ended.html:154
 #: visualizer/templates/visualizer/ongoing.html:97
-#: .\booth\templates\booth\booth.html:449
-msgid "You must select an option for each question."
-msgstr "Debes seleccionar una opción para cada pregunta."
-
-#: .\booth\templates\booth\booth.html:489
-msgid "Enter an email and a password."
-msgstr "Introduzca un correo electrónico y una contraseña."
-
-#: .\booth\templates\booth\booth.html:492
-msgid "The voting can not be accessed because it has not started."
-msgstr "No se puede acceder a la votación porque no ha comenzado."
-
-#: .\booth\templates\booth\booth.html:494
-msgid "The voting can not be accessed because it has ended."
-msgstr "No se puede acceder a la votación porque ha finalizado."
-
-#: .\booth\templates\booth\booth.html:497
-msgid ""
-"This vote does not contain any questions, so it can not be accessed yet. Try "
-"it again later."
-msgstr "Esta votación no contiene preguntas, por lo que aún no se puede acceder. Inténtalo de nuevo más tarde."
-
-#: .\decide\settings.py:142
-msgid "English"
-msgstr "Inglés"
-
-#: .\decide\settings.py:143
-msgid "Spanish"
-msgstr "Español"
-
-#: .\decide\settings.py:144
-msgid "Catalan"
-msgstr "Catalán"
-
-#: .\visualizer\templates\visualizer\ended.html:15
-#: .\visualizer\templates\visualizer\ended_export.html:6
-msgid "Results: "
-msgstr "Resultados"
-
-#: .\visualizer\templates\visualizer\ended.html:152
-#: .\visualizer\templates\visualizer\ongoing.html:95
-msgid "Download results as .pdf"
-msgstr "Descargar los resultados en formato .pdf"
-
-#: .\visualizer\templates\visualizer\ended.html:154
-#: .\visualizer\templates\visualizer\ongoing.html:97
 msgid "Download results as .csv"
 msgstr "Descargar los resultados en formato .csv"
 
-#: .\visualizer\templates\visualizer\not_started.html:16
+#: visualizer/templates/visualizer/not_started.html:16
 msgid "Voting not started"
 msgstr "La votación no ha comenzado"
 
@@ -304,24 +258,11 @@ msgstr "Estadisticas"
 
 #: visualizer/templates/visualizer/ongoing.html:25
 #: visualizer/templates/visualizer/ongoing_export.html:8
-#: .\visualizer\templates\visualizer\ongoing.html:14
-msgid "In Progress"
-msgstr "En progreso"
-
-#: .\visualizer\templates\visualizer\ongoing.html:21
-#: .\visualizer\templates\visualizer\ongoing_export.html:6
-msgid "Stats"
-msgstr "Estadisticas"
-
-#: .\visualizer\templates\visualizer\ongoing.html:25
-#: .\visualizer\templates\visualizer\ongoing_export.html:8
 msgid "Census Size:"
 msgstr "Tamaño del censo"
 
 #: visualizer/templates/visualizer/ongoing.html:26
 #: visualizer/templates/visualizer/ongoing_export.html:9
-#: .\visualizer\templates\visualizer\ongoing.html:26
-#: .\visualizer\templates\visualizer\ongoing_export.html:9
 msgid "Voters Turnout:"
 msgstr "Asistencia de los votantes"
 
@@ -331,24 +272,18 @@ msgid "Participation:"
 msgstr "Participación"
 
 #: visualizer/templates/visualizer/ongoing.html:42
-#: .\visualizer\templates\visualizer\ongoing.html:27
-#: .\visualizer\templates\visualizer\ongoing_export.html:10
-msgid "Participation:"
-msgstr "Porcentaje de participación:"
-
-#: .\visualizer\templates\visualizer\ongoing.html:42
 msgid "Interested in the participation according to genders? Check it out!"
 msgstr "¿Quieres saber la participación por género? ¡Míralo!"
 
-#: .\visualizer\templates\visualizer\ongoing.html:46
+#: visualizer/templates/visualizer/ongoing.html:46
 msgid "Women"
 msgstr "Femenino"
 
-#: .\visualizer\templates\visualizer\ongoing.html:47
+#: visualizer/templates/visualizer/ongoing.html:47
 msgid "Non-Binary"
 msgstr "No binario"
 
-#: .\visualizer\templates\visualizer\ongoing.html:48
+#: visualizer/templates/visualizer/ongoing.html:48
 msgid "Men"
 msgstr "Hombre"
 
@@ -363,48 +298,36 @@ msgid "of the total"
 msgstr "del total"
 
 #: visualizer/templates/visualizer/ongoing.html:52
-#: .\visualizer\templates\visualizer\ongoing.html:51
-msgid "women voted"
-msgstr "mujeres votaron"
-
-#: .\visualizer\templates\visualizer\ongoing.html:51
-#: .\visualizer\templates\visualizer\ongoing.html:52
-#: .\visualizer\templates\visualizer\ongoing.html:53
-msgid "of the total"
-msgstr "del total"
-
-#: .\visualizer\templates\visualizer\ongoing.html:52
 msgid "non-binary voted"
 msgstr "no binario votado"
 
-#: .\visualizer\templates\visualizer\ongoing.html:53
+#: visualizer/templates/visualizer/ongoing.html:53
 msgid "men voted"
 msgstr "hombre votado"
 
-#: .\visualizer\templates\visualizer\ongoing.html:61
+#: visualizer/templates/visualizer/ongoing.html:61
 msgid "to"
 msgstr "a"
 
-#: .\visualizer\templates\visualizer\ongoing.html:61
-#: .\visualizer\templates\visualizer\ongoing.html:74
-#: .\visualizer\templates\visualizer\ongoing.html:87
+#: visualizer/templates/visualizer/ongoing.html:61
+#: visualizer/templates/visualizer/ongoing.html:74
+#: visualizer/templates/visualizer/ongoing.html:87
 msgid "years old"
 msgstr "años"
 
 #: visualizer/templates/visualizer/ongoing.html:70
-#: .\visualizer\templates\visualizer\ongoing.html:70
 msgid "The average age of people who voted is..."
 msgstr "La edad media de los votantes es..."
 
-#: .\visualizer\templates\visualizer\ongoing.html:76
+#: visualizer/templates/visualizer/ongoing.html:76
 msgid "Nobody has voted yet :("
 msgstr "Nadie ha votado aún :("
 
-#: .\visualizer\templates\visualizer\ongoing.html:83
+#: visualizer/templates/visualizer/ongoing.html:83
 msgid "The average age of people who didn't vote is..."
-msgstr "vLa edad media de los votantes que aún no han votado es..."
+msgstr "La edad media de los votantes que aún no han votado es..."
 
-#: .\visualizer\templates\visualizer\ongoing.html:89
+#: visualizer/templates/visualizer/ongoing.html:89
 msgid "Everyone has voted already :)"
 msgstr "Ya han votado todos :)"
 
@@ -433,30 +356,5 @@ msgid "Non-binary participation:"
 msgstr "Participación de genéro no binario:"
 
 #: visualizer/templates/visualizer/ongoing_export.html:26
-#: .\visualizer\templates\visualizer\ongoing_export.html:5
-msgid "Voting is open"
-msgstr "La votación esta abierta"
-
-#: .\visualizer\templates\visualizer\ongoing_export.html:12
-msgid "Voter's Mean Age:"
-msgstr "Edad media de los votantes:"
-
-#: .\visualizer\templates\visualizer\ongoing_export.html:15
-msgid "Non-Voter's Mean Age:"
-msgstr "Edad media de los no votantes:"
-
-#: .\visualizer\templates\visualizer\ongoing_export.html:17
-msgid "Voter's Age Analysis:"
-msgstr "Analisis de la edad de los votantes:"
-
-#: .\visualizer\templates\visualizer\ongoing_export.html:24
-msgid "Women participation:"
-msgstr "Participación femenina:"
-
-#: .\visualizer\templates\visualizer\ongoing_export.html:25
-msgid "Non-binary participation:"
-msgstr "Participación de genéro no binario:"
-
-#: .\visualizer\templates\visualizer\ongoing_export.html:26
 msgid "Men participation:"
 msgstr "Participación masculina:"
