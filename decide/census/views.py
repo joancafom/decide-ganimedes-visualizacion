@@ -365,13 +365,15 @@ def import_csv_view(request):
 def list_census(request):
 
     census = Census.objects.all()
-    return render(request,"main_index.html",{'census': census})
+    votings = Voting.objects.all()
+    voters = User.objects.all()
+    return render(request,"main_index.html",{'census': census, 'votings':votings, 'voters':voters})
 
 def edit_census(request):
 
 
     n_id = request.GET.get('id')
-    users = User.objects.all()
+    users = User.objects.all().filter(is_staff=False)
     votings = Voting.objects.all()
     census = get_object_or_404(Census,id=n_id)
 
