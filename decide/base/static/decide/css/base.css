@@ -1,4 +1,10 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body{
+    height: 100%;
     background-color:#fafafa;
     font-family: 'Roboto';
     font-size: 16px;
@@ -19,6 +25,10 @@ body{
     margin-bottom: 50px;
 }
 
+.userEmail{
+    margin-right: 4%;
+}
+
 .brand-logo{
     font-family: 'Roboto Slab';
 }
@@ -35,6 +45,10 @@ h5, p{
 
 .decideFooter{
     margin-top:50px;
+    position: absolute !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 60px !important;
 }
 
 .errorlist
