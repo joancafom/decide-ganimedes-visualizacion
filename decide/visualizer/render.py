@@ -36,20 +36,31 @@ class Render:
             writer.writerow([votacion['name']])
             writer.writerow(['Resultados'])
 
-            p = 0
-
             for q in votacion['questions']:
-                r = 0
-                p = p + 1
                 writer.writerow([q['number'], q['desc']])
-                writer.writerow(['Opción', 'Número de votos'])
 
-                for k, v in votacion['postproc'].items():
-                    r = r + 1
+                if votacion['postproc']['type'] == 1 or votacion['postproc']['type'] == 2:
+                    writer.writerow(['Opción', 'Total', 'Número de votos'])
+                
+                elif votacion['postproc']['type'] == 4:
+                    writer.writerow(['Equipo', 'Opción', 'Número de votos'])
 
-                    if p == r:
-                        for o in v:
-                            writer.writerow([o['option'], o['postproc']])
+                else:
+                    writer.writerow(['Opción', 'Número de votos'])
+
+
+                for p in votacion['postproc']['questions']:
+                    if p['number'] == q['number']:
+                        for o in p['options']:
+
+                            if votacion['postproc']['type'] == 1 or votacion['postproc']['type'] == 2:
+                                writer.writerow([o['option'], o['postproc'], o['votes']])
+
+                            elif votacion['postproc']['type'] == 4:
+                                writer.writerow([o['team'], o['option'], o['votes']])
+                            
+                            else:
+                                writer.writerow([o['option'], o['postproc']])
         
         elif path == 'visualizer/ongoing_export.html':
 
