@@ -198,8 +198,8 @@ def signUp(request):
             to_email = formulario.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            template = loader.get_template("authentication/confirm_email.html")
-            return HttpResponse(template.render())
+          # template = loader.get_template("authentication/confirm_email.html")
+            return render(request, "authentication/confirm_email.html")
             #return HttpResponse('Please confirm your email address to complete the registration')
 
     else:

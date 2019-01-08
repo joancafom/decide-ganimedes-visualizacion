@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% load i18n static %}
-{% block title %}Nuevo usuario{% endblock %}
+{% block title %}{% trans "New user"%}{% endblock %}
+{% get_current_language as LANGUAGE_CODE %}
+
 
 {% block content %}
 
-Please confirm your email address to complete the registration
+{% trans "Please confirm your email address to complete the registration" %}
 {% endblock %}

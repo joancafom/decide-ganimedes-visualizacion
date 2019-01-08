@@ -80,7 +80,7 @@
                                     <div class="col s12 language1">
                                         <select class="browser-default" name="language" onchange="this.form.submit()">
                                             {% get_current_language as LANGUAGE_CODE %}
-                                            {% get_available_languages as LANGUAGES %}
+                                            {% get_available_languages as LANGUAGES %}  
                                             {% for lang in LANGUAGES %}
                                             <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected disabled hidden {% endif %}>
                                                 {{ lang.1 }}
