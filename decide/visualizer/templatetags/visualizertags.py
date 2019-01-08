@@ -3,7 +3,7 @@ register = template.Library()
 
 @register.filter(name="get_value")
 def get_value(dictionary, i):
-    return list(dictionary.values())[i-1]
+    return dictionary[i-1]
 
 @register.filter(name="get_first")
 def get_first(dictionary):
