@@ -1,4 +1,5 @@
 {% load i18n static %}
+{% load custom_tags %}
 
 <!DOCTYPE html>
 <html>
@@ -21,6 +22,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="utf-8" />
         <title>{% block title %}Decide!{% endblock %}</title>
+        <link rel="shortcut icon" type="image/png" href="{% static 'decide/img/favicon.png'%}"/>
+        <style type="text/css"> 
+            .social-icon {
+                height: 30px;
+                margin-left: 15px;
+                margin-top: 16px;
+            }
+            .admin-icon {
+                height: 30px;
+                margin-top: 16px;
+            }
+            .logged-email {
+                margin-left: 10px;
+            }
+        </style>
         {% block extrahead %}
         {% endblock %}
       
@@ -34,14 +50,59 @@
               $('select').formSelect();
             });
         </script>
-          
     </head>
 
     <body onload="initMaterialize()">
+    
+        <script>
+                window.fbAsyncInit = function() {
+                    FB.init({
+                    appId      : '{your-app-id}',
+                    cookie     : true,
+                    xfbml      : true,
+                    version    : '{api-version}'
+                    });
+                    
+                    FB.AppEvents.logPageView();   
+                    
+                };
+                
+                (function(d, s, id){
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {return;}
+                    js = d.createElement(s); js.id = id;
+                    js.src = "https://connect.facebook.net/en_US/sdk.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));
+            </script>
 
         <nav class="menu">
                 <div class="nav-wrapper blue-grey darken-2">
-                    <a href="/" class="brand-logo right">Ganímedes<i class="material-icons right">data_usage</i></a>
+                        {% if user.is_authenticated %}
+                            <div class="userEmail right">
+                                {% if request.session|get_value_from_dict:'google-oauth2_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
+                                    <img class="left social-icon" src="{% static 'decide/img/google_icon.png'%}"/>
+                                {% elif request.session|get_value_from_dict:'github_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
+                                    <img class="left social-icon" src="{% static 'decide/img/github_icon.png'%}"/>
+                                {% elif request.session|get_value_from_dict:'facebook_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
+                                    <img class="left social-icon" src="{% static 'decide/img/Facebook.png'%}"/>
+                                {% else %}
+                                    <i class="material-icons left">account_circle</i>
+                                {% endif %}
+                                <span class="logged-email">{{ user.email }}</span>
+                                <a class="right" href="{% url 'logout' %}"><i class="material-icons right">power_settings_new</i></a>
+                            </div>
+                        {% endif %}
+                        {% if user.is_authenticated == False %}
+                            <div class="userEmail right">
+                                <a href="{% url 'social:begin' 'google-oauth2' %}"><img class="left social-icon" src="{% static 'decide/img/google_icon.png'%}"/></a>
+                                <a href="{% url 'social:begin' 'github' %}"><img class="left social-icon" src="{% static 'decide/img/github_icon.png'%}"/></a>
+                                <a href="{% url 'social:begin' 'facebook' %}"><img class="left social-icon" src="{% static 'decide/img/Facebook.png'%}"/></a>
+                                <a href="/authentication/form-login?next={{request.path}}"><i class="material-icons right">send</i></a>
+                                <a href="/authentication/signup/"><i class="material-icons right">account_circle</i></a>                                
+                            </div>
+                        {% endif %}
+                        <a href="/" class="brand-logo center">Ganímedes<i class="material-icons right">data_usage</i></a>
                         <ul id="nav-mobile" class="left hide-on-med-and-down">
                             {% block menu_options %}
                             <li>
@@ -51,7 +112,7 @@
                                     <div class="col s12 language1">
                                         <select class="browser-default" name="language" onchange="this.form.submit()">
                                             {% get_current_language as LANGUAGE_CODE %}
-                                            {% get_available_languages as LANGUAGES %}
+                                            {% get_available_languages as LANGUAGES %}  
                                             {% for lang in LANGUAGES %}
                                             <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected disabled hidden {% endif %}>
                                                 {{ lang.1 }}
@@ -61,9 +122,9 @@
                                     </div>
                                 </form>
                             </li>
-                            <li><a href="#">Link 1</a></li>
+                            <li><a href="/booth/1/">Booth</a></li>
                             <li><a href="#">Link 2</a></li>
-                            <li><a href="#">Link 3</a></li>
+                            <li><a href="/admin"><img class="admin-icon" src="{% static 'decide/img/django_icon.png'%}"/></a></li>
                             {% endblock %}
                         </ul>
                 </div>
@@ -101,15 +162,15 @@
                     <div class="container">
                     <div class="row">
                         <div class="col l6 s12">
-                        <h5 class="white-text">Footer Content</h5>
-                        <p class="grey-text text-lighten-4">Information.</p>
+                        <h5 class="white-text">{% trans "Footer Content"%}</h5>
+                        <p class="grey-text text-lighten-4">{% trans "Information."%}</p>
                         </div>
                     </div>
                     </div>
                     <div class="footer-copyright">
                     <div class="container">
-                    © 2018 Copyright Text
-                    <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+                        {% trans "© 2018 Copyright Text"%}  
+                    <a class="grey-text text-lighten-4 right" href="#!">{% trans "More Links"%}</a>
                     </div>
                     </div>
             </footer> 

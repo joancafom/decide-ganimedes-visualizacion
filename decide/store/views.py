@@ -71,7 +71,7 @@ class StoreView(generics.ListAPIView):
                 {"message": "voting not started or is closed"},
                 status=status.HTTP_401_UNAUTHORIZED)
 
-        uid = request.data.get('voter')
+        uid = int(request.data.get('voter'))
         votes = request.data.get('votes')
 
         if not vid or not uid or not votes:

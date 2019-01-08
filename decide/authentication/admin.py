@@ -12,9 +12,7 @@ class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
     add_form = UserCreateForm
-
-
-    #form = UserCreateForm
+    # form = UserCreateForm
 
     # The fields to be used in displaying the DecideUser model.
     # These override the definitions on the base UserAdmin
@@ -24,11 +22,11 @@ class UserAdmin(BaseUserAdmin):
         ('W', 'Woman'),
         ('N', 'Non-binary'),
     )
-    list_display = ('email', 'first_name','last_name','city','birthdate', 'sex','avatar', 'is_staff')
+    list_display = ('email', 'first_name','last_name','city','birthdate', 'sex', 'is_staff')
     list_filter = ('is_staff',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('birthdate','city','sex','avatar','first_name','last_name',),}),
+        ('Personal info', {'fields': ('birthdate','city','sex', 'first_name','last_name',),}),
         ('Permissions', {'fields': ('is_staff',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -36,7 +34,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'birthdate','city','sex','avatar','first_name','last_name', 'password1', 'password2')}
+            'fields': ('email', 'birthdate','city','sex', 'first_name','last_name', 'password1', 'password2')}
         ),
     )
     search_fields = ('email',)
@@ -48,5 +46,3 @@ admin.site.register(User, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
-
-
