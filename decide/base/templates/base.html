@@ -4,9 +4,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- Inicio en Google para Heroku -->
-        <meta name="google-site-verification" content="ewIBHJWCo3oagHnyHw73YqJdRYTH1GlWhPKjsDLCVVA" />
-
         {% load static %}
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -77,17 +74,9 @@
                     js.src = "https://connect.facebook.net/en_US/sdk.js";
                     fjs.parentNode.insertBefore(js, fjs);
                     }(document, 'script', 'facebook-jssdk'));
-            </script>
+            </script>    
 
-        <ul id="dropdown1" class="dropdown-content">
-            <li><a class="center" href="{% url 'social:begin' 'google-oauth2' %}"><img style="margin:0 !important" class="social-icon" src="{% static 'decide/img/google_icon.png'%}"/></a></li>
-            <li class="divider"></li>
-            <li><a class="center" href="{% url 'social:begin' 'github' %}"><img style="margin:0 !important" class="social-icon" src="{% static 'decide/img/github_icon.png'%}"/></a></li>
-            <li class="divider"></li>
-            <li><a class="center" href="{% url 'social:begin' 'facebook' %}"><img style="margin:0 !important" class="social-icon" src="{% static 'decide/img/Facebook.png'%}"/></a></li>
-          </ul>   
-
-        <nav class="menu">
+        <nav class="menu" style="overflow: hidden !important;">
                 <div class="nav-wrapper blue-grey darken-2">
                         {% if user.is_authenticated %}
                             <div class="userEmail right">
@@ -107,11 +96,12 @@
                         {% if user.is_authenticated == False %}
                             <div class="userEmail right">
                                 <ul class="right hide-on-med-and-down">
-                                        <li></li>
-                                </ul>
-                                <a href="/authentication/form-login?next={{request.path}}">{% trans "Log in"%} |</a>
-                                <a href="/authentication/signup/">{% trans "Sign up"%} |</a>  
-                                a class="center" href="{% url 'social:begin' 'google-oauth2' %}"><img style="margin:0 !important" class="social-icon right" src="{% static 'decide/img/google_icon.png'%}"/></a>                              
+                                    <li><a href="/authentication/form-login?next={{request.path}}">{% trans "Log in"%}</a></li>
+                                    <li><a href="/authentication/signup/">{% trans "Sign up"%}</a> </li>
+                                    <li><a href="{% url 'social:begin' 'google-oauth2' %}"><img class="admin-icon center" src="{% static 'decide/img/google_icon.png'%}"/></a></li>
+                                    <li><a href="{% url 'social:begin' 'github' %}"><img class="admin-icon" src="{% static 'decide/img/github_icon.png'%}"/></a></li>
+                                    <li><a href="{% url 'social:begin' 'facebook' %}"><img class="admin-icon" src="{% static 'decide/img/Facebook.png'%}"/></a></li>
+                                </ul>    
                             </div>
                         {% endif %}
                         <a href="/" class="brand-logo center">Ganímedes<i class="material-icons right">data_usage</i></a>
@@ -136,7 +126,7 @@
                             </li>
                             <li><a href="/booth/1/">Booth</a></li>
                             <li><a href="#">Link 2</a></li>
-                            <li><a href="/admin"><img class="social-icon right" src="{% static 'decide/img/django_icon.png'%}"/>{% trans "Iniciar sesión como admin"%}</a></li>
+                            <li><a href="/admin"><img class="social-icon right" src="{% static 'decide/img/django_icon.png'%}"/>{% trans "Panel de administrador"%}</a></li>
                             {% endblock %}
                         </ul>
                 </div>
