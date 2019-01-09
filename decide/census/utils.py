@@ -3,7 +3,6 @@ from django.utils import timezone
 
 
 def check_str_is_int(string):
-
     try:
         int(string)
 

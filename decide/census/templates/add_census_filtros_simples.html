@@ -9,7 +9,7 @@
   <nav>
     <div class="nav-wrapper row teal darken-3">
       <div class="col s12">
-        <div class="col s12"><a href="/admin" class="breadcrumb">Home</a>
+        <div class="col s12"><a href="/" class="breadcrumb">Home</a>
         <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
         <a href="" class="breadcrumb">{% trans "Create census" %}</a>
       </div>
@@ -113,10 +113,10 @@
 
     <div id="age-choice">
      <label for="younger">{% trans 'From this age' %}</label>
-    <input type="number" name="younger" id="younger" min="0">
+    <input type="number" name="younger" id="younger" >
     <br>
     <label for="older">{% trans 'To this age' %}</label>
-    <input type="number" name="older" id="older" min="0">  
+    <input type="number" name="older" id="older" >
     <br/>
     <br/>
     <button class="btn waves-effect waves-light" type="submit" >{% trans 'Create census' %}

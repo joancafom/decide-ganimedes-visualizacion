@@ -131,10 +131,10 @@ def addAllByAge(request):
                 younger = request.GET.get('younger')
                 older = request.GET.get('older')
 
-                if older is None: #Comprobando que la edad no este vacía.
+                if older is None or len(older)==0: #Comprobando que la edad no este vacía.
                     older = '200'
 
-                if younger is None:
+                if younger is None or len(younger)==0:
                     younger = '-1'
 
                 if check_str_is_int(older) and check_str_is_int(younger): #Comprobando que en caso de tener un valor sea un entero.
@@ -222,71 +222,76 @@ class CensusDetail(generics.RetrieveDestroyAPIView):
 
 def add_custom_census(request):
 
-    if request.method == 'POST':                                    # Petición POST
-        form = CensusAddMultipleVotersForm(request.POST)
+    if request.user.is_staff:
+        if request.method == 'POST':                                    # Petición POST
+            form = CensusAddMultipleVotersForm(request.POST)
 
-        # Paso 1: Comprobando que los datos se han añadido al formulario correctamente
+            # Paso 1: Comprobando que los datos se han añadido al formulario correctamente
 
-        if form.is_valid():
-            sex_elections = form.cleaned_data['sex']
-            city_election = form.cleaned_data['city']
-            age_initial_range_election = form.cleaned_data['age_initial_range']
-            age_final_range_election = form.cleaned_data['age_final_range']
-            voting = form.cleaned_data['voting'].__getattribute__('pk')
+            if form.is_valid():
+                sex_elections = form.cleaned_data['sex']
+                city_election = form.cleaned_data['city']
+                age_initial_range_election = form.cleaned_data['age_initial_range']
+                age_final_range_election = form.cleaned_data['age_final_range']
+                voting = form.cleaned_data['voting'].__getattribute__('pk')
 
-            # Paso 2: Filtrando los votantes seleccionados...
+                # Paso 2: Filtrando los votantes seleccionados...
 
-            voters = User.objects.all()
+                voters = User.objects.all()
 
-            # ...por sexos
+                # ...por sexos
 
-            if len(sex_elections) != 0:                                 # Si la lista tiene 0 elementos...
-                voters = voters.filter(sex__in=sex_elections)
+                if len(sex_elections) != 0:                                 # Si la lista tiene 0 elementos...
+                    voters = voters.filter(sex__in=sex_elections)
 
-            # ...por ciudades
+                # ...por ciudades
 
-            if len(city_election) != 0:                                 # Si la longitud de la cadena es 0...
-                voters = voters.filter(city__iexact=city_election)      # Sin considerar mayúsculas y minúsculas
+                if len(city_election) != 0:                                 # Si la longitud de la cadena es 0...
+                    voters = voters.filter(city__iexact=city_election)      # Sin considerar mayúsculas y minúsculas
 
-            # ...por rango de edades
+                # ...por rango de edades
 
-            if age_initial_range_election is not None:                  # Si no se especificó fecha de inicio...
-                voters = voters.filter(birthdate__gte=age_initial_range_election)
+                if age_initial_range_election is not None:                  # Si no se especificó fecha de inicio...
+                    voters = voters.filter(birthdate__gte=age_initial_range_election)
 
-            if age_final_range_election is not None:                    # Si no se especificó fecha de fin...
-                voters = voters.filter(birthdate__lte=age_final_range_election)
+                if age_final_range_election is not None:                    # Si no se especificó fecha de fin...
+                    voters = voters.filter(birthdate__lte=age_final_range_election)
 
-            # Paso 3: comprobamos que el usuario logueado tiene permisos de creación de censos
+                # Paso 3: comprobamos que el usuario logueado tiene permisos de creación de censos
 
-            if request.user.is_authenticated:
-                if request.user.has_perm('add_census'):
+                if request.user.is_authenticated:
+                    if request.user.has_perm('add_census'):
 
-                    # Paso 4: asignamos todos los votantes al nuevo censo
+                        # Paso 4: asignamos todos los votantes al nuevo censo
 
-                    voters_ids = voters.values_list('id', flat=True, named=False)
+                        voters_ids = voters.values_list('id', flat=True, named=False)
 
 
 
-                    for voter_id in voters_ids:
+                        for voter_id in voters_ids:
 
-                        # Comprobamos que sea único
+                            # Comprobamos que sea único
 
-                        if not is_exists_census(voting, voter_id):
+                            if not is_exists_census(voting, voter_id):
 
-                            census = Census(voting_id=voting, voter_id=voter_id)
-                            census.save()
+                                census = Census(voting_id=voting, voter_id=voter_id)
+                                census.save()
 
-            return redirect('listCensus')                  # TODO: cambiar redirección
+                return redirect('listCensus')                  # TODO: cambiar redirección
 
-    else:                                                            # Petición GET
-        form = CensusAddMultipleVotersForm()
+        else:                                                            # Petición GET
+            form = CensusAddMultipleVotersForm()
 
-    context = {
-        'form': form,
-    }
+        context = {
+            'form': form,
+        }
 
-    return render(request, template_name='add_custom_census.html', context=context)
+        return render(request, template_name='add_custom_census.html', context=context)
 
+    else:
+        messages.add_message(request, messages.ERROR, "Permission denied")
+
+        return redirect('listCensus')
 
 def export_csv(request):
 
@@ -313,27 +318,30 @@ def export_csv(request):
 
 def import_csv(request):
 
-    # Paso 1: obtenemos el fichero CSV
+    if request.user.is_staff:
+        # Paso 1: obtenemos el fichero CSV
 
-    csv_file = request.FILES['file']
+        csv_file = request.FILES['file']
 
-    # Paso 2: verificación del fichero CSV
+        # Paso 2: verificación del fichero CSV
 
-    if not csv_file.name.endswith('.csv'):
-        return redirect("/census/addCustomCensus")
+        if not csv_file.name.endswith('.csv'):
+            return redirect("/census/addCustomCensus")
 
-    # Paso 3: persistemos los cambios en la base de datos
+        # Paso 3: persistemos los cambios en la base de datos
 
-    data_set = csv_file.read().decode('UTF-8')
-    io_string = io.StringIO(data_set)
-    next(io_string)
+        data_set = csv_file.read().decode('UTF-8')
+        io_string = io.StringIO(data_set)
+        next(io_string)
 
-    for column in csv.reader(io_string, delimiter=',', quotechar='|'):
-        _, created = Census.objects.update_or_create(
-            id=column[0],
-            voting_id=column[1],
-            voter_id=column[2],
-        )
+        for column in csv.reader(io_string, delimiter=',', quotechar='|'):
+            _, created = Census.objects.update_or_create(
+                id=column[0],
+                voting_id=column[1],
+                voter_id=column[2],
+            )
+    else:
+        messages.add_message(request, messages.ERROR, "Permission denied")
 
     return redirect('listCensus')
 
@@ -358,23 +366,35 @@ def viewVoters(request):
     return render(request, "view_voters.html", {'users': users})
 
 def passVotings(request):
+    if request.user.is_staff:
+        votings = Voting.objects.all()
+        if votings:
 
-    votings = Voting.objects.all()
-    if votings:
-        
-        return render(request, "add_census_filtros_simples.html", {'votings': votings})
+            return render(request, "add_census_filtros_simples.html", {'votings': votings})
 
+        else:
+            messages.add_message(request, messages.ERROR, "There are no votings available")
+            return redirect('listCensus')
     else:
-        messages.add_message(request, messages.ERROR, "There are no votings available")
+        messages.add_message(request, messages.ERROR, "Permission denied")
+
         return redirect('listCensus')
+
 
 def export_csv_view(request):
 
-    return render(request, "export_view.html")            
+    return render(request, "export_view.html")
+
 
 def import_csv_view(request):
 
-    return render(request, "import_view.html")
+    if request.user.is_staff:
+        return render(request, "import_view.html")
+
+    else:
+        messages.add_message(request, messages.ERROR, "Permission denied")
+        return redirect('listCensus')
+
 
 def list_census(request):
 
@@ -383,35 +403,43 @@ def list_census(request):
     voters = User.objects.all()
     return render(request,"main_index.html",{'census': census, 'votings':votings, 'voters':voters})
 
+
 def edit_census(request):
 
+    if request.user.is_staff:
+        n_id = request.GET.get('id')
+        users = User.objects.all().filter(is_staff=False)
+        votings = Voting.objects.all()
+        census = get_object_or_404(Census,id=n_id)
 
-    n_id = request.GET.get('id')
-    users = User.objects.all().filter(is_staff=False)
-    votings = Voting.objects.all()
-    census = get_object_or_404(Census,id=n_id)
-
-    if users:
-        if votings:
-            return render(request, 'edit_census.html',{'census': census, 'users':users, 'votings':votings})
+        if users:
+            if votings:
+                return render(request, 'edit_census.html',{'census': census, 'users':users, 'votings':votings})
+            else:
+                messages.add_message(request, messages.ERROR, "There are no votings available.")
+                return redirect('listCensus')
         else:
-            messages.add_message(request, messages.ERROR, "There are no votings available.")
+            messages.add_message(request, messages.ERROR, "There are no users available.")
             return redirect('listCensus')
     else:
-        messages.add_message(request, messages.ERROR, "There are no users available.")
+        messages.add_message(request, messages.ERROR, "Permission denied")
+
         return redirect('listCensus')
 
 
 def delete_census(request):
+    if request.user.is_staff:
+        n_id = request.GET.get('id')
+        census = get_object_or_404(Census,id=n_id)
 
-    n_id = request.GET.get('id')
-    census = get_object_or_404(Census,id=n_id)
+        return render(request, 'delete_census.html',{'census': census})
+    else:
+        messages.add_message(request, messages.ERROR, "Permission denied")
 
-    return render(request, 'delete_census.html',{'census': census})
+        return redirect('listCensus')
 
 def save_edited_census(request):
-
-    
+    if request.user.is_staff:
         census_id = request.GET.get('id')
         voting_id = request.GET.get('voting_id')
         voter_id = request.GET.get('voter_id')
@@ -423,15 +451,20 @@ def save_edited_census(request):
         census.voter_id = voter_id
         census.save()
 
-        return redirect('listCensus')
+    else:
+        messages.add_message(request, messages.ERROR, "Permission denied")
+
+    return redirect('listCensus')
 
 
 def delete_selected_census(request):
 
-    census_id = request.GET.get('id')
-    
-    census = get_object_or_404(Census,id=census_id)
+    if request.user.is_staff:
+        census_id = request.GET.get('id')
+        census = get_object_or_404(Census,id=census_id)
+        census.delete()
 
-    census.delete()
+    else:
+        messages.add_message(request, messages.ERROR, "Permission denied")
 
     return redirect('listCensus')
