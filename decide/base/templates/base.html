@@ -4,6 +4,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Inicio en Google para Heroku -->
+        <meta name="google-site-verification" content="ewIBHJWCo3oagHnyHw73YqJdRYTH1GlWhPKjsDLCVVA" />
+
         {% load static %}
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -104,10 +107,11 @@
                         {% if user.is_authenticated == False %}
                             <div class="userEmail right">
                                 <ul class="right hide-on-med-and-down">
-                                        <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{% trans "Iniciar sesión con RRSS."%}<i class="material-icons right">arrow_drop_down</i></a></li>
+                                        <li></li>
                                 </ul>
                                 <a href="/authentication/form-login?next={{request.path}}">{% trans "Log in"%} |</a>
-                                <a href="/authentication/signup/">{% trans "Sign up"%} |</a>                                
+                                <a href="/authentication/signup/">{% trans "Sign up"%} |</a>  
+                                a class="center" href="{% url 'social:begin' 'google-oauth2' %}"><img style="margin:0 !important" class="social-icon right" src="{% static 'decide/img/google_icon.png'%}"/></a>                              
                             </div>
                         {% endif %}
                         <a href="/" class="brand-logo center">Ganímedes<i class="material-icons right">data_usage</i></a>
