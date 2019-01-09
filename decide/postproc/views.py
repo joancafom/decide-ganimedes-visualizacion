@@ -85,7 +85,7 @@ class PostProcView(APIView):
         def lista_ordenada(lista_votos, votos_ordenados):
             sorted_teams = []
             lista_votos_aux = lista_votos
-            
+
             for i in votos_ordenados:
                 listax = []
                 ind = lista_votos_aux.index(i)
