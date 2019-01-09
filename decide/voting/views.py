@@ -1,7 +1,7 @@
 import django_filters.rest_framework
 from django.conf import settings
 from django.utils import timezone
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from rest_framework import generics, status
 from rest_framework.response import Response
 
@@ -104,3 +104,18 @@ class VotingUpdate(generics.RetrieveUpdateDestroyAPIView):
             msg = 'Action not found, try with start, stop or tally'
             st = status.HTTP_400_BAD_REQUEST
         return Response(msg, status=st)
+
+def get_open_votings(request):
+    
+    """
+    Method to get all open votings (all votings that have
+    start date and dont have end date.
+    """
+    
+    try:
+        open_votings = Voting.objects.filter(start_date__isnull = False, end_date__isnull = True)
+    except:
+        open_votings = []
+    
+    return render(request, 'voting/openVotings.html',
+                  context={'open_votings':open_votings})
