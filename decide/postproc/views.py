@@ -16,6 +16,10 @@ class PostProcView(APIView):
         out.sort(key=lambda x: -x['postproc'])
         return out
 
+    """Este método servirá para crear votaciones en las que el voto de los distintos votantes pueda diferir en su peso.
+    El número de votos de cada opción es multiplicado por el peso indicado en un nuevo campo (weight),
+    para después añadir dicha opción al array de objetos que se devuelve como resultado.
+    Finalmente se re-ordena este array según el valor en el nuevo campo weight de mayor a menor peso."""
     def weight(self, options):
         out = []
 
