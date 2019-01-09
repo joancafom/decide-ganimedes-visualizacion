@@ -102,26 +102,62 @@ class PostProcView(APIView):
         return equipos
 
     def parity(self, options):
-        return self.identity(options)  # TODO
+        hombres = []
+        mujeres = []
+        for opt in options:
+            if opt['gender']:  # si la opcion es un hombre, añadelo a la lista hombres, si no, a mujer.
+                hombres.append(opt)
+            else:
+                mujeres.append(opt)
+
+        hombres.sort(key=lambda x: -x['votes'])  # lista Ordenada de hombres por numero de votos
+        mujeres.sort(key=lambda x: -x['votes'])  # lista Ordenada de mujeres por numero de votos
+        res = []
+        r = 0  # tendrá el valor de la longitud de la lista más corta (hombres o mujeres)
+        listaSecundaria = []  # la lista con más candidatos de las dos
+        if len(hombres) < len(mujeres):
+            r = len(hombres)
+            listaSecundaria = mujeres
+        else:
+            r = len(mujeres)
+            listaSecundaria = hombres
+
+        # añade a la lista resultado todos los elementos de la que fuera la
+        # lista más larga. De este modo, se ordenaran los elementos de las
+        # listas aplicando paridad hasta que en una de las dos no haya más
+        # elementos. Entonces, completamos la lista resultado con los
+        # candidatos de la lista que aún no se ha terminado de recorrer.
+        for i in range(r):
+            if hombres[i]['votes'] > mujeres[i]['votes']:
+                res.append(hombres[i])
+                res.append(mujeres[i])
+            else:
+                res.append(mujeres[i])
+                res.append(hombres[i])
+
+        for opt in listaSecundaria:
+            if opt not in res:
+                res.append(opt)
+
+        return res
 
     def post(self, request):
         t = request.data.get('type', PostProcType.IDENTITY)
         qsts = request.data.get('questions', [])
-        results = {}
+        questions = []
 
         for qst in qsts:
             if t == PostProcType.IDENTITY:
-                results[qst['id']] = self.identity(qst['options'])
+                questions.append({'number': qst['number'], 'options': self.identity(qst['options'])})
             elif t == PostProcType.WEIGHT:
-                results[qst['id']] = self.weight(qst['options'])
+                questions.append({'number': qst['number'], 'options': self.weight(qst['options'])})
             elif t == PostProcType.SEATS:
-                sts = qst['seats']
-                results[qst['id']] = self.seats(qst['options'], sts)
+                questions.append({'number': qst['number'], 'options': self.seats(qst['options'], qst['seats']), 'seats': qst['seats']})
             elif t == PostProcType.PARITY:
-                results[qst['id']] = self.parity(qst['options'])
+                questions.append({'number': qst['number'], 'options': self.parity(qst['options'])})
             elif t == PostProcType.TEAM:
-                results[qst['id']] = self.team(qst['options'])
+                questions.append({'number': qst['number'], 'options': self.team(qst['options'])})
             else:
-                results[qst['id']] = self.identity(qst['options'])
+                questions.append({'number': qst['number'], 'options': self.identity(qst['options'])})
 
-        return Response(results)
+        return Response({'questions': questions, 'type': t})
