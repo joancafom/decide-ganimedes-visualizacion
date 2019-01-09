@@ -24,7 +24,7 @@
             <th>{% trans 'Start/end' %}</th>
             <th>{% trans 'Link' %}</th>
         </tr>
-            {% for voting in endedVotings %}
+            {% for voting in endedVotings reversed %}
             <tr>
                 <td>
                     {{ voting.id }}

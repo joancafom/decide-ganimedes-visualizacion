@@ -43,13 +43,11 @@
     {% endif %}
    
     {% for q in voting.questions %}
-        <p>{{q.desc}}</p>
         <div style="width: 50%">
             <canvas id="resultados{{q.number}}" width="100%" height="50%"></canvas>
         </div>
     {% endfor %}
-
- 
+    
     {% with voting.postproc.questions.0.options.0 as firstVote %}
 
     {% if voting.postproc.type == 4 %}
@@ -96,10 +94,67 @@
     {% endfor %}
         
    
-    
+    <!-- Gráfica para parity -->
     {% elif voting.postproc.type == 3 %}
-        <!--TODO Pintado de grafica para Parity -->
+        {% for question in voting.postproc.questions %}
+            <script>
+                var ctx = document.getElementById("resultados{{question.number}}").getContext('2d');
+                
+                function getRandomColor() {
+                    var r = Math.floor(Math.random() * 255);
+                    var g = Math.floor(Math.random() * 255);
+                    var b = Math.floor(Math.random() * 255);
+                    return "rgb(" + r + "," + g + "," + b + ", 0.5)";
+                }
 
+                var colors = [];
+
+                {% for option in question.options %}                
+                    colors.push(getRandomColor());
+                {% endfor %}
+
+                
+
+                var gridlines = {
+                                    display:false,
+                                    drawOnChartArea:false,
+                                    drawTicks:false,
+                                };
+
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: [{% for option in question.options %}{% if forloop.first %}"{{option.option}}{% if option.gender == False %}(Female){% else %}(Male){% endif %}"{% else %},"{{option.option}}{% if option.gender == False %}(Female){% else %}(Male){% endif %}"{% endif %}{% endfor %}],
+                        datasets: [{
+                            label: '# of Votes',
+                            data: [{% for option in question.options %}{% if forloop.first %}{{option.votes}}{% else %},{{option.votes}}{% endif %}{% endfor %}],
+                            backgroundColor: colors,
+                            borderWidth: 1,
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                gridLines:gridlines,
+                                ticks: {
+                                    beginAtZero:true,
+                                }
+                            }],
+                            xAxes: [{
+                                gridLines:gridlines,
+                                ticks: {
+                                    autoSkip:false,
+                                }
+                            }]
+                        },
+                        title: {
+                            display: true,
+                            text: '{{voting.name}} - {% trans 'Question:' %} {{question.number}}',
+                        }
+                    }
+                });
+            </script>
+        {% endfor %}
     {% elif voting.postproc.type == 0 %}
 
     <!--Pintado de gráfica para Identity-->
@@ -119,10 +174,14 @@
         
                 {% for option in values.options %}                
                     colors.push(getRandomColor());
-                    
                 {% endfor %}
         
-                
+                var gridlines = {
+                                    display:false,
+                                    drawOnChartArea:false,
+                                    drawTicks:false,
+                                };
+
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
@@ -137,10 +196,21 @@
                     options: {
                         scales: {
                             yAxes: [{
+                                gridLines:gridlines,
                                 ticks: {
-                                    beginAtZero:true
+                                    beginAtZero:true,
                                 }
-                            }]
+                            }],
+                                xAxes: [{
+                                    gridLines:gridlines,
+                                    ticks: {
+                                        autoSkip:false
+                                    }
+                                }]
+                        },
+                        title: {
+                            display: true,
+                            text: '{{voting.name}}'
                         }
                     }
                 });
@@ -230,6 +300,12 @@
                colors.push(getRandomColor());
             {% endfor %}
         
+            var gridlines = {
+                                    display:false,
+                                    drawOnChartArea:false,
+                                    drawTicks:false,
+                                };
+
             var ctx = document.getElementById("resultados{{q.number}}");
             var myChart = new Chart(ctx, {
                 type: 'doughnut',
@@ -242,6 +318,7 @@
                     borderWidth: 1
                     }]
                 },
+
                 options: {
                     responsive: true,
                     circumference: Math.PI,
@@ -249,7 +326,12 @@
                             animateScale: true,
                             animateRotate: true
                         },
-                    rotation: -Math.PI
+                    rotation: -Math.PI,
+                    gridLines:gridlines,
+                    title: {
+                        display: true,
+                        text: '{{voting.name}}'
+                    }
                 }
             });
             </script>
