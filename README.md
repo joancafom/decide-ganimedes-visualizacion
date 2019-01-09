@@ -1,4 +1,4 @@
-Plataforma voto electrónico educativa
+Plataforma voto electrónico educativa [![Build Status](https://travis-ci.org/decide-ganimedes-autenticacion/decide-ganimedes-autenticacion.svg?branch=master)](https://travis-ci.org/decide-ganimedes-autenticacion/decide-ganimedes-autenticacion)
 =====================================
 
 El objetivo de este proyecto es implementar una plataforma de voto
