@@ -7,11 +7,12 @@ from django.template.defaulttags import register
 
 from base import mods
 from django import template
+from datetime import datetime
 
 register = template.Library()
 
 from .render import Render
-from .computations import age_distribution, mean, get_sexes_participation, get_sexes_percentages
+from .computations import age_distribution, mean, get_sexes_percentages
 
 
 class VisualizerView(TemplateView):
@@ -260,32 +261,27 @@ def get_statistics(vid, counter=0):
         else:
             stats['participation_ratio'] = 0
 
-        voters_ages = get_stub_info('ages', vid, voters_id)
-        no_voters_ages = get_stub_info('ages', vid, no_voters)
+        contador_voters = mods.get('authentication', entry_point='/contador/', params={'list': voters_id})
+        contador_no_voters = mods.get('authentication', entry_point='/contador/', params={'list': no_voters})
+
+        voters_ages = transform_age(contador_voters['data']['all'])
+        no_voters_ages = transform_age(contador_no_voters['data']['all'])
         (voters_age_dist, voters_age_mean) = age_distribution(voters_ages)
         stats['voters_age_dist'] = voters_age_dist
         stats['voters_age_mean'] = voters_age_mean
         stats['no_voters_age_mean'] = mean(no_voters_ages)
 
         #Estadísticas avanzadas de votación II
-        votantes =  []
-        for v_id in voters_id:
-            user = User.objects.filter(id = v_id).all()
-            votantes.append(user)
-        sexes_total = get_stub_info('sexes', vid, census['voters'])
-        sexes_empty = {
-            User.SEX_OPTIONS[0][0] : 0,
-            User.SEX_OPTIONS[1][0] : 0,
-            User.SEX_OPTIONS[2][0] : 0
-        }
+        contador_censo = mods.get('authentication', entry_point='/contador/', params={'list': census['voters']})
+        sexes_total = transform_sexes(contador_censo['data'])
 
-        sexes_participation = get_sexes_participation(votantes, sexes_empty)
+        sexes_participation = transform_sexes(contador_voters['data'])
 
         stats['women_participation'] = sexes_participation['W']
         stats['men_participation'] = sexes_participation['M']
         stats['nonbinary_participation'] = sexes_participation['N']
 
-        sexes_percentages = get_sexes_percentages(sexes_participation, sexes_total, sexes_empty)
+        sexes_percentages = get_sexes_percentages(sexes_participation, sexes_total)
 
         stats['women_percentage'] = sexes_percentages['W']
         stats['men_percentage'] = sexes_percentages['M']
@@ -313,43 +309,27 @@ def get_statistics(vid, counter=0):
     
     return stats
 
-# Stub Methods
-# Simulamos la llamada a otros módulos mientras estos implementan sus cambios
+def transform_age(ages_raw):
+    age_formated = {}
+    today = date.today()
+
+    for a in ages_raw:
+        birth_date = datetime.strptime(ages_raw[0]['date'], '%Y-%m-%d')
+        years = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+        age_formated[years] = a['total_entries']
+
+    return age_formated
+
 from authentication.models import User
 
-def get_stub_info(stub_info, vid, id_list = []):
+def transform_sexes(sexes_raw):
+    
+    res = {
 
-    if stub_info == 'sexes':
-        voters = User.objects.filter(id__in=id_list).all()
-
-        res = {
-
-            User.SEX_OPTIONS[0][0] : 0,
-            User.SEX_OPTIONS[1][0] : 0,
-            User.SEX_OPTIONS[2][0] : 0
+            User.SEX_OPTIONS[0][0] : sexes_raw['man'],
+            User.SEX_OPTIONS[1][0] : sexes_raw['woman'],
+            User.SEX_OPTIONS[2][0] : sexes_raw['non-binary']
 
         }
 
-        for v in voters:
-            res[v.sex] = res[v.sex] + 1
-
-        return res
-
-    elif stub_info == 'ages':
-        voters = User.objects.filter(id__in=id_list).all()
-
-        res = {}
-        today = date.today()
-
-        for v in voters:
-            years = today.year - v.birthdate.year - ((today.month, today.day) < (v.birthdate.month, v.birthdate.day))
-
-            if years in res.keys():
-                res[years] = res[years] + 1
-            else:
-                res[years] = 1
-
-        return res
-    else:
-        return None
-
+    return res
