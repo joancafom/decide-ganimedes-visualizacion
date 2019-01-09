@@ -156,6 +156,47 @@ class PostProcTestCase(APITestCase):
         values = response.json()
         self.assertEqual(values, expected_result)
 
+    def test_team2(self):
+        data = {
+            'type': PostProcType.TEAM,
+            'questions': [
+                {
+                    'number': 1,
+                    'options': [
+                        {'option': 'Option 1', 'number': 1, 'votes': 1, 'team': 0},
+                        {'option': 'Option 2', 'number': 2, 'votes': 0, 'team': 1},
+                        {'option': 'Option 3', 'number': 3, 'votes': 0, 'team': 0},
+                        {'option': 'Option 4', 'number': 4, 'votes': 0, 'team': 1},
+                        {'option': 'Option 5', 'number': 5, 'votes': 0, 'team': 2},
+                        {'option': 'Option 6', 'number': 6, 'votes': 0, 'team': 3},
+                    ],
+                },
+            ],
+        }
+
+        expected_result = {
+            'type': PostProcType.TEAM,
+            'questions': [
+                {
+                    'number': 1,
+                    'options': [
+                        {'option': 'Option 1', 'number': 1, 'votes': 1, 'team': 0},
+                        {'option': 'Option 3', 'number': 3, 'votes': 0, 'team': 0},
+                        {'option': 'Option 2', 'number': 2, 'votes': 0, 'team': 1},
+                        {'option': 'Option 4', 'number': 4, 'votes': 0, 'team': 1},
+                        {'option': 'Option 5', 'number': 5, 'votes': 0, 'team': 2},
+                        {'option': 'Option 6', 'number': 6, 'votes': 0, 'team': 3},
+                    ],
+                },
+            ],
+        }
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+        
     #PRUEBA BÁSICA
     def test_parity(self):
         data = {
@@ -368,8 +409,7 @@ class PostProcTestCase(APITestCase):
         values = response.json()
         self.assertEqual(values, expected_result)
 
-        #Valores muy altos en el campo weight
-
+    #Valores muy altos en el campo weight
     def test_weight3(self):
         data = {
             'type': PostProcType.WEIGHT,
