@@ -182,7 +182,6 @@ class CensusCreate(generics.ListCreateAPIView):
 
         users = User.objects.all().values_list('id', flat=True)
 
-        print(type(users))
         try:
             for voter in voters:
                 if int(voter) not in users:
@@ -266,7 +265,7 @@ def add_custom_census(request):
 
                     voters_ids = voters.values_list('id', flat=True, named=False)
 
-                    print("Todos los voters_ids: " + str(voters_ids))
+
 
                     for voter_id in voters_ids:
 
