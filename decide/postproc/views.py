@@ -95,7 +95,7 @@ class PostProcView(APIView):
                     if opt['team'] == ind and not(opt in sorted_teams):
                         listax.append(opt)
                 listax.sort(key=lambda x: -x['votes'])
-
+                
                 for l in listax:
                     sorted_teams.append(l)
 
