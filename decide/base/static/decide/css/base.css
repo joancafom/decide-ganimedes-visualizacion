@@ -1,4 +1,11 @@
+html {
+    height: 100%;
+}
+
 body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
     background-color:#fafafa;
     font-family: 'Roboto';
     font-size: 16px;
@@ -6,6 +13,7 @@ body{
 }
 
 .body{
+    min-height: 100%;
     margin: auto;
     width: 85%
 }
@@ -17,6 +25,10 @@ body{
 
 .menu{
     margin-bottom: 50px;
+}
+
+.userEmail{
+    margin-right: 4%;
 }
 
 .brand-logo{
@@ -34,10 +46,9 @@ h5, p{
 }
 
 .decideFooter{
-    position: relative;
-    bottom: 0;
-    text-align: center;
-
+    margin-top:50px;
+    width: 100% !important;
+    height: 60px !important;
 }
 
 .errorlist
