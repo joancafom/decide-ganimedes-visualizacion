@@ -46,7 +46,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from .tokens import account_activation_token
 from django.utils.encoding import force_bytes
 from django.template import Context, loader
-
+import ast
 
 User=get_user_model()
     
@@ -67,10 +67,11 @@ class GetContadorView(APIView):
         #############################################################
         id_list=[]
         #rcv   
-        #TODO fake id_list . Change at integration moment (visualizer)     
+           
         if request:
             id_list= request.data.get('list', '')
         #id_list=['2','4','3','5']
+        id_list=ast.literal_eval(id_list)
         id_list = list(map(int, id_list))
 
         #filtered users. In this way, we call only one time to db
