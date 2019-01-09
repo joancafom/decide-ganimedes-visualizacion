@@ -4,6 +4,13 @@
   
 {% block content %}
 
+<!-- Para el login con redes sociales, es necesario acceder desde localhost, no 127.0.0.1 -->
+{% if request.build_absolute_uri == "http://127.0.0.1:8000/" %}
+  <script>
+    window.location.replace("http://localhost:8000/");
+  </script>
+{% endif %}
+
 <div class="parallax-container">
     <div class="parallax" ><img src="static/decide/img/3406.jpg" alt="My image"/></div>
   </div>
