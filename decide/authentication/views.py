@@ -69,7 +69,7 @@ class GetContadorView(APIView):
         #rcv   
            
         if request:
-            id_list= request.data.get('list', '')
+            id_list= request.GET.get('list', '[]')
         #id_list=['2','4','3','5']
         id_list=ast.literal_eval(id_list)
         id_list = list(map(int, id_list))
