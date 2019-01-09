@@ -145,9 +145,9 @@ AUTH_USER_MODEL = 'authentication.User'
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGES = (
-    ('en-us', 'English'),
-    ('es', 'Español'),
-    ('ca', 'Català'),
+    ('en-us', _('English')),
+    ('es', _('Español')),
+    ('ca', _('Català')),
 )
 
 LANGUAGE_CODE = 'en-us'
