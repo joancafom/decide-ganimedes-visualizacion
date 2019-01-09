@@ -28,7 +28,7 @@ from django.http import HttpResponse
 from django.template import loader
 import csv, io
 from datetime import datetime
-from census.utils import check_str_is_int
+from census.utils import check_str_is_int, check_voting_is_started
 
 
 def addAllRegistered(request):
@@ -38,12 +38,16 @@ def addAllRegistered(request):
     list_voting = list(Voting.objects.all().values_list('id', flat=True))
     if request.user.is_staff:
         if int(voting_id) in list_voting:
-            for voter in voters:
-                try:
-                    census = Census(voting_id=voting_id, voter_id=voter.id)
-                    census.save()
-                except IntegrityError:
-                    continue
+            if not check_voting_is_started(int(voting_id)):
+                for voter in voters:
+                    try:
+                        census = Census(voting_id=voting_id, voter_id=voter.id)
+                        census.save()
+                    except IntegrityError:
+                        continue
+                        
+            else:
+                messages.add_message(request, messages.ERROR, "The voting is started")
         else:
             messages.add_message(request, messages.ERROR, "Invalid voting id: " + str(voting_id))
     else:
@@ -63,12 +67,16 @@ def addAllBySex(request):
     if request.user.is_staff:
         if voters:
             if int(voting_id) in list_voting:
-                for voter in voters:
-                    try:
-                        census = Census(voting_id=voting_id, voter_id=voter.id)
-                        census.save()
-                    except IntegrityError:
-                        continue
+                if not check_voting_is_started(int(voting_id)):
+                    for voter in voters:
+                        try:
+                            census = Census(voting_id=voting_id, voter_id=voter.id)
+                            census.save()
+                        except IntegrityError:
+                            continue
+
+                else:
+                    messages.add_message(request, messages.ERROR, "The voting is started")
             else:
                 messages.add_message(request, messages.ERROR, "Invalid voting id")
         else:
@@ -91,12 +99,15 @@ def addAllInCity(request):
     if request.user.is_staff:
         if voters:
             if int(voting_id) in list_voting:
-                for voter in voters:
-                    try:
-                        census = Census(voting_id=voting_id, voter_id=voter.id)
-                        census.save()
-                    except IntegrityError:
-                        continue
+                if not check_voting_is_started(int(voting_id)):
+                    for voter in voters:
+                        try:
+                            census = Census(voting_id=voting_id, voter_id=voter.id)
+                            census.save()
+                        except IntegrityError:
+                            continue
+                else:
+                    messages.add_message(request, messages.ERROR, "The voting is started")
             else:
                 messages.add_message(request, messages.ERROR, "Invalid voting id")
         else:
@@ -116,37 +127,41 @@ def addAllByAge(request):
         list_voting = set(Voting.objects.all().values_list('id', flat=True))
 
         if int(voting_id) in list_voting:
-            younger = request.GET.get('younger')
-            older = request.GET.get('older')
+            if not check_voting_is_started(int(voting_id)):
+                younger = request.GET.get('younger')
+                older = request.GET.get('older')
 
-            if older is None: #Comprobando que la edad no este vacía.
-                older = '200'
+                if older is None: #Comprobando que la edad no este vacía.
+                    older = '200'
 
-            if younger is None:
-                younger = '-1'
+                if younger is None:
+                    younger = '-1'
 
-            if check_str_is_int(older) and check_str_is_int(younger): #Comprobando que en caso de tener un valor sea un entero.
+                if check_str_is_int(older) and check_str_is_int(younger): #Comprobando que en caso de tener un valor sea un entero.
 
-                now1 = datetime.now()
-                now2 = now1
-                superior_limit = now1.replace(year=now1.year-int(younger))
-                lower_limit = now2.replace(year=now2.year-int(older))
+                    now1 = datetime.now()
+                    now2 = now1
+                    superior_limit = now1.replace(year=now1.year-int(younger))
+                    lower_limit = now2.replace(year=now2.year-int(older))
 
-                voters = User.objects.filter(birthdate__gte=lower_limit)
-                voters = voters.filter(birthdate__lte=superior_limit)
+                    voters = User.objects.filter(birthdate__gte=lower_limit)
+                    voters = voters.filter(birthdate__lte=superior_limit)
 
-                if voters:
-                    for voter in voters:
+                    if voters:
+                        for voter in voters:
 
-                        try:
-                            census = Census(voting_id=int(voting_id), voter_id=voter.id)
-                            census.save()
+                            try:
+                                census = Census(voting_id=int(voting_id), voter_id=voter.id)
+                                census.save()
 
-                        except IntegrityError:
-                            continue
+                            except IntegrityError:
+                                continue
+
+                else:
+                    messages.add_message(request, messages.ERROR, "Age is not an integer")
 
             else:
-                messages.add_message(request, messages.ERROR, "Age is not an integer")
+                messages.add_message(request, messages.ERROR, "The voting is started")
 
         else:
             messages.add_message(request, messages.ERROR, "Invalid voting id")
@@ -154,7 +169,7 @@ def addAllByAge(request):
     else:
         messages.add_message(request, messages.ERROR, "Permission denied")
 
-    return redirect('/admin/census/census')
+    return redirect('listCensus')
 
 class CensusCreate(generics.ListCreateAPIView):
     permission_classes = (CensusPermissions,)
