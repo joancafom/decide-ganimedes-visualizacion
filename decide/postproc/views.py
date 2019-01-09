@@ -100,7 +100,9 @@ class PostProcView(APIView):
         equipos_mayor_a_menor = sorted(votes_per_team, key=int, reverse=True)
         equipos = lista_ordenada(votes_per_team, equipos_mayor_a_menor)
         return equipos
-
+    """"Este método aplica paridad de resultados a una votación. Es decir, dada una lista de candidatos con sus respectivos
+        atributos, siendo los más relevantes el número de votos y el género de los candidatos, devuelve una lista ordenada
+        por número de votos, alternando siempre entre mujeres y hombres, para asegurar así la paridad."""
     def parity(self, options):
         hombres = []
         mujeres = []
