@@ -240,3 +240,56 @@ class VotingTestCase(BaseTestCase):
         response = self.client.put('/voting/{}/'.format(v.pk), data, format='json')
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), 'Voting already tallied')
+
+    def test_yes_no_question(self):
+        v = Voting(name = 'test voting', postproc_type = PostProcType.IDENTITY)
+        v.save()
+
+        q = Question(voting = v, desc = 'yes/no test question', yes_no_question = True)
+        q.save()
+
+        opts = list(q.options.all())
+
+        self.assertEqual(len(opts), 2)
+        self.assertEqual(opts[0].option, 'Si')
+        self.assertEqual(opts[1].option, 'No')
+
+    def test_automatic_number_assignment_of_question_and_questionoption(self):
+        v = Voting(name = 'test voting', postproc_type = PostProcType.IDENTITY)
+        v.save()
+
+        for q in range(3):
+
+            quest = Question(voting = v, desc = 'question {}'.format(q))
+            quest.save()
+
+            for o in range(3):
+
+                opt = QuestionOption(question = quest, option = 'option {}'.format(o))
+                opt.save()
+
+        questions = list(v.questions.all())
+
+        q1 = questions[0]
+        q1opts = list(q1.options.all())
+
+        self.assertEqual(q1.number, 1)
+        self.assertEqual(q1opts[0].number, 1)
+        self.assertEqual(q1opts[1].number, 2)
+        self.assertEqual(q1opts[2].number, 3)
+
+        q2 = questions[1]
+        q2opts = list(q2.options.all())
+
+        self.assertEqual(q2.number, 2)
+        self.assertEqual(q2opts[0].number, 4)
+        self.assertEqual(q2opts[1].number, 5)
+        self.assertEqual(q2opts[2].number, 6)
+
+        q3 = questions[2]
+        q3opts = list(q3.options.all())
+
+        self.assertEqual(q3.number, 3)
+        self.assertEqual(q3opts[0].number, 7)
+        self.assertEqual(q3opts[1].number, 8)
+        self.assertEqual(q3opts[2].number, 9)
