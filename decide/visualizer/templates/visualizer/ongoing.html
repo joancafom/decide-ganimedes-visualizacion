@@ -1,16 +1,14 @@
 {% extends "base.html" %}
 {% load i18n static %}
-{% block title %}
-{% endblock %}
 {% block extrahead %}
     <link type="text/css" rel="stylesheet" href="{% static "decide/css/visualizer/ongoing.css"%}"/>
-{% endblock %}
-{% block menu_options %}
 {% endblock %}
 {% block content %}
 
     <div id="cabecera-votacion">
         <h4>{{voting.name}}</h4>
+        <h5>{{voting.desc}}</h5>
+        <br>
         <p>{% trans 'In Progress' %}</p>
     </div>
 
@@ -92,10 +90,13 @@
             </li>
             </ul>
             <div class="centered-text">
-                <a href="pdf/" target="_blank">{% trans "Download results as .pdf" %}</a>
-                <br/>
-                <a href="csv/" target="_blank">{% trans "Download results as .csv" %}</a>
+                <p>{% trans "Download results as" %} <a href="pdf/" target="_blank">.pdf</a> 
+                <a href="csv/" target="_blank">.csv</a> 
+                <a href="json/" target="_blank">.json</a> 
+                <a href="xml/" target="_blank">.xml</a>
+                </p>
             </div>
         </div>
+    </div>
 
 {% endblock %}
