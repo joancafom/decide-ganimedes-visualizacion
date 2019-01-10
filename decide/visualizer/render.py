@@ -30,6 +30,7 @@ class Render:
 
         votacion = params['voting']
         writer = csv.writer(response)
+        print(votacion)
 
         if path == 'visualizer/ended_export.html':
             
@@ -41,6 +42,9 @@ class Render:
 
                 if votacion['postproc']['type'] == 1 or votacion['postproc']['type'] == 2:
                     writer.writerow(['Opción', 'Total', 'Número de votos'])
+
+                elif votacion['postproc']['type'] == 3:
+                    writer.writerow(['Género', 'Opción', 'Número de votos'])
                 
                 elif votacion['postproc']['type'] == 4:
                     writer.writerow(['Equipo', 'Opción', 'Número de votos'])
@@ -55,6 +59,10 @@ class Render:
 
                             if votacion['postproc']['type'] == 1 or votacion['postproc']['type'] == 2:
                                 writer.writerow([o['option'], o['postproc'], o['votes']])
+
+                            elif votacion['postproc']['type'] == 3:
+                                gender = "Hombre" if o['gender'] == True else "Mujer"
+                                writer.writerow([gender, o['option'], o['votes']])
 
                             elif votacion['postproc']['type'] == 4:
                                 writer.writerow([o['team'], o['option'], o['votes']])
