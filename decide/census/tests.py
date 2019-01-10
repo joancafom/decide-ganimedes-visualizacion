@@ -216,3 +216,75 @@ class CensusTestCase(BaseTestCase):
         data = {'voting_id': 40, 'voters': [63]}
         response = self.client.post('/census/', data, format='json')
         self.assertEqual(response.status_code, 201)
+
+    def test_add_voters_sex(self):
+        census_before = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        user1 = User(email='user5@user5.com', password='user5user5', city='Madrid', sex='M')
+        user1.save()
+
+        user2 = User(email='user6@user6.com', password='user2user2', city="Lugo", sex="M")
+        user2.save()
+
+        user3 = User(email='user7@user7.com', password='user3user3', city="Palencia", sex="W")
+        user3.save()
+
+        admin = User(email='administrador@gmail.com', password='qwerty')
+        admin.is_staff = True
+        admin.save()
+
+        voting_id = "40"
+        self.client.force_login(admin)
+        response2 = self.client.get('/census/addAllBySex/?voting_id={}&sex={}'.format(voting_id, 'M'))
+        census_after = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        self.assertEqual(response2.status_code, 302)
+        self.assertTrue(census_before + 2 == census_after)
+
+    def test_add_voters_sex_fail_no_users_with_sex(self):
+        census_before = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        user1 = User(email='user5@user5.com', password='user5user5', city='Madrid', sex='M')
+        user1.save()
+
+        user2 = User(email='user6@user6.com', password='user2user2', city="Lugo", sex="M")
+        user2.save()
+
+        user3 = User(email='user7@user7.com', password='user3user3', city="Palencia", sex="W")
+        user3.save()
+
+        admin = User(email='administrador@gmail.com', password='qwerty')
+        admin.is_staff = True
+        admin.save()
+
+        voting_id = "40"
+        self.client.force_login(admin)
+        response2 = self.client.get('/census/addAllBySex/?voting_id={}&sex={}'.format(voting_id, 'N'))
+        census_after = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        self.assertEqual(response2.status_code, 302)
+        self.assertTrue(census_before == census_after)
+
+    def test_add_voters_sex_fail_invalid_voting_id(self):
+        census_before = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        user1 = User(email='user5@user5.com', password='user5user5', city='Madrid', sex='M')
+        user1.save()
+
+        user2 = User(email='user6@user6.com', password='user2user2', city="Lugo", sex="M")
+        user2.save()
+
+        user3 = User(email='user7@user7.com', password='user3user3', city="Palencia", sex="W")
+        user3.save()
+
+        admin = User(email='administrador@gmail.com', password='qwerty')
+        admin.is_staff = True
+        admin.save()
+
+        voting_id = "88"
+        self.client.force_login(admin)
+        response2 = self.client.get('/census/addAllBySex/?voting_id={}&sex={}'.format(voting_id, 'M'))
+        census_after = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        self.assertEqual(response2.status_code, 302)
+        self.assertTrue(census_before == census_after)
