@@ -235,13 +235,28 @@ class Render:
                     option = ET.SubElement(options, 'option')
                     desc = ET.SubElement(option, 'desc')
                     desc.text = o['option']
-                    if(votacion['postproc']['type'] == 1):
-
+                    if(votacion['postproc']['type'] == 1 or votacion['postproc']['type'] == 2):
                         postproc = ET.SubElement(option, 'postproc')
                         postproc.text = str(o['postproc'])
+                        votes = ET.SubElement(option, 'votes')
+                        votes.text = str(o['votes'])
+                    elif(votacion['postproc']['type'] == 3):
+                        if(o['gender']==True):
+                            gender = ET.SubElement(option, 'gender')
+                            gender.text = "Male"
+                        else:
+                            gender = ET.SubElement(option, 'gender')
+                            gender.text = "Female"
+                        votes = ET.SubElement(option, 'votes')
+                        votes.text = str(o['votes'])
+                    elif(votacion['postproc']['type'] == 4):
+                        team = ET.SubElement(option, 'team')
+                        team.text = str(o['team'])
+                        votes = ET.SubElement(option, 'votes')
+                        votes.text = str(o['votes'])
                     else:
                         postproc = ET.SubElement(option, 'postproc')
-                        postproc.text = str(o['votes'])
+                        postproc.text = str(o['postproc'])
 
 
             #Pasar el XML a String
