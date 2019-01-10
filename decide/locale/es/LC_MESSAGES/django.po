@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-08 10:00+0000\n"
+"POT-Creation-Date: 2019-01-09 17:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -128,6 +128,7 @@ msgstr ""
 "registro"
 
 #: authentication/templates/authentication/login.html:25
+#: base/templates/base.html:113
 msgid "Log in"
 msgstr "Iniciar Sesión"
 
@@ -148,31 +149,43 @@ msgstr "Error: Las credenciales no son válidas"
 msgid "Error: "
 msgstr "Error: "
 
-#: authentication/templates/authentication/signup.html:7
+#: authentication/templates/authentication/signup.html:13
 msgid "Sign up a new user"
 msgstr "Registrar nuev@ usuari@"
 
-#: authentication/templates/authentication/signup.html:15
+#: authentication/templates/authentication/signup.html:21
 msgid "Submit"
 msgstr "Enviar"
 
-#: base/templates/base.html:165
+#: base/templates/base.html:111
+msgid "Iniciar sesión con RRSS."
+msgstr ""
+
+#: base/templates/base.html:114
+msgid "Sign up"
+msgstr ""
+
+#: base/templates/base.html:139
+msgid "Iniciar sesión como admin"
+msgstr ""
+
+#: base/templates/base.html:177
 msgid "Footer Content"
 msgstr "Contenido de Pie de página"
 
-#: base/templates/base.html:166
+#: base/templates/base.html:178
 msgid "Information."
 msgstr "Información."
 
-#: base/templates/base.html:172
+#: base/templates/base.html:184
 msgid "© 2018 Copyright Text"
 msgstr "© 2018 Copyright Text"
 
-#: base/templates/base.html:173
+#: base/templates/base.html:185
 msgid "More Links"
 msgstr "Mas hipervínculos"
 
-#: base/templates/index.html:12
+#: base/templates/index.html:19
 msgid "Welcome"
 msgstr "Bienvenid@"
 
@@ -227,6 +240,18 @@ msgstr "Felicidades. Tu voto ha sido enviado."
 #: booth/templates/booth/booth.html:317
 msgid "You must select an option for each question."
 msgstr "Debes seleccionar una opción para cada pregunta."
+
+#: decide/settings.py:148
+msgid "English"
+msgstr "English"
+
+#: decide/settings.py:149
+msgid "Español"
+msgstr "Español"
+
+#: decide/settings.py:150
+msgid "Català"
+msgstr "Català"
 
 #: visualizer/templates/visualizer/ended.html:15
 #: visualizer/templates/visualizer/ended_export.html:6

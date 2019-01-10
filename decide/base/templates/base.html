@@ -5,6 +5,10 @@
 <html>
     <head>
         {% load static %}
+
+        <!-- Control de autenticación con Google -->
+        <meta name="google-site-verification" content="ewIBHJWCo3oagHnyHw73YqJdRYTH1GlWhPKjsDLCVVA" />
+
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         
@@ -74,14 +78,14 @@
                     js.src = "https://connect.facebook.net/en_US/sdk.js";
                     fjs.parentNode.insertBefore(js, fjs);
                     }(document, 'script', 'facebook-jssdk'));
-            </script>
+            </script>    
 
-        <nav class="menu">
+        <nav class="menu" style="overflow: hidden !important;">
                 <div class="nav-wrapper blue-grey darken-2">
                         {% if user.is_authenticated %}
                             <div class="userEmail right">
                                 {% if request.session|get_value_from_dict:'google-oauth2_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
-                                    <img class="left social-icon" src="{% static 'decide/img/google_icon.png'%}"/>
+                                    <img class="left social-icon"  src="{% static 'decide/img/google_icon.png'%}"/>
                                 {% elif request.session|get_value_from_dict:'github_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
                                     <img class="left social-icon" src="{% static 'decide/img/github_icon.png'%}"/>
                                 {% elif request.session|get_value_from_dict:'facebook_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
@@ -89,17 +93,19 @@
                                 {% else %}
                                     <i class="material-icons left">account_circle</i>
                                 {% endif %}
-                                <span class="logged-email">{{ user.email }}</span>
+                                <span class="logged-email">{{ user.email }} | </span>
                                 <a class="right" href="{% url 'logout' %}"><i class="material-icons right">power_settings_new</i></a>
                             </div>
                         {% endif %}
                         {% if user.is_authenticated == False %}
                             <div class="userEmail right">
-                                <a href="{% url 'social:begin' 'google-oauth2' %}"><img class="left social-icon" src="{% static 'decide/img/google_icon.png'%}"/></a>
-                                <a href="{% url 'social:begin' 'github' %}"><img class="left social-icon" src="{% static 'decide/img/github_icon.png'%}"/></a>
-                                <a href="{% url 'social:begin' 'facebook' %}"><img class="left social-icon" src="{% static 'decide/img/Facebook.png'%}"/></a>
-                                <a href="/authentication/form-login?next={{request.path}}"><i class="material-icons right">send</i></a>
-                                <a href="/authentication/signup/"><i class="material-icons right">account_circle</i></a>                                
+                                <ul class="right hide-on-med-and-down">
+                                    <li><a href="/authentication/form-login?next={{request.path}}">{% trans "Log in"%}</a></li>
+                                    <li><a href="/authentication/signup/">{% trans "Sign up"%}</a> </li>
+                                    <li><a href="{% url 'social:begin' 'google-oauth2' %}"><img class="admin-icon center" src="{% static 'decide/img/google_icon.png'%}"/></a></li>
+                                    <li><a href="{% url 'social:begin' 'github' %}"><img class="admin-icon" src="{% static 'decide/img/github_icon.png'%}"/></a></li>
+                                    <li><a href="{% url 'social:begin' 'facebook' %}"><img class="admin-icon" src="{% static 'decide/img/Facebook.png'%}"/></a></li>
+                                </ul>    
                             </div>
                         {% endif %}
                         <a href="/" class="brand-logo center">Ganímedes<i class="material-icons right">data_usage</i></a>
@@ -124,7 +130,7 @@
                             </li>
                             <li><a href="/booth/1/">Booth</a></li>
                             <li><a href="#">Link 2</a></li>
-                            <li><a href="/admin"><img class="admin-icon" src="{% static 'decide/img/django_icon.png'%}"/></a></li>
+                            <li><a href="/admin"><img class="social-icon right" src="{% static 'decide/img/django_icon.png'%}"/>{% trans "Panel de administrador"%}</a></li>
                             {% endblock %}
                         </ul>
                 </div>
