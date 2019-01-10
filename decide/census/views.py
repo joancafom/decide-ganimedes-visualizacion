@@ -28,7 +28,7 @@ from django.http import HttpResponse
 from django.template import loader
 import csv, io
 from datetime import datetime
-from census.utils import check_str_is_int, check_voting_is_started
+from census.utils import check_str_is_int, check_voting_is_started, internacionalize_message
 
 
 def addAllRegistered(request):
@@ -47,11 +47,11 @@ def addAllRegistered(request):
                         continue
                         
             else:
-                messages.add_message(request, messages.ERROR, "The voting is started")
+                messages.add_message(request, messages.ERROR, internacionalize_message("The voting is started"))
         else:
-            messages.add_message(request, messages.ERROR, "Invalid voting id: " + str(voting_id))
+            messages.add_message(request, messages.ERROR, internacionalize_message("Invalid voting id"))
     else:
-        messages.add_message(request, messages.ERROR, "Permission denied")
+        messages.add_message(request, messages.ERROR, internacionalize_message("Permission denied"))
 
     return redirect('listCensus')
 
@@ -76,13 +76,13 @@ def addAllBySex(request):
                             continue
 
                 else:
-                    messages.add_message(request, messages.ERROR, "The voting is started")
+                    messages.add_message(request, messages.ERROR, internacionalize_message("The voting is started"))
             else:
-                messages.add_message(request, messages.ERROR, "Invalid voting id")
+                messages.add_message(request, messages.ERROR, internacionalize_message("Invalid voting id"))
         else:
-                messages.add_message(request, messages.WARNING, "No users with sex requested")
+                messages.add_message(request, messages.WARNING, internacionalize_message("No users with sex requested"))
     else:
-        messages.add_message(request, messages.ERROR, "Permission denied")
+        messages.add_message(request, messages.ERROR, internacionalize_message("Permission denied"))
 
     #return redirect('/census/?voting_id=' + voting_id)
     return redirect('listCensus')
@@ -107,13 +107,13 @@ def addAllInCity(request):
                         except IntegrityError:
                             continue
                 else:
-                    messages.add_message(request, messages.ERROR, "The voting is started")
+                    messages.add_message(request, messages.ERROR, internacionalize_message("The voting is started"))
             else:
-                messages.add_message(request, messages.ERROR, "Invalid voting id")
+                messages.add_message(request, messages.ERROR, internacionalize_message("Invalid voting id"))
         else:
-                messages.add_message(request, messages.WARNING, "No users in city requested")
+                messages.add_message(request, messages.WARNING, internacionalize_message("No users in city requested"))
     else:
-        messages.add_message(request, messages.ERROR, "Permission denied")
+        messages.add_message(request, messages.ERROR, internacionalize_message("Permission denied"))
 
     #return redirect('/census/?voting_id=' + voting_id)
     return redirect('listCensus')
@@ -131,10 +131,10 @@ def addAllByAge(request):
                 younger = request.GET.get('younger')
                 older = request.GET.get('older')
 
-                if older is None or len(older)==0: #Comprobando que la edad no este vacía.
+                if older is None or len(older) == 0: #Comprobando que la edad no este vacía.
                     older = '200'
 
-                if younger is None or len(younger)==0:
+                if younger is None or len(younger) == 0:
                     younger = '-1'
 
                 if check_str_is_int(older) and check_str_is_int(younger): #Comprobando que en caso de tener un valor sea un entero.
@@ -158,16 +158,16 @@ def addAllByAge(request):
                                 continue
 
                 else:
-                    messages.add_message(request, messages.ERROR, "Age is not an integer")
+                    messages.add_message(request, messages.ERROR, internacionalize_message("Age is not an integer"))
 
             else:
-                messages.add_message(request, messages.ERROR, "The voting is started")
+                messages.add_message(request, messages.ERROR, internacionalize_message("The voting is started"))
 
         else:
-            messages.add_message(request, messages.ERROR, "Invalid voting id")
+            messages.add_message(request, messages.ERROR, internacionalize_message("Invalid voting id"))
 
     else:
-        messages.add_message(request, messages.ERROR, "Permission denied")
+        messages.add_message(request, messages.ERROR, internacionalize_message("Permission denied"))
 
     return redirect('listCensus')
 
@@ -289,7 +289,7 @@ def add_custom_census(request):
         return render(request, template_name='add_custom_census.html', context=context)
 
     else:
-        messages.add_message(request, messages.ERROR, "Permission denied")
+        messages.add_message(request, messages.ERROR, internacionalize_message("Permission denied"))
 
         return redirect('listCensus')
 
@@ -341,7 +341,7 @@ def import_csv(request):
                 voter_id=column[2],
             )
     else:
-        messages.add_message(request, messages.ERROR, "Permission denied")
+        messages.add_message(request, messages.ERROR, internacionalize_message("Permission denied"))
 
     return redirect('listCensus')
 
@@ -373,10 +373,10 @@ def passVotings(request):
             return render(request, "add_census_filtros_simples.html", {'votings': votings})
 
         else:
-            messages.add_message(request, messages.ERROR, "There are no votings available")
+            messages.add_message(request, messages.ERROR, internacionalize_message("There are no votings available"))
             return redirect('listCensus')
     else:
-        messages.add_message(request, messages.ERROR, "Permission denied")
+        messages.add_message(request, messages.ERROR, internacionalize_message("Permission denied"))
 
         return redirect('listCensus')
 
@@ -392,7 +392,7 @@ def import_csv_view(request):
         return render(request, "import_view.html")
 
     else:
-        messages.add_message(request, messages.ERROR, "Permission denied")
+        messages.add_message(request, messages.ERROR, internacionalize_message("Permission denied"))
         return redirect('listCensus')
 
 
@@ -416,13 +416,13 @@ def edit_census(request):
             if votings:
                 return render(request, 'edit_census.html',{'census': census, 'users':users, 'votings':votings})
             else:
-                messages.add_message(request, messages.ERROR, "There are no votings available.")
+                messages.add_message(request, messages.ERROR, internacionalize_message("There are no votings available"))
                 return redirect('listCensus')
         else:
-            messages.add_message(request, messages.ERROR, "There are no users available.")
+            messages.add_message(request, messages.ERROR, internacionalize_message("There are no users available"))
             return redirect('listCensus')
     else:
-        messages.add_message(request, messages.ERROR, "Permission denied")
+        messages.add_message(request, messages.ERROR, internacionalize_message("Permission denied"))
 
         return redirect('listCensus')
 
@@ -434,7 +434,7 @@ def delete_census(request):
 
         return render(request, 'delete_census.html',{'census': census})
     else:
-        messages.add_message(request, messages.ERROR, "Permission denied")
+        messages.add_message(request, messages.ERROR, internacionalize_message("Permission denied"))
 
         return redirect('listCensus')
 
@@ -452,7 +452,7 @@ def save_edited_census(request):
         census.save()
 
     else:
-        messages.add_message(request, messages.ERROR, "Permission denied")
+        messages.add_message(request, messages.ERROR, internacionalize_message("Permission denied"))
 
     return redirect('listCensus')
 
@@ -465,6 +465,6 @@ def delete_selected_census(request):
         census.delete()
 
     else:
-        messages.add_message(request, messages.ERROR, "Permission denied")
+        messages.add_message(request, messages.ERROR, internacionalize_message("Permission denied"))
 
     return redirect('listCensus')
