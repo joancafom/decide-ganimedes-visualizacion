@@ -145,9 +145,9 @@ AUTH_USER_MODEL = 'authentication.User'
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGES = (
-    ('en-us', 'English'),
-    ('es', 'Español'),
-    ('ca', 'Català'),
+    ('en-us', _('English')),
+    ('es', _('Español')),
+    ('ca', _('Català')),
 )
 
 LANGUAGE_CODE = 'en-us'
@@ -171,31 +171,6 @@ STATIC_URL = '/static/'
 
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
-
-if 'TRAVIS' in os.environ:
-    try:
-        from local_settings_travis import *
-    except ImportError:
-        print("local_settings_travis.py not found")
-elif 'HEROKU' in os.environ:
-    try:
-        from local_settings_heroku import *
-
-        BASEURL = 'https://'+os.environ['REPO_NAME']+'.herokuapp.com/'
-
-        #Heroku (Esta configuración debe ir aquí)
-        import django_heroku
-        django_heroku.settings(locals())
-    except ImportError:
-        print("local_settings_heroku.py not found")
-else:
-    try:
-        from local_settings import *
-    except ImportError:
-        print("local_settings.example.py not found")
-
-
-INSTALLED_APPS = INSTALLED_APPS + MODULES
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
@@ -221,3 +196,28 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'locale': 'es_ES',
   'fields': 'id, name, email, age_range'
 }
+
+if 'TRAVIS' in os.environ:
+    try:
+        from local_settings_travis import *
+    except ImportError:
+        print("local_settings_travis.py not found")
+elif 'HEROKU' in os.environ:
+    try:
+        from local_settings_heroku import *
+
+        BASEURL = 'https://'+os.environ['REPO_NAME']+'.herokuapp.com/'
+
+        #Heroku (Esta configuración debe ir aquí)
+        import django_heroku
+        django_heroku.settings(locals())
+    except ImportError:
+        print("local_settings_heroku.py not found")
+else:
+    try:
+        from local_settings import *
+    except ImportError:
+        print("local_settings.example.py not found")
+
+
+INSTALLED_APPS = INSTALLED_APPS + MODULES
