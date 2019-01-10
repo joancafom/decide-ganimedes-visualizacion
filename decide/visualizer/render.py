@@ -127,10 +127,16 @@ class Render:
                 results_results = {}
 
                 for r in q['options']:
-                    if resultados['type'] == 1 or resultados['type'] == 2:
+
+                    if resultados['type'] == 0:
+                        results_results[str(r['option'])] = "Número de votos: {}".format(r['postproc'])
+                    elif resultados['type'] == 1 or resultados['type'] == 2:
                         results_results[str(r['option'])] = "Total: {} - Número de votos: {}".format(r['postproc'], r['votes'])
+                    elif resultados['type'] == 3:
+                        genero = "Hombre" if r['gender'] else "Mujer"
+                        results_results[str(r['option'])] = " ({}) - Número de votos: {}".format(genero, r['votes'])
                     elif resultados['type'] == 4:
-                         results_results['Equipo ' + str(r['team']) + " - " + str(r['option'])] = r['votes']
+                         results_results['Equipo ' + str(r['team']) + " - " + str(r['option'])] = "Número de votos: {}".format(r['votes'])
                     else:
                         results_results[str(r['option'])] = r['votes']
                 
