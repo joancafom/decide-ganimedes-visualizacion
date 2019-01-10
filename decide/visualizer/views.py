@@ -359,6 +359,8 @@ def transform_age(ages_raw):
     today = date.today()
 
     for a in ages_raw:
+        if a is None or a['date'] is None:
+            continue
         birth_date = datetime.strptime(a['date'], '%Y-%m-%d')
         years = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
         age_formated[years] = a['total_entries']

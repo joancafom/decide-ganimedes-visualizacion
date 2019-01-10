@@ -16,8 +16,8 @@
  
     <div class="row">
         <!-- Nuevo mostrado de resultados en funcion de más de una pregunta -->
-        {% if voting.postproc.type != 1 %}
-            <!-- Votación para Weights-->
+        {% if voting.postproc.type != 1 and voting.postproc.type != 2 %}
+            <!-- Para el resto de votaciones -->
             <ul>
                 {% for question in voting.questions %}
                     <div class="col m6 s12">
@@ -26,7 +26,17 @@
                                 <p class="card-title white-text" id="question-title">{{question.number}} - {{question.desc}}</p><br/>
                                 {% with voting.postproc.questions|get_value:question.number as values %}
                                     {% for value in values.options %}
-                                        <li><p class="white-text">{{value.option}} - ({{value.votes}})</p></li>
+                                        {% if voting.postproc.type == 3 %}
+                                            {% if value.gender == False %}
+                                                <li><p class="white-text">(Mujer) {{ value.option }} - Número de votos: ({{ value.votes }})</p></li>
+                                            {% else %}
+                                                <li><p class="white-text">(Hombre) {{ value.option }} - Número de votos: ({{ value.votes }})</p></li>
+                                            {% endif %}
+                                        {% elif voting.postproc.type == 4 %}
+                                            <li><p class="white-text">Equipo {{value.team}}: {{ value.option }} - Número de votos: ({{ value.votes }})</p></li>
+                                        {% elif voting.postproc.type == 0 %}
+                                            <li><p class="white-text">{{ value.option }} - Número de votos: ({{ value.postproc }})</p></li>
+                                        {% endif %}
                                     {% endfor %}
                                 {% endwith %}
                             </div>
@@ -42,8 +52,9 @@
                     <hr class="blue-grey darken-1"/>
                 {% endfor %}
             </ul>
-            <!-- Para el resto de votaciones -->
+            
         {% else %}
+            <!-- Votación para Weights y Seats-->
             <ul>
                 {% for question in voting.questions %}
                     <div class="col m6 s12">
@@ -59,7 +70,7 @@
                         </div>
                     </div>
                     <div style="width: 50%" class="col m6 s12">
-                        <div class="card teal lighten-4">
+                        <div class="card grey lighten-4">
                             <canvas id="resultados{{question.number}}" width="100%" height="50%"></canvas>
                         </div>
                     </div>
@@ -89,17 +100,14 @@
                     var b = Math.floor(Math.random() * 255);
                     return "rgb(" + r + "," + g + "," + b + ", 0.5)";
                 }
-                var colors = [];
-                {% for option in values.options %}
-                    colors.push(getRandomColor());
-                {% endfor %}
+               
                 
                 var ctx = document.getElementById("resultados{{q.number}}").getContext("2d");
                 var myChart = new Chart(ctx, {
                     type:"bar",
                     data: {
-                        labels:[{% for t in teams %}{% if forloop.first %}"{{t.grouper}}"{% else %},"{{t.grouper}}"{% endif %}{% endfor %}],
-                        datasets: [{% for t in teams %}{% for option in t.list %}{label: "{{ option.option }}",backgroundColor: colors,data:[{% for team in teams %}{% if team.grouper == option.team %}{{option.votes}},{% else %}0,{% endif %}{% endfor %}]},{% endfor %}{% endfor %}]
+                        labels:[{% for t in teams %}{% if forloop.first %}"Equipo {{t.grouper}}"{% else %},"Equipo {{t.grouper}}"{% endif %}{% endfor %}],
+                        datasets: [{% for t in teams %}{% for option in t.list %}{label: "{{ option.option }}",backgroundColor: getRandomColor(),data:[{% for team in teams %}{% if team.grouper == option.team %}{{option.votes}},{% else %}0,{% endif %}{% endfor %}]},{% endfor %}{% endfor %}]
                     },
             
                     options:{
@@ -117,7 +125,6 @@
         {% endwith %}
     {% endfor %}
         
-   
     <!-- Gráfica para parity -->
     {% elif voting.postproc.type == 3 %}
         {% for question in voting.postproc.questions %}
@@ -132,12 +139,9 @@
                 }
 
                 var colors = [];
-
-                {% for option in question.options %}                
-                    colors.push(getRandomColor());
-                {% endfor %}
-
-                
+                colors.push(getRandomColor());
+                colors.push(getRandomColor())
+  
 
                 var gridlines = {
                                     display:false,
@@ -149,26 +153,15 @@
                     type: 'bar',
                     data: {
                         labels: [{% for option in question.options %}{% if forloop.first %}"{{option.option}}{% if option.gender == False %}(Female){% else %}(Male){% endif %}"{% else %},"{{option.option}}{% if option.gender == False %}(Female){% else %}(Male){% endif %}"{% endif %}{% endfor %}],
-                        datasets: [{
-                            label: '# of Votes',
-                            data: [{% for option in question.options %}{% if forloop.first %}{{option.votes}}{% else %},{{option.votes}}{% endif %}{% endfor %}],
-                            backgroundColor: colors,
-                            borderWidth: 1,
-                        }]
+                        datasets: [{% for option in question.options %}{label: "{{ option.option }}",backgroundColor: {% if option.gender == True %}colors[0]{% else %}colors[1]{% endif %},data:[{% for option1 in question.options %}{% if option1 == option %}{{option.votes}},{% else %}0,{% endif %}{% endfor %}]},{% endfor %}]
                     },
                     options: {
                         scales: {
-                            yAxes: [{
-                                gridLines:gridlines,
-                                ticks: {
-                                    beginAtZero:true,
-                                }
+                            yAxes:[{
+                                stacked:true
                             }],
-                            xAxes: [{
-                                gridLines:gridlines,
-                                ticks: {
-                                    autoSkip:false,
-                                }
+                            xAxes:[{
+                                stacked:true
                             }]
                         },
                         title: {
@@ -194,11 +187,9 @@
                     var b = Math.floor(Math.random() * 255);
                     return "rgb(" + r + "," + g + "," + b + ", 0.5)";
                 }
-                var colors = [];
+                var color = getRandomColor();
         
-                {% for option in values.options %}                
-                    colors.push(getRandomColor());
-                {% endfor %}
+                
         
                 var gridlines = {
                                     display:false,
@@ -211,9 +202,9 @@
                     data: {
                         labels: [{% for option in values.options %}{% if forloop.first %}"{{option.option}}"{% else %},"{{option.option}}"{% endif %}{% endfor %}],
                         datasets: [{
-                            label: '# of Votes',
+                            label: 'Número de votos',
                             data: [{% for option in values.options %}{% if forloop.first %}{{option.votes}}{% else %},{{option.votes}}{% endif %}{% endfor %}],
-                            backgroundColor: colors,
+                            backgroundColor: color,
                             borderWidth: 1
                         }]
                     },
@@ -363,13 +354,13 @@
     {% endfor %}
 
     {% endif %}
-    <a href="pdf/" target="_blank">{% trans "Download results as .pdf" %}</a>
-    <br/>
-    <a href="csv/" target="_blank">{% trans "Download results as .csv" %}</a>
-    <br/>
-    <a href="json/" target="_blank">{% trans "Download results as .json" %}</a>
-    <br/>
-    <a href="xml/" target="_blank">Download results as .xml</a>
+    <div class="centered-text">
+        <p>{% trans "Download results as" %} <a href="pdf/" target="_blank">.pdf</a> 
+        <a href="csv/" target="_blank">.csv</a> 
+        <a href="json/" target="_blank">.json</a> 
+        <a href="xml/" target="_blank">.xml</a>
+        </p>
+    </div>
     {% endwith %}
 
 {% endblock %}

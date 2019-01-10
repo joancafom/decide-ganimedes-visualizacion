@@ -233,21 +233,6 @@ msgstr "Resultats"
 msgid "Question:"
 msgstr "Qüestió:"
 
-#: .\visualizer\templates\visualizer\ended.html:366
-#: .\visualizer\templates\visualizer\ongoing.html:93
-msgid "Download results as .pdf"
-msgstr "Baixeu els resultats com .pdf"
-
-#: .\visualizer\templates\visualizer\ended.html:368
-#: .\visualizer\templates\visualizer\ongoing.html:95
-msgid "Download results as .csv"
-msgstr "Baixeu els resultats com .csv"
-
-#: .\visualizer\templates\visualizer\ended.html:370
-#: .\visualizer\templates\visualizer\ongoing.html:97
-msgid "Download results as .json"
-msgstr "Baixeu els resultats com .json"
-
 #: .\visualizer\templates\visualizer\list_ended.html:17
 msgid "Ended votings"
 msgstr "Votacions finalitzades"
@@ -382,6 +367,10 @@ msgstr "L'edat mitjana de les persones que no van votar és..."
 #: .\visualizer\templates\visualizer\ongoing.html:87
 msgid "Everyone has voted already :)"
 msgstr "Tothom ha votat ja :)"
+
+#: .\visualizer\templates\visualizer\ongoing.html:93
+msgid "Download results as"
+msgstr "Descarregar resultats com"
 
 #: .\visualizer\templates\visualizer\ongoing_export.html:5
 msgid "Voting is open"

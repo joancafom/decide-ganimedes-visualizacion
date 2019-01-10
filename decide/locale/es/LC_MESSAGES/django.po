@@ -233,22 +233,7 @@ msgstr "Resultados"
 msgid "Question:"
 msgstr "Pregunta:"
 
-#: .\visualizer\templates\visualizer\ended.html:366
-#: .\visualizer\templates\visualizer\ongoing.html:93
-msgid "Download results as .pdf"
-msgstr "Descargar los resultados en formato .pdf"
-
-#: .\visualizer\templates\visualizer\ended.html:368
-#: .\visualizer\templates\visualizer\ongoing.html:95
-msgid "Download results as .csv"
-msgstr "Descargar los resultados en formato .csv"
-
-#: .\visualizer\templates\visualizer\ended.html:370
-#: .\visualizer\templates\visualizer\ongoing.html:97
-msgid "Download results as .json"
-msgstr "Descargar los resultados en formato .json"
-
-#: .\visualizer\templates\visualizer\list_ended.html:17
+#: .\visualizer\templates\visualizer\list_ended.html:16
 msgid "Ended votings"
 msgstr "Votaciones terminadas"
 
@@ -282,11 +267,11 @@ msgstr "Empezado:"
 msgid "Ended:"
 msgstr "Terminado"
 
-#: .\visualizer\templates\visualizer\list_ended.html:55
+#: .\visualizer\templates\visualizer\list_ended.html:57
 msgid "Go"
 msgstr "Ir"
 
-#: .\visualizer\templates\visualizer\list_ended.html:61
+#: .\visualizer\templates\visualizer\list_ended.html:72
 msgid "There are no ended votings yet"
 msgstr "Aún no hay votaciones terminadas "
 
@@ -382,6 +367,11 @@ msgstr "La edad media de los votantes que aún no han votado es..."
 #: .\visualizer\templates\visualizer\ongoing.html:87
 msgid "Everyone has voted already :)"
 msgstr "Ya han votado todos :)"
+
+#: .\visualizer\templates\visualizer\ongoing.html:87
+#: .\visualizer\templates\visualizer\ended.html:364
+msgid "Download results as"
+msgstr "Descargar resultados como"
 
 #: .\visualizer\templates\visualizer\ongoing_export.html:5
 msgid "Voting is open"
