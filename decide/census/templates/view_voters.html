@@ -3,8 +3,6 @@
 
 {% block content %}
 <div class="container">
- <a href="/admin/logout" class="waves-effect waves-light btn">{% trans 'Log out' %}</a>
-  <br><br>
   <nav>
     <div class="nav-wrapper row teal darken-3">
       <div class="col s12">
@@ -38,12 +36,13 @@
     </tr>
   {% endfor %}
   </tbody>
+  </table>
 </table>
-
+</div>
 <div>
 <br>
 <br>
 <td><a href="{% url 'listCensus' %}" class="waves-effect waves-light btn">{% trans "Back" %}</a></td>
 </div>
-</div>
+
 {% endblock %}

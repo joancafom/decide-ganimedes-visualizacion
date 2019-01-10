@@ -3,15 +3,14 @@
 {% include 'admin/delete_confirmation.html' %}
 
 {% block content %}
-  
+
  <div class="container">
-  <a href="/admin/logout" class="waves-effect waves-light btn">Log out</a>
-  <br><br>
   <nav>
     <div class="nav-wrapper row teal darken-3">
       <div class="col s12">
         <div class="col s12"><a href="/" class="breadcrumb">Home</a>
         <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
+            <a href="" class="breadcrumb">{% trans "Delete census" %}</a>
       </div>
       </div>
     </div>
@@ -58,5 +57,5 @@
   <a href="{% url 'listCensus' %}" class="waves-effect waves-light btn">{% trans "No, take me back" %}</a>
 </div> 
 </form>
-<div>
+</div>
 {% endblock %}
