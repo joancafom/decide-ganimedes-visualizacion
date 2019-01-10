@@ -4,6 +4,8 @@ from voting.models import Question
 from base.tests import BaseTestCase
 from postproc.models import PostProcType
 from voting.models import Voting
+from datetime import date
+from django.utils import timezone
 
 class CensusTestCase(BaseTestCase):
 
@@ -216,3 +218,78 @@ class CensusTestCase(BaseTestCase):
         data = {'voting_id': 40, 'voters': [63]}
         response = self.client.post('/census/', data, format='json')
         self.assertEqual(response.status_code, 201)
+
+    def test_add_voters_age(self):
+        census_before = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        admin = User(email='staff@staff.com', password='qwerty')
+        admin.is_staff = True
+        admin.save()
+        user1 = User(email='user1@user1.com', password='user1user1', city='sevilla', sex='M',
+                     birthdate=date(year=2000, month=1, day=1))
+        user1.save()
+        user2 = User(email='user2@user2.com', password='user2user2', city='sevilla', sex='M',
+                     birthdate=date(year=1992, month=1, day=1))
+        user2.save()
+        voting_id = "40"
+        self.client.force_login(admin)
+        response2 = self.client.get('/census/addAllByAge/?voting_id={}&younger={}&older={}'.format(voting_id, 18, 28))
+        census_after = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        self.assertEqual(response2.status_code, 302)
+        self.assertTrue(census_after-census_before == 2)
+
+    def test_add_voters_age_fail_not_staff(self):
+        census_before = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        admin = User(email='staff@staff.com', password='qwerty')
+        admin.is_staff = False
+        admin.save()
+        user1 = User(email='user1@user1.com', password='user1user1', city='sevilla', sex='M',
+                     birthdate=date(year=2000, month=1, day=1))
+        user1.save()
+        voting_id = "40"
+        self.client.force_login(admin)
+        response2 = self.client.get('/census/addAllByAge/?voting_id={}&younger={}&older={}'.format(voting_id, 18, 28))
+        census_after = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        self.assertEqual(response2.status_code, 302)
+        self.assertTrue(census_after == census_before)
+
+    def test_add_voters_age_fail_age_not_int(self):
+        census_before = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        admin = User(email='staff@staff.com', password='qwerty')
+        admin.is_staff = True
+        admin.save()
+        user1 = User(email='user1@user1.com', password='user1user1', city='sevilla', sex='M',
+                     birthdate=date(year=2000, month=1, day=1))
+        user1.save()
+        voting_id = "40"
+        self.client.force_login(admin)
+        response2 = self.client.get('/census/addAllByAge/?voting_id={}&younger={}&older={}'.format(voting_id,"young","old"))
+        census_after = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        self.assertEqual(response2.status_code, 302)
+        self.assertTrue(census_after == census_before)
+
+    def test_add_voters_age_fail_voting_started(self):
+        census_before = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        admin = User(email='staff@staff.com', password='qwerty')
+        admin.is_staff = True
+        admin.save()
+        user1 = User(email='user1@user1.com', password='user1user1', city='sevilla', sex='M',
+                     birthdate=date(year=2000, month=1, day=1))
+        user1.save()
+        voting_id = "40"
+        voting = Voting.objects.get(pk=40)
+        voting.start_date = timezone.now()
+        voting.save()
+        self.client.force_login(admin)
+        response2 = self.client.get('/census/addAllByAge/?voting_id={}&younger={}&older={}'.format(voting_id, 100, 0))
+        census_after = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        self.assertEqual(response2.status_code, 302)
+        self.assertTrue(census_after == census_before)
+
