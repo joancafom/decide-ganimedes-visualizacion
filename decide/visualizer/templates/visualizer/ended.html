@@ -187,11 +187,9 @@
                     var b = Math.floor(Math.random() * 255);
                     return "rgb(" + r + "," + g + "," + b + ", 0.5)";
                 }
-                var colors = [];
+                var color = getRandomColor();
         
-                {% for option in values.options %}                
-                    colors.push(getRandomColor());
-                {% endfor %}
+                
         
                 var gridlines = {
                                     display:false,
@@ -204,9 +202,9 @@
                     data: {
                         labels: [{% for option in values.options %}{% if forloop.first %}"{{option.option}}"{% else %},"{{option.option}}"{% endif %}{% endfor %}],
                         datasets: [{
-                            label: '# of Votes',
+                            label: 'Número de votos',
                             data: [{% for option in values.options %}{% if forloop.first %}{{option.votes}}{% else %},{{option.votes}}{% endif %}{% endfor %}],
-                            backgroundColor: colors,
+                            backgroundColor: color,
                             borderWidth: 1
                         }]
                     },
