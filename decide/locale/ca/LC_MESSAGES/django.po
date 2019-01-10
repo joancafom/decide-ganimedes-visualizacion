@@ -426,7 +426,7 @@ msgstr "English"
 
 #: .\decide\settings.py:149
 msgid "Español"
-msgstr "Espanyol"
+msgstr "Español"
 
 #: .\decide\settings.py:150
 msgid "Català"
