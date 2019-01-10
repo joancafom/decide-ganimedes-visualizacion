@@ -114,7 +114,6 @@
         {% endwith %}
     {% endfor %}
         
-   
     <!-- Gráfica para parity -->
     {% elif voting.postproc.type == 3 %}
         {% for question in voting.postproc.questions %}
@@ -129,12 +128,9 @@
                 }
 
                 var colors = [];
-
-                {% for option in question.options %}                
-                    colors.push(getRandomColor());
-                {% endfor %}
-
-                
+                colors.push(getRandomColor());
+                colors.push(getRandomColor())
+  
 
                 var gridlines = {
                                     display:false,
@@ -146,26 +142,15 @@
                     type: 'bar',
                     data: {
                         labels: [{% for option in question.options %}{% if forloop.first %}"{{option.option}}{% if option.gender == False %}(Female){% else %}(Male){% endif %}"{% else %},"{{option.option}}{% if option.gender == False %}(Female){% else %}(Male){% endif %}"{% endif %}{% endfor %}],
-                        datasets: [{
-                            label: '# of Votes',
-                            data: [{% for option in question.options %}{% if forloop.first %}{{option.votes}}{% else %},{{option.votes}}{% endif %}{% endfor %}],
-                            backgroundColor: colors,
-                            borderWidth: 1,
-                        }]
+                        datasets: [{% for option in question.options %}{label: "{{ option.option }}",backgroundColor: {% if option.gender == True %}colors[0]{% else %}colors[1]{% endif %},data:[{% for option1 in question.options %}{% if option1 == option %}{{option.votes}},{% else %}0,{% endif %}{% endfor %}]},{% endfor %}]
                     },
                     options: {
                         scales: {
-                            yAxes: [{
-                                gridLines:gridlines,
-                                ticks: {
-                                    beginAtZero:true,
-                                }
+                            yAxes:[{
+                                stacked:true
                             }],
-                            xAxes: [{
-                                gridLines:gridlines,
-                                ticks: {
-                                    autoSkip:false,
-                                }
+                            xAxes:[{
+                                stacked:true
                             }]
                         },
                         title: {
@@ -176,6 +161,8 @@
                 });
             </script>
         {% endfor %}
+    {% elif voting.postproc.type == 0 %}
+     
     {% elif voting.postproc.type == 0 %}
 
     <!--Pintado de gráfica para Identity-->
