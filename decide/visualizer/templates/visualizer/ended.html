@@ -89,17 +89,14 @@
                     var b = Math.floor(Math.random() * 255);
                     return "rgb(" + r + "," + g + "," + b + ", 0.5)";
                 }
-                var colors = [];
-                {% for option in values.options %}
-                    colors.push(getRandomColor());
-                {% endfor %}
+               
                 
                 var ctx = document.getElementById("resultados{{q.number}}").getContext("2d");
                 var myChart = new Chart(ctx, {
                     type:"bar",
                     data: {
-                        labels:[{% for t in teams %}{% if forloop.first %}"{{t.grouper}}"{% else %},"{{t.grouper}}"{% endif %}{% endfor %}],
-                        datasets: [{% for t in teams %}{% for option in t.list %}{label: "{{ option.option }}",backgroundColor: colors,data:[{% for team in teams %}{% if team.grouper == option.team %}{{option.votes}},{% else %}0,{% endif %}{% endfor %}]},{% endfor %}{% endfor %}]
+                        labels:[{% for t in teams %}{% if forloop.first %}"Equipo {{t.grouper}}"{% else %},"Equipo {{t.grouper}}"{% endif %}{% endfor %}],
+                        datasets: [{% for t in teams %}{% for option in t.list %}{label: "{{ option.option }}",backgroundColor: getRandomColor(),data:[{% for team in teams %}{% if team.grouper == option.team %}{{option.votes}},{% else %}0,{% endif %}{% endfor %}]},{% endfor %}{% endfor %}]
                     },
             
                     options:{
