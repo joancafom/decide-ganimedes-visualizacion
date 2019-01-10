@@ -22,7 +22,7 @@
     {% elif voting.end_date != None %}
         <p class="center-align flow-text descripcion">{% trans 'The voting can not be accessed because it has ended. You can access to the results in the following link: ' %} <a href="/visualizer/{{voting.id}}">{% trans 'Results' %}</a></p>
     {% elif voting.questions|length == 0 %}
-        <p class="center-align flow-text descripcion">{% trans 'This vote does not contain any questions, so it can not be accessed yet. Try it again later.' %}</p>
+        <p class="center-align flow-text descripcion">{% trans 'This voting does not contain any questions, so it can not be accessed yet. Try it again later.' %}</p>
     {% else %}
   
     <div id="voting">
