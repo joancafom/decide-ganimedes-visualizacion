@@ -27,9 +27,9 @@
                 {% with voting.postproc.questions|get_value:question.number as values %}
                     {% for value in values.options %}
                         {% if value.gender == False %}
-                            <li><p>(Mujer) {{ value.option }} - ({{ value.votes }})</p></li>
+                            <li><p>(Mujer) {{ value.option }} - Número de votos: ({{ value.votes }})</p></li>
                         {% else %}
-                            <li><p>(Hombre) {{ value.option }} - ({{ value.votes }})</p></li>
+                            <li><p>(Hombre) {{ value.option }} - Número de votos: ({{ value.votes }})</p></li>
                         {% endif %}
                     {% endfor %}
                 {% endwith %}
@@ -43,7 +43,7 @@
                 <p>{{ question.number }} - {{ question.desc }}</p>
                 {% with voting.postproc.questions|get_value:question.number as values %}
                     {% for value in values.options %}
-                        <li><p>Equipo {{value.team}}: {{ value.option }} - ({{ value.votes }})</p></li>
+                        <li><p>Equipo {{value.team}}: {{ value.option }} - Número de votos: ({{ value.votes }})</p></li>
                     {% endfor %}
                 {% endwith %}
             {% endfor %}
@@ -56,7 +56,7 @@
                 <p>{{ question.number }} - {{ question.desc }}</p>
                 {% with voting.postproc.questions|get_value:question.number as values %}
                     {% for value in values.options %}
-                        <li><p>{{ value.option }} - ({{ value.postproc }})</p></li>
+                        <li><p>{{ value.option }} - Número de votos: ({{ value.postproc }})</p></li>
                     {% endfor %}
                 {% endwith %}
             {% endfor %}
