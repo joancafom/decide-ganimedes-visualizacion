@@ -1,9 +1,5 @@
 {% extends "base.html" %}
 {% load i18n static %}
-{% block title %}
-{% endblock %}
-{% block menu_options %}
-{% endblock %}
 {% block extrahead %}
     <link type="text/css" rel="stylesheet" href="{% static "decide/css/visualizer/ended.css"%}"/>
 {% endblock %}
@@ -69,6 +65,14 @@
         </div>
     </div>
     {% else %}
-        {% trans 'There are no ended votings yet' %}
+
+            <div class="col s12 m5">
+              <div class="card-panel  teal darken-1">
+                <span class="white-text">
+                    <p class="white-text" style="text-align:center">{% trans 'There are no ended votings yet' %}</p>
+                </span>
+              </div>
+            </div>
+        
     {% endif %}
 {% endblock %}
