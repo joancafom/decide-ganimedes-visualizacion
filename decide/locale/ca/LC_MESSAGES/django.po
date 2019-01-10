@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-10 22:58+0000\n"
+"POT-Creation-Date: 2019-01-10 23:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -167,6 +167,10 @@ msgstr "Votacions obertes"
 #: base/templates/base.html:132
 msgid "Closed Votings"
 msgstr "Votacions Tancades"
+
+#: base/templates/base.html:133
+msgid "Admin panel"
+msgstr "Tauler d'administració"
 
 #: base/templates/base.html:172
 msgid "Footer Content"
