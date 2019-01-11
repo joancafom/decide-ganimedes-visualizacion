@@ -47,8 +47,10 @@ h5, p{
 
 .decideFooter{
     margin-top:50px;
-    width: 100% !important;
-    height: 60px !important;
+}
+
+.decideFooterContainer{
+    padding-bottom:20px;
 }
 
 .errorlist
