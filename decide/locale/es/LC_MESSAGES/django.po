@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-11 12:00+0000\n"
+"POT-Creation-Date: 2019-01-11 13:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,10 +19,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: authentication/forms.py:14 authentication/forms.py:88
+#: visualizer/templates/visualizer/ended.html:33
+#: visualizer/templates/visualizer/ended_export.html:32
 msgid "Man"
 msgstr "Hombre"
 
 #: authentication/forms.py:15 authentication/forms.py:89
+#: visualizer/templates/visualizer/ended.html:31
+#: visualizer/templates/visualizer/ended_export.html:30
 msgid "Woman"
 msgstr "Mujer"
 
@@ -188,26 +192,6 @@ msgstr "Censo"
 #: base/templates/base.html:135
 msgid "Closed Votings"
 msgstr "Votaciones Cerradas"
-
-#: base/templates/base.html:136
-msgid "Admin panel"
-msgstr "Panel de admin"
-
-#: base/templates/base.html:176
-msgid "Footer Content"
-msgstr "Contenido de pie de página"
-
-#: base/templates/base.html:177
-msgid "Information."
-msgstr "Información."
-
-#: base/templates/base.html:183
-msgid "© 2018 Copyright Text"
-msgstr "© 2018 Copyright Text"
-
-#: base/templates/base.html:184
-msgid "More Links"
-msgstr "Más enlaces"
 
 #: base/templates/index.html:19
 msgid "Welcome"
@@ -526,6 +510,24 @@ msgstr "Català"
 msgid "Results: "
 msgstr "Resultados: "
 
+#: visualizer/templates/visualizer/ended.html:31
+#: visualizer/templates/visualizer/ended.html:33
+#: visualizer/templates/visualizer/ended.html:36
+#: visualizer/templates/visualizer/ended.html:38
+#: visualizer/templates/visualizer/ended.html:66
+#: visualizer/templates/visualizer/ended_export.html:16
+#: visualizer/templates/visualizer/ended_export.html:30
+#: visualizer/templates/visualizer/ended_export.html:32
+#: visualizer/templates/visualizer/ended_export.html:46
+#: visualizer/templates/visualizer/ended_export.html:59
+msgid "Number of votes:"
+msgstr "Número de votos:"
+
+#: visualizer/templates/visualizer/ended.html:36
+#: visualizer/templates/visualizer/ended_export.html:46
+msgid "Team"
+msgstr "Equipo"
+
 #: visualizer/templates/visualizer/ended.html:169
 msgid "Question:"
 msgstr "Pregunta:"
@@ -534,6 +536,10 @@ msgstr "Pregunta:"
 #: visualizer/templates/visualizer/ongoing.html:93
 msgid "Download results as"
 msgstr "Descargar resultados como"
+
+#: visualizer/templates/visualizer/ended_export.html:16
+msgid "Total:"
+msgstr ""
 
 #: visualizer/templates/visualizer/list_ended.html:16
 msgid "Ended votings"
@@ -717,3 +723,18 @@ msgstr "Ver las estadísticas"
 #: voting/templates/voting/openVotings.html:42
 msgid "There are no open votings in the system."
 msgstr "No hay votaciones abiertas en el sistema."
+
+#~ msgid "Admin panel"
+#~ msgstr "Panel de admin"
+
+#~ msgid "Footer Content"
+#~ msgstr "Contenido de pie de página"
+
+#~ msgid "Information."
+#~ msgstr "Información."
+
+#~ msgid "© 2018 Copyright Text"
+#~ msgstr "© 2018 Copyright Text"
+
+#~ msgid "More Links"
+#~ msgstr "Más enlaces"
