@@ -19,10 +19,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: authentication/forms.py:14
+#: visualizer/templates/visualizer/ended_export.html:32
+#: visualizer/templates/visualizer/ended.html:33
 msgid "Man"
 msgstr "Homes"
 
 #: authentication/forms.py:15
+#: visualizer/templates/visualizer/ended_export.html:30
+#: visualizer/templates/visualizer/ended.html:31
 msgid "Woman"
 msgstr "Dona"
 
@@ -513,6 +517,24 @@ msgstr "Resultats"
 msgid "Question:"
 msgstr "Qüestió:"
 
+#: visualizer/templates/visualizer/ended_export.html:16
+#: visualizer/templates/visualizer/ended_export.html:30
+#: visualizer/templates/visualizer/ended_export.html:32
+#: visualizer/templates/visualizer/ended_export.html:46
+#: visualizer/templates/visualizer/ended_export.html:59
+#: visualizer/templates/visualizer/ended.html:31
+#: visualizer/templates/visualizer/ended.html:33
+#: visualizer/templates/visualizer/ended.html:36
+#: visualizer/templates/visualizer/ended.html:38
+#: visualizer/templates/visualizer/ended.html:66
+msgid "Number of votes:"
+msgstr "Nombre de vots:"
+
+#: visualizer/templates/visualizer/ended_export.html:46
+#: visualizer/templates/visualizer/ended.html:36
+msgid "Team"
+msgstr "Equip"
+
 #: visualizer/templates/visualizer/ended.html:358
 #: visualizer/templates/visualizer/ongoing.html:93
 msgid "Download results as"
@@ -703,12 +725,12 @@ msgstr "No hi ha votacions obertes al sistema."
 
 #: decide/settings.py:149
 msgid "English"
-msgstr ""
+msgstr "English"
 
 #: decide/settings.py:150
 msgid "Español"
-msgstr ""
+msgstr "Español"
 
 #: decide/settings.py:151
 msgid "Català"
-msgstr ""
+msgstr "Català"
