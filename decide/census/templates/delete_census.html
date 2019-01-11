@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n static %}
+{% load custom_tags %}
 {% include 'admin/delete_confirmation.html' %}
 
 {% block content %}
@@ -8,8 +9,8 @@
   <nav>
     <div class="nav-wrapper row teal darken-3">
       <div class="col s12">
-        <div class="col s12"><a href="/" class="breadcrumb">Home</a>
-        <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
+        <div class="col s12"><a href="/" class="breadcrumb">{% trans 'Home' %}</a>
+        <a href="{% url 'listCensus' %}" class="breadcrumb">{% trans 'Census'%}</a>
             <a href="" class="breadcrumb">{% trans "Delete census" %}</a>
       </div>
       </div>
@@ -19,7 +20,7 @@
 
 <div id="delete-block">
 
-<h5><p>{% blocktrans with escaped_object=object %}Are you sure you want to delete this census? All of the following related items will be deleted:{% endblocktrans %}</p></h5>
+<h5><p>{% trans 'Are you sure you want to delete this census? All of the following related items will be deleted' %}</p></h5>
 <br>
 <br>
 <br>

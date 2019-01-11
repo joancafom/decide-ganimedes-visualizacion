@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n static %}
+{% load custom_tags %}s
 {% include 'admin/change_form.html' %}
 
 {% block content %}
@@ -8,8 +9,8 @@
   <nav>
     <div class="nav-wrapper row teal darken-3">
       <div class="col s12">
-        <div class="col s12"><a href="/" class="breadcrumb">Home</a>
-        <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
+        <div class="col s12"><a href="/" class="breadcrumb">{% trans 'Home' %}</a>
+        <a href="{% url 'listCensus' %}" class="breadcrumb">{% trans 'Census'%}</a>
             <a href="" class="breadcrumb">{% trans "Edit census" %}</a>
       </div>
       </div>

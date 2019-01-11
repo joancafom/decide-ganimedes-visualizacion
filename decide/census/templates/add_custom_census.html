@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n static %}
-{% block title %}Creación de censos mediante filtros{% endblock %}
+{% load custom_tags %}
+{% block title %}{% trans 'Creation of censuses using filters' %}{% endblock %}
 
 {% block content %}
 
@@ -8,8 +9,8 @@
   <nav>
     <div class="nav-wrapper row teal darken-3">
       <div class="col s12">
-        <div class="col s12"><a href="/" class="breadcrumb">Home</a>
-        <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
+        <div class="col s12"><a href="/" class="breadcrumb">{% trans 'Home' %}</a>
+        <a href="{% url 'listCensus' %}" class="breadcrumb">{% trans 'Census'%}</a>
             <a href="" class="breadcrumb">{% trans "Create custom census" %}</a>
       </div>
       </div>
@@ -17,30 +18,30 @@
   </nav>
 
     <div>
-        <h4>Censando votantes en una votación</h4>
+        <h4>{% trans 'Adding voters on a vote' %}</h4>
 
         <div>
             <form action="{% url 'addCustomCensus' %}" method="POST">
                 {% csrf_token %}
                 <table>
                     <tr>
-                        <td><label>{{ form.voting.label }}</label>{{ form.voting }}</td>
+                        <td><label>{% trans 'Select voting' %}</label>{{ form.voting }}</td>
                     </tr>
                 </table>
-                <h5>Filtrado</h5>
+                <h5>{% trans 'Filtering' %}</h5>
                 <table>
                     <tr>
-                        <td colspan="2"><label>{{ form.sex.label }}</label>{{ form.sex }}</td>
+                        <td colspan="2"><label>{% trans 'Sex' %}</label>{{ form.sex }}</td>
                     </tr>
                     <tr>
-                        <td colspan="2"><label>{{ form.city.label }}</label>{{ form.city }}</td>
+                        <td colspan="2"><label>{% trans 'City' %}</label>{{ form.city }}</td>
                     </tr>
                     <tr>
                     <div class="datepicker">
-                        <td><label>{{ form.age_initial_range.label}}</label>{{ form.age_initial_range }}</td>
+                        <td><label>{% trans 'Initial age' %}</label>{{ form.age_initial_range }}</td>
                     </div>
                     <div class="datepicker">
-                        <td><label>{{ form.age_final_range.label }}</label>{{ form.age_final_range }}</td>
+                        <td><label>{% trans 'Final age' %}</label>{{ form.age_final_range }}</td>
                     </div>
                     </tr>
                 </table>

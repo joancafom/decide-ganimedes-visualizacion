@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n static %}
+{% load custom_tags %}
 {% include 'admin/change_list.html' %}
 {% load i18n admin_urls static admin_list %}
 
@@ -8,8 +9,8 @@
   <nav>
     <div class="nav-wrapper row teal darken-3">
       <div class="col s12">
-        <div class="col s12"><a href="/" class="breadcrumb">Home</a>
-        <a href="{% url 'listCensus' %}" class="breadcrumb">Census</a>
+        <div class="col s12"><a href="/" class="breadcrumb">{% trans 'Home' %}</a>
+        <a href="{% url 'listCensus' %}" class="breadcrumb">{% trans 'Census'%}</a>
         <a href="" class="breadcrumb">{% trans "Import census" %}</a>
       </div>
       </div>
@@ -39,14 +40,14 @@
 {% endfor %}
 <br/>
 <div class="container">
-    <h5>Importar CSV</h5>
-    Elija el archivo CSV con los censos a importar en el sistema.
+    <h5>{% trans 'Import CSV' %}</h5>
+    {% trans 'Choose the CSV file with the censuses to be imported into the system.'%}
     <br/>
     <form action="{% url 'importCSV' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="file-field input-field">
       <div class="btn">
-        <span>File</span>
+        <span>{% trans 'File' %}</span>
         <input type="file" name="file">
       </div>
       <br/>
@@ -55,8 +56,8 @@
       </div>
     </div>
       <br/>
-      <p>Solo acepta ficheros CSV</p>
-      <button type="save" class="waves-effect waves-dark btn">Upload CSV</button>
+      <p>{% trans 'Only CSV files' %}</p>
+      <button type="save" class="waves-effect waves-dark btn">{% trans 'Upload CSV' %}</button>
     </form>
     <br/><br/>
 
