@@ -6,6 +6,7 @@ import datetime
 import pytz
 from django.utils import timezone
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from nocaptcha_recaptcha.fields import NoReCaptchaField
 
 User=get_user_model()
 class UserCreateForm(UserCreationForm):
@@ -22,10 +23,11 @@ class UserCreateForm(UserCreationForm):
     birthdate = forms.DateTimeField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
     city = forms.CharField(label=_('City'),required=True)
     sex = forms.ChoiceField(label=_('Sex'),choices=SEX_OPTIONS, required=False)
+    captcha = NoReCaptchaField()
 
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "email", "birthdate", "city", "sex", "password1", "password2")
+        fields = ("first_name", "last_name", "email", "birthdate", "city", "sex", "password1", "password2", "captcha")
     
     def save(self, commit=True):
         user = super(UserCreateForm, self).save(commit=False)
