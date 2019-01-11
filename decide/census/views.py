@@ -223,7 +223,9 @@ class CensusDetail(generics.RetrieveDestroyAPIView):
 def add_custom_census(request):
 
     if request.user.is_staff:
+
         if request.method == 'POST':                                    # Petición POST
+
             form = CensusAddMultipleVotersForm(request.POST)
 
             # Paso 1: Comprobando que los datos se han añadido al formulario correctamente
@@ -260,24 +262,23 @@ def add_custom_census(request):
                 # Paso 3: comprobamos que el usuario logueado tiene permisos de creación de censos
 
                 if request.user.is_authenticated:
-                    if request.user.has_perm('add_census'):
 
-                        # Paso 4: asignamos todos los votantes al nuevo censo
+                    # Paso 4: asignamos todos los votantes al nuevo censo
 
-                        voters_ids = voters.values_list('id', flat=True, named=False)
-
+                    voters_ids = voters.values_list('id', flat=True, named=False)
 
 
-                        for voter_id in voters_ids:
 
-                            # Comprobamos que sea único
+                    for voter_id in voters_ids:
 
-                            if not is_exists_census(voting, voter_id):
+                        # Comprobamos que sea único
 
-                                census = Census(voting_id=voting, voter_id=voter_id)
-                                census.save()
+                        if not is_exists_census(voting, voter_id):
 
-                return redirect('listCensus')                  # TODO: cambiar redirección
+                            census = Census(voting_id=voting, voter_id=voter_id)
+                            census.save()
+
+                return redirect('listCensus')
 
         else:                                                            # Petición GET
             form = CensusAddMultipleVotersForm()

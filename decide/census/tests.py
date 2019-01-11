@@ -365,3 +365,41 @@ class CensusTestCase(BaseTestCase):
         self.assertEqual(response2.status_code, 302)
         self.assertTrue(census_before == census_after)
 
+    def test_add_voter_custom(self):
+        census_before = len(Census.objects.all().values_list('voting_id', flat=True))
+        admin = User(email='staff@staff.com', password='qwerty')
+        admin.is_staff = True
+        admin.save()
+        user1 = User(email='user1@user1.com', password='user1user1', city='sevilla', sex='M',
+                     birthdate=date(year=2000, month=1, day=1))
+        user1.save()
+        self.client.force_login(admin)
+        voting = Voting.objects.get(pk=40)
+        response = self.client.post('/census/addCustomCensus', {'voting': voting.pk, 'city': 'sevilla', 'sex': 'M',
+                                                                'age_initial_range': '22/12/1990',
+                                                                'age_final_range_election': '22/12/2020'})
+
+        census_after = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(census_after > census_before)
+
+    def test_add_voter_custom_fail_not_staff(self):
+        census_before = len(Census.objects.all().values_list('voting_id', flat=True))
+        admin = User(email='staff@staff.com', password='qwerty')
+        admin.is_staff = False
+        admin.save()
+        user1 = User(email='user1@user1.com', password='user1user1', city='sevilla', sex='M',
+                     birthdate=date(year=2000, month=1, day=1))
+        user1.save()
+        self.client.force_login(admin)
+        voting = Voting.objects.get(pk=40)
+        response = self.client.post('/census/addCustomCensus', {'voting': voting.pk, 'city': 'sevilla', 'sex': 'M',
+                                                                'age_initial_range': '22/12/1990',
+                                                                'age_final_range_election': '22/12/2020'})
+
+        census_after = len(Census.objects.all().values_list('voting_id', flat=True))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(census_after == census_before)
+
