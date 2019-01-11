@@ -206,7 +206,7 @@ elif 'HEROKU' in os.environ:
     try:
         from local_settings_heroku import *
 
-        BASEURL = 'https://'+os.environ['REPO_NAME']+'.herokuapp.com/'
+        BASEURL = 'https://'+os.environ['REPO_NAME']+'.herokuapp.com'
 
         #Heroku (Esta configuración debe ir aquí)
         import django_heroku
