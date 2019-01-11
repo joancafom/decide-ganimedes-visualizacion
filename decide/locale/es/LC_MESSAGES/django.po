@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-10 23:45+0000\n"
+"POT-Creation-Date: 2019-01-11 01:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,53 +18,53 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: authentication/forms.py:13
+#: authentication/forms.py:14
 msgid "Man"
 msgstr "Hombre"
 
-#: authentication/forms.py:14
+#: authentication/forms.py:15
 msgid "Woman"
 msgstr "Mujer"
 
-#: authentication/forms.py:15
+#: authentication/forms.py:16
 msgid "Non-binary"
 msgstr "No binario"
 
-#: authentication/forms.py:17
+#: authentication/forms.py:18
 msgid "Format: dd/mm/YYYY"
 msgstr "Formato: dd/mm/YYYY"
 
-#: authentication/forms.py:19 authentication/models.py:17
+#: authentication/forms.py:20 authentication/models.py:17
 msgid "First name"
 msgstr "Nombre"
 
-#: authentication/forms.py:20 authentication/models.py:18
+#: authentication/forms.py:21 authentication/models.py:18
 msgid "Last name"
 msgstr "Apellidos"
 
-#: authentication/forms.py:21 authentication/models.py:16
+#: authentication/forms.py:22 authentication/models.py:16
 #: authentication/serializers.py:16
 #: authentication/templates/authentication/login.html:37
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: authentication/forms.py:22 authentication/models.py:19
+#: authentication/forms.py:23 authentication/models.py:19
 msgid "Birthdate"
 msgstr "Fecha de nacimiento"
 
-#: authentication/forms.py:23 authentication/models.py:20
+#: authentication/forms.py:24 authentication/models.py:20
 msgid "City"
 msgstr "Ciudad"
 
-#: authentication/forms.py:24 authentication/models.py:21
+#: authentication/forms.py:25 authentication/models.py:21
 msgid "Sex"
 msgstr "Sexo"
 
-#: authentication/forms.py:54
+#: authentication/forms.py:56
 msgid "Email alredy exits"
 msgstr "El correo electrónico ya existe"
 
-#: authentication/forms.py:64
+#: authentication/forms.py:66
 msgid "Future date not posible"
 msgstr "Fechas posteriores no validas"
 
@@ -128,7 +128,7 @@ msgstr ""
 "registro"
 
 #: authentication/templates/authentication/login.html:25
-#: base/templates/base.html:103
+#: base/templates/base.html:105
 msgid "Log in"
 msgstr "Iniciar Sesión"
 
@@ -157,35 +157,35 @@ msgstr "Registrar nuev@ usuari@"
 msgid "Submit"
 msgstr "Enviar"
 
-#: base/templates/base.html:104
+#: base/templates/base.html:106
 msgid "Sign up"
 msgstr "Registrarse"
 
-#: base/templates/base.html:131 voting/templates/voting/openVotings.html:9
+#: base/templates/base.html:133 voting/templates/voting/openVotings.html:9
 msgid "Open votings"
 msgstr "Votaciones abiertas"
 
-#: base/templates/base.html:132
+#: base/templates/base.html:134
 msgid "Closed Votings"
 msgstr "Votaciones Cerradas"
 
-#: base/templates/base.html:133
+#: base/templates/base.html:135
 msgid "Admin panel"
 msgstr "Panel de admin"
 
-#: base/templates/base.html:172
+#: base/templates/base.html:174
 msgid "Footer Content"
 msgstr "Contenido de pie de página"
 
-#: base/templates/base.html:173
+#: base/templates/base.html:175
 msgid "Information."
 msgstr "Información."
 
-#: base/templates/base.html:179
+#: base/templates/base.html:181
 msgid "© 2018 Copyright Text"
 msgstr "© 2018 Copyright Text"
 
-#: base/templates/base.html:180
+#: base/templates/base.html:182
 msgid "More Links"
 msgstr "Más enlaces"
 
@@ -245,15 +245,15 @@ msgstr "Felicidades. Tu voto ha sido enviado."
 msgid "You must select an option for each question."
 msgstr "Debes seleccionar una opción para cada pregunta."
 
-#: decide/settings.py:148
+#: decide/settings.py:149
 msgid "English"
 msgstr "English"
 
-#: decide/settings.py:149
+#: decide/settings.py:150
 msgid "Español"
 msgstr "Español"
 
-#: decide/settings.py:150
+#: decide/settings.py:151
 msgid "Català"
 msgstr "Català"
 
