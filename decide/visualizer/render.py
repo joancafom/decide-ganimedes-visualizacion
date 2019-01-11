@@ -304,11 +304,11 @@ class Render:
             age = ET.SubElement(stats, 'byAge')
             if params['voters_age_mean']:
                 votersAgeMean = ET.SubElement(age, 'votersAgeMean')
-                votersAgeMean = str(params['voters_age_mean']) + ' years'
+                votersAgeMean.text = str(params['voters_age_mean']) + ' years'
 
             if params['no_voters_age_mean']:
                 noVotersAgeMean = ET.SubElement(age, 'noVotersAgeMean')
-                noVotersAgeMean =  str(params['no_voters_age_mean']) + ' years'
+                noVotersAgeMean.text =  str(params['no_voters_age_mean']) + ' years'
             
             #Estadísticas por rango etario
             ageRange = ET.SubElement(stats, 'byAgeRange')
@@ -330,11 +330,11 @@ class Render:
             nonBinary = ET.SubElement(genre, 'nonBinary')
             nonBinary.text = str(params['nonbinary_participation'])
             ratioNonBinary = ET.SubElement(genre, 'ratioNonBinary')
-            ratioNonBinary = str(params['nonbinary_percentage']) + '%'
+            ratioNonBinary.text = str(params['nonbinary_percentage']) + '%'
             numMen = ET.SubElement(genre, 'numMen')
             numMen.text = str(params['men_participation'])
             ratioMen = ET.SubElement(genre, 'ratioMen')
-            ratioMen = str(params['men_percentage']) + '%'
+            ratioMen.text = str(params['men_percentage']) + '%'
 
             #Pasar el XML a String
             mydata = ET.tostring(voting)
