@@ -198,7 +198,7 @@ class PostProcTestCase(APITestCase):
         self.assertEqual(values, expected_result)
 
     # Supongamos que options es un array vacío (no hay candidatos)
-    def test_parity_options_vacío(self):
+    def test_parity_options_vacio(self):
         data = {
             'type': PostProcType.PARITY,
             'questions': [
