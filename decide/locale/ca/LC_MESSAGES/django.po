@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-11 11:42+0000\n"
+"POT-Creation-Date: 2019-01-11 12:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,9 +24,10 @@ msgstr "Homes"
 
 #: authentication/forms.py:15 authentication/forms.py:89
 msgid "Woman"
-msgstr "dona"
+msgstr "Dona"
 
 #: authentication/forms.py:16 authentication/forms.py:90
+#: census/templates/add_census_filtros_simples.html:84
 msgid "Non-binary"
 msgstr "No binari"
 
@@ -35,12 +36,12 @@ msgid "Format: dd/mm/YYYY"
 msgstr "Format: dd/mm/AAAA"
 
 #: authentication/forms.py:20 authentication/forms.py:94
-#: authentication/models.py:17
+#: authentication/models.py:17 census/templates/view_voters.html:21
 msgid "First name"
 msgstr "Nom"
 
 #: authentication/forms.py:21 authentication/forms.py:95
-#: authentication/models.py:18
+#: authentication/models.py:18 census/templates/view_voters.html:22
 msgid "Last name"
 msgstr "Cognom"
 
@@ -57,11 +58,15 @@ msgstr "Data de naixement"
 
 #: authentication/forms.py:24 authentication/forms.py:98
 #: authentication/models.py:20
+#: census/templates/add_census_filtros_simples.html:49
+#: census/templates/add_custom_census.html:37
+#: census/templates/view_voters.html:24
 msgid "City"
 msgstr "Ciutat"
 
 #: authentication/forms.py:25 authentication/forms.py:99
-#: authentication/models.py:21
+#: authentication/models.py:21 census/templates/add_custom_census.html:34
+#: census/templates/view_voters.html:23
 msgid "Sex"
 msgstr "Sexe"
 
@@ -151,7 +156,7 @@ msgstr "Error: les credencials no són vàlides"
 #: authentication/templates/authentication/login.html:108
 #: booth/templates/booth/booth.html:312
 msgid "Error: "
-msgstr "Error"
+msgstr "Error: "
 
 #: authentication/templates/authentication/signup.html:13
 msgid "Sign up a new user"
@@ -170,26 +175,36 @@ msgid "Open votings"
 msgstr "Votacions obertes"
 
 #: base/templates/base.html:134
+#: census/templates/add_census_filtros_simples.html:12
+#: census/templates/add_custom_census.html:13
+#: census/templates/census_history.html:13
+#: census/templates/delete_census.html:13 census/templates/edit_census.html:13
+#: census/templates/import_view.html:13 census/templates/main_index.html:15
+#: census/templates/view_voters.html:10
+msgid "Census"
+msgstr "Cens"
+
+#: base/templates/base.html:135
 msgid "Closed Votings"
 msgstr "Votacions Tancades"
 
-#: base/templates/base.html:135
+#: base/templates/base.html:136
 msgid "Admin panel"
 msgstr "Tauler d'administració"
 
-#: base/templates/base.html:174
+#: base/templates/base.html:176
 msgid "Footer Content"
 msgstr "Contingut del peu de pàgina"
 
-#: base/templates/base.html:175
+#: base/templates/base.html:177
 msgid "Information."
 msgstr "Informació"
 
-#: base/templates/base.html:181
+#: base/templates/base.html:183
 msgid "© 2018 Copyright Text"
 msgstr "© 2018 Copyright Text"
 
-#: base/templates/base.html:182
+#: base/templates/base.html:184
 msgid "More Links"
 msgstr "Més enllaços"
 
@@ -248,6 +263,251 @@ msgstr "Felicitacions. S'ha enviat el vostre vot"
 #: booth/templates/booth/booth.html:317
 msgid "You must select an option for each question."
 msgstr "Heu de seleccionar una opció per a cada pregunta."
+
+#: census/templates/add_census_filtros_simples.html:11
+#: census/templates/add_custom_census.html:12
+#: census/templates/census_history.html:12
+#: census/templates/delete_census.html:12 census/templates/edit_census.html:12
+#: census/templates/import_view.html:12 census/templates/main_index.html:14
+#: census/templates/view_voters.html:9
+msgid "Home"
+msgstr "Inici"
+
+#: census/templates/add_census_filtros_simples.html:13
+#: census/templates/add_census_filtros_simples.html:53
+#: census/templates/add_census_filtros_simples.html:87
+#: census/templates/add_census_filtros_simples.html:121
+#: census/templates/add_census_filtros_simples.html:152
+#: census/templates/add_custom_census.html:49
+msgid "Create census"
+msgstr "Crear cens"
+
+#: census/templates/add_census_filtros_simples.html:32
+msgid "Choose one of the filters below to create the census."
+msgstr "Trieu un dels filtres a continuació per crear el cens."
+
+#: census/templates/add_census_filtros_simples.html:36
+msgid "Create census with users from this city"
+msgstr "Creeu un cens amb usuaris d'aquesta ciutat"
+
+#: census/templates/add_census_filtros_simples.html:39
+#: census/templates/add_census_filtros_simples.html:70
+#: census/templates/add_census_filtros_simples.html:104
+#: census/templates/add_census_filtros_simples.html:140
+msgid "Choose a voting"
+msgstr "Tria una votació"
+
+#: census/templates/add_census_filtros_simples.html:50
+msgid "Ex: Sevilla"
+msgstr "Ex: Sevilla"
+
+#: census/templates/add_census_filtros_simples.html:68
+msgid "Create census with users of this sex"
+msgstr "Creeu un cens amb els usuaris d'aquest sexe"
+
+#: census/templates/add_census_filtros_simples.html:80
+msgid "Choose a sex"
+msgstr "Tria un sexe"
+
+#: census/templates/add_census_filtros_simples.html:82
+msgid "Male"
+msgstr "Home"
+
+#: census/templates/add_census_filtros_simples.html:83
+msgid "Female"
+msgstr "Dona"
+
+#: census/templates/add_census_filtros_simples.html:102
+msgid "Create census with users in this age range"
+msgstr "Creeu un cens amb usuaris d'aquest rang d'edat"
+
+#: census/templates/add_census_filtros_simples.html:114
+msgid "From this age"
+msgstr "A partir d'aquesta edat"
+
+#: census/templates/add_census_filtros_simples.html:117
+msgid "To this age"
+msgstr "A aquesta edat"
+
+#: census/templates/add_census_filtros_simples.html:138
+msgid "Create census with all existing users"
+msgstr "Creeu un cens amb tots els usuaris existents"
+
+#: census/templates/add_census_filtros_simples.html:146
+#: census/templates/main_index.html:50
+msgid "Voting"
+msgstr "Votació"
+
+#: census/templates/add_census_filtros_simples.html:162
+#: census/templates/census_history.html:47 census/templates/edit_census.html:44
+#: census/templates/import_view.html:64 census/templates/view_voters.html:45
+msgid "Back"
+msgstr "Enrere"
+
+#: census/templates/add_custom_census.html:4
+msgid "Creation of censuses using filters"
+msgstr "Creació de censos mitjançant filtres"
+
+#: census/templates/add_custom_census.html:14
+msgid "Create custom census"
+msgstr "Crea un cens personalitzat"
+
+#: census/templates/add_custom_census.html:21
+msgid "Adding voters on a vote"
+msgstr "Afegint votants en una votació"
+
+#: census/templates/add_custom_census.html:28
+msgid "Select voting"
+msgstr "Selecciona la votació"
+
+#: census/templates/add_custom_census.html:31
+msgid "Filtering"
+msgstr "Filtratge"
+
+#: census/templates/add_custom_census.html:41
+msgid "Initial age"
+msgstr "Edat inicial"
+
+#: census/templates/add_custom_census.html:44
+msgid "Final age"
+msgstr "Edat final"
+
+#: census/templates/census_history.html:14
+msgid "Census history"
+msgstr "Historial del cens"
+
+#: census/templates/census_history.html:21
+msgid "History"
+msgstr "Història"
+
+#: census/templates/census_history.html:27
+msgid "Date/time"
+msgstr "Data i hora"
+
+#: census/templates/census_history.html:28
+msgid "User"
+msgstr "Usuari"
+
+#: census/templates/census_history.html:29
+msgid "Action"
+msgstr "Acció"
+
+#: census/templates/census_history.html:43
+msgid ""
+"This object doesn't have a change history. It probably wasn't added via this "
+"admin site."
+msgstr ""
+"Aquest objecte no té un historial de canvis. Probablement no s'hagi afegit a "
+"través d'aquest lloc d'administració."
+
+#: census/templates/delete_census.html:14 census/templates/main_index.html:78
+msgid "Delete census"
+msgstr "Suprimeix el cens"
+
+#: census/templates/delete_census.html:23
+msgid ""
+"Are you sure you want to delete this census? All of the following related "
+"items will be deleted"
+msgstr ""
+"Esteu segur que voleu suprimir aquest cens? S'eliminaran tots els següents "
+"elements relacionats"
+
+#: census/templates/delete_census.html:31
+msgid "ID"
+msgstr "ID"
+
+#: census/templates/delete_census.html:32
+msgid "Voting ID"
+msgstr "ID de vot"
+
+#: census/templates/delete_census.html:51
+msgid "Be careful: this action cannot be undone!"
+msgstr "Aneu amb compte: aquesta acció no es pot desfer."
+
+#: census/templates/delete_census.html:54
+msgid "Yes, I'm sure"
+msgstr "Sí, n'estic segur"
+
+#: census/templates/delete_census.html:58
+msgid "No, take me back"
+msgstr "No, prengui'm de tornada"
+
+#: census/templates/edit_census.html:14 census/templates/edit_census.html:41
+#: census/templates/main_index.html:77
+msgid "Edit census"
+msgstr "Edita el cens"
+
+#: census/templates/edit_census.html:21
+msgid "Select the voting to assign to this census"
+msgstr "Seleccioneu la votació per assignar a aquest cens"
+
+#: census/templates/edit_census.html:31
+msgid "Select the user to assign to this census"
+msgstr "Seleccioneu l'usuari que voleu assignar a aquest cens"
+
+#: census/templates/import_view.html:14
+msgid "Import census"
+msgstr "Import cens"
+
+#: census/templates/import_view.html:43
+msgid "Import CSV"
+msgstr "Import CSV"
+
+#: census/templates/import_view.html:44
+msgid "Choose the CSV file with the censuses to be imported into the system."
+msgstr "Trieu el fitxer CSV amb els censos que cal importar al sistema."
+
+#: census/templates/import_view.html:50
+msgid "File"
+msgstr "Fitxer"
+
+#: census/templates/import_view.html:59
+msgid "Only CSV files"
+msgstr "Només fitxers CSV"
+
+#: census/templates/import_view.html:60
+msgid "Upload CSV"
+msgstr "Penja CSV"
+
+#: census/templates/main_index.html:34
+msgid "Add census with filters"
+msgstr "Afegiu un cens amb filtres"
+
+#: census/templates/main_index.html:35
+msgid "Add custom census"
+msgstr "Afegiu un cens personalitzat"
+
+#: census/templates/main_index.html:38
+msgid "Export all"
+msgstr "Exporta-ho tot"
+
+#: census/templates/main_index.html:39
+msgid "Import all"
+msgstr "Importa'ls tots"
+
+#: census/templates/main_index.html:51
+msgid "Voters"
+msgstr "Votants"
+
+#: census/templates/main_index.html:52
+msgid "Edit"
+msgstr "Edita"
+
+#: census/templates/main_index.html:53
+msgid "Delete"
+msgstr "Suprimeix"
+
+#: census/templates/main_index.html:89
+msgid "No census to show"
+msgstr "Sense cens per mostrar"
+
+#: census/templates/view_voters.html:11 census/templates/view_voters.html:16
+msgid "View Voters"
+msgstr "Veure votants"
+
+#: census/templates/view_voters.html:25
+msgid "Date of birth"
+msgstr "Data de naixement"
 
 #: decide/settings.py:149
 msgid "English"
