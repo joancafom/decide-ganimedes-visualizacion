@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-11 04:17+0000\n"
+"POT-Creation-Date: 2019-01-11 06:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,61 +18,61 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: authentication/forms.py:13
+#: authentication/forms.py:14
 msgid "Man"
 msgstr "Homes"
 
-#: authentication/forms.py:14
+#: authentication/forms.py:15
 msgid "Woman"
 msgstr "Dona"
 
-#: authentication/forms.py:15
+#: authentication/forms.py:16
 #: census/templates/add_census_filtros_simples.html:84
 msgid "Non-binary"
 msgstr "No binari"
 
-#: authentication/forms.py:17
+#: authentication/forms.py:18
 msgid "Format: dd/mm/YYYY"
 msgstr "Format: dd/mm/AAAA"
 
-#: authentication/forms.py:19 authentication/models.py:17
+#: authentication/forms.py:20 authentication/models.py:17
 #: census/templates/view_voters.html:21
 msgid "First name"
 msgstr "Nom"
 
-#: authentication/forms.py:20 authentication/models.py:18
+#: authentication/forms.py:21 authentication/models.py:18
 #: census/templates/view_voters.html:22
 msgid "Last name"
 msgstr "Cognom"
 
-#: authentication/forms.py:21 authentication/models.py:16
+#: authentication/forms.py:22 authentication/models.py:16
 #: authentication/serializers.py:16
 #: authentication/templates/authentication/login.html:37
 msgid "Email"
 msgstr "Correu electrònic"
 
-#: authentication/forms.py:22 authentication/models.py:19
+#: authentication/forms.py:23 authentication/models.py:19
 msgid "Birthdate"
 msgstr "Data de naixement"
 
-#: authentication/forms.py:23 authentication/models.py:20
+#: authentication/forms.py:24 authentication/models.py:20
 #: census/templates/add_census_filtros_simples.html:49
 #: census/templates/add_custom_census.html:37
 #: census/templates/view_voters.html:24
 msgid "City"
 msgstr "Ciutat"
 
-#: authentication/forms.py:24 authentication/models.py:21
+#: authentication/forms.py:25 authentication/models.py:21
 #: census/templates/add_custom_census.html:34
 #: census/templates/view_voters.html:23
 msgid "Sex"
 msgstr "Sexe"
 
-#: authentication/forms.py:54
+#: authentication/forms.py:56
 msgid "Email alredy exits"
 msgstr "Correu electrònic de sortida"
 
-#: authentication/forms.py:64
+#: authentication/forms.py:66
 msgid "Future date not posible"
 msgstr "La data futura no és possible"
 
@@ -121,7 +121,9 @@ msgstr "Nou usuari"
 
 #: authentication/templates/authentication/acc_active_email.html:9
 msgid "Thank you for your email confirmation. Now you can login your account."
-msgstr "Gràcies per la vostra confirmació per correu electrònic. Ara podeu iniciar la sessió al vostre compte."
+msgstr ""
+"Gràcies per la vostra confirmació per correu electrònic. Ara podeu iniciar "
+"la sessió al vostre compte."
 
 #: authentication/templates/authentication/acc_active_email.html:11
 msgid "Go to login"
@@ -129,9 +131,11 @@ msgstr "Iniciar Sessió"
 
 #: authentication/templates/authentication/confirm_email.html:7
 msgid "Please confirm your email address to complete the registration"
-msgstr "Confirmeu la vostra adreça de correu electrònic per completar el registre"
+msgstr ""
+"Confirmeu la vostra adreça de correu electrònic per completar el registre"
 
 #: authentication/templates/authentication/login.html:25
+#: base/templates/base.html:105
 msgid "Log in"
 msgstr "Iniciar Sessió"
 
@@ -152,35 +156,57 @@ msgstr "Error: les credencials no són vàlides"
 msgid "Error: "
 msgstr "Error: "
 
-#: authentication/templates/authentication/signup.html:7
+#: authentication/templates/authentication/signup.html:13
 msgid "Sign up a new user"
 msgstr "Registra't un nou usuari"
 
-#: authentication/templates/authentication/signup.html:15
+#: authentication/templates/authentication/signup.html:21
 msgid "Submit"
 msgstr "Presentar"
 
-#: base/templates/base.html:125 voting/templates/voting/openVotings.html:9
+#: base/templates/base.html:106
+msgid "Sign up"
+msgstr "Registra't"
+
+#: base/templates/base.html:133 voting/templates/voting/openVotings.html:9
 msgid "Open votings"
 msgstr "Votacions obertes"
 
-#: base/templates/base.html:167
+#: base/templates/base.html:134
+#: census/templates/add_census_filtros_simples.html:12
+#: census/templates/add_custom_census.html:13
+#: census/templates/census_history.html:13
+#: census/templates/delete_census.html:13 census/templates/edit_census.html:13
+#: census/templates/import_view.html:13 census/templates/main_index.html:15
+#: census/templates/view_voters.html:10
+msgid "Census"
+msgstr "Cens"
+
+#: base/templates/base.html:135
+msgid "Closed Votings"
+msgstr "Votacions Tancades"
+
+#: base/templates/base.html:136
+msgid "Admin panel"
+msgstr "Tauler d'administració"
+
+#: base/templates/base.html:176
 msgid "Footer Content"
 msgstr "Contingut del peu de pàgina"
 
-#: base/templates/base.html:168
+#: base/templates/base.html:177
 msgid "Information."
 msgstr "Informació"
 
-#: base/templates/base.html:174
+#: base/templates/base.html:183
 msgid "© 2018 Copyright Text"
 msgstr "© 2018 Copyright Text"
 
-#: base/templates/base.html:175
+#: base/templates/base.html:184
 msgid "More Links"
 msgstr "Més enllaços"
 
-#: base/templates/index.html:12
+#: base/templates/index.html:19
 msgid "Welcome"
 msgstr "Benvinguda"
 
@@ -192,7 +218,9 @@ msgstr "La votació no es pot accedir perquè no s'ha iniciat."
 msgid ""
 "The voting can not be accessed because it has ended. You can access to the "
 "results in the following link: "
-msgstr "La votació no es pot accedir perquè s'ha acabat. Podeu accedir als resultats al següent enllaç:"
+msgstr ""
+"La votació no es pot accedir perquè s'ha acabat. Podeu accedir als resultats "
+"al següent enllaç:"
 
 #: booth/templates/booth/booth.html:23
 msgid "Results"
@@ -202,7 +230,10 @@ msgstr "Resultats"
 msgid ""
 "This voting does not contain any questions, so it can not be accessed yet. "
 "Try it again later."
-msgstr "Aquesta votació no conté cap pregunta, de manera que encara no es pot accedir a ella. Proveuuna altra vegada més tard."
+msgstr ""
+"Aquesta votació no conté cap pregunta, de manera que encara no es pot "
+"accedir a ella. Proveuuna altra vegada més tard."
+
 
 #: booth/templates/booth/booth.html:66
 msgid "Answer with voice"
@@ -241,22 +272,12 @@ msgstr "Heu de seleccionar una opció per a cada pregunta."
 msgid "Home"
 msgstr "Inici"
 
-#: census/templates/add_census_filtros_simples.html:12
-#: census/templates/add_custom_census.html:13
-#: census/templates/census_history.html:13
-#: census/templates/delete_census.html:13 census/templates/edit_census.html:13
-#: census/templates/import_view.html:13 census/templates/main_index.html:15
-#: census/templates/view_voters.html:10
-msgid "Census"
-msgstr "Cens"
-
 #: census/templates/add_census_filtros_simples.html:13
 #: census/templates/add_census_filtros_simples.html:53
 #: census/templates/add_census_filtros_simples.html:87
 #: census/templates/add_census_filtros_simples.html:121
 #: census/templates/add_census_filtros_simples.html:152
 #: census/templates/add_custom_census.html:49
-#: base/templates/base.html:127
 msgid "Create census"
 msgstr "Crear cens"
 
@@ -486,7 +507,7 @@ msgstr "Data de naixement"
 #: visualizer/templates/visualizer/ended.html:14
 #: visualizer/templates/visualizer/ended_export.html:7
 msgid "Results: "
-msgstr "Resultats: "
+msgstr "Resultats"
 
 #: visualizer/templates/visualizer/ended.html:169
 msgid "Question:"
@@ -680,14 +701,14 @@ msgstr "Veure les estadístiques"
 msgid "There are no open votings in the system."
 msgstr "No hi ha votacions obertes al sistema."
 
-#: .\decide\settings.py:148
+#: decide/settings.py:149
 msgid "English"
-msgstr "English"
+msgstr ""
 
-#: .\decide\settings.py:149
+#: decide/settings.py:150
 msgid "Español"
-msgstr "Español"
+msgstr ""
 
-#: .\decide\settings.py:150
+#: decide/settings.py:151
 msgid "Català"
-msgstr "Català"
+msgstr ""
