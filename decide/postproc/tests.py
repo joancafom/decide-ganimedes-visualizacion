@@ -236,7 +236,7 @@ class PostProcTestCase(APITestCase):
         self.assertEqual(values, expected_result)
 
     #TODOS DEL MISMO SEXO
-    def test_parityUnSoloSexo(self):
+    def test_parity_un_solo_sexo(self):
         data = {
             'type': PostProcType.PARITY,
             'questions': [
@@ -291,7 +291,7 @@ class PostProcTestCase(APITestCase):
 
 
     #1 CANDIDATO DE UN SEXO Y EL RESTO DEL CONTRARIO
-    def test_parityTodxsMenosUnx(self):
+    def test_parity_todxs_menos_unx(self):
         data = {
             'type': PostProcType.PARITY,
             'questions': [
