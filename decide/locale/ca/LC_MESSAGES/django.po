@@ -256,6 +256,7 @@ msgstr "Cens"
 #: census/templates/add_census_filtros_simples.html:121
 #: census/templates/add_census_filtros_simples.html:152
 #: census/templates/add_custom_census.html:49
+#: base/templates/base.html:127
 msgid "Create census"
 msgstr "Crear cens"
 

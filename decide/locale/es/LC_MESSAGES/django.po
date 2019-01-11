@@ -247,6 +247,7 @@ msgstr "Inicio"
 #: census/templates/delete_census.html:13 census/templates/edit_census.html:13
 #: census/templates/import_view.html:13 census/templates/main_index.html:15
 #: census/templates/view_voters.html:10
+#: base/templates/base.html:127
 msgid "Census"
 msgstr "Censo"
 
