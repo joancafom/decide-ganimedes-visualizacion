@@ -1,54 +1,57 @@
 {% extends 'base.html' %}
-
-{% block title %}Creación de censos mediante filtros{% endblock %}
+{% load i18n static %}
+{% load custom_tags %}
+{% block title %}{% trans 'Creation of censuses using filters' %}{% endblock %}
 
 {% block content %}
+
+ <div class="container">
+  <nav>
+    <div class="nav-wrapper row teal darken-3">
+      <div class="col s12">
+        <div class="col s12"><a href="/" class="breadcrumb">{% trans 'Home' %}</a>
+        <a href="{% url 'listCensus' %}" class="breadcrumb">{% trans 'Census'%}</a>
+            <a href="" class="breadcrumb">{% trans "Create custom census" %}</a>
+      </div>
+      </div>
+    </div>
+  </nav>
+
     <div>
-        <h4>Censando votantes en una votación</h4>
+        <h4>{% trans 'Adding voters on a vote' %}</h4>
 
         <div>
             <form action="{% url 'addCustomCensus' %}" method="POST">
                 {% csrf_token %}
                 <table>
                     <tr>
-                        <td><label>{{ form.voting.label }}</label>{{ form.voting }}</td>
+                        <td><label>{% trans 'Select voting' %}</label>{{ form.voting }}</td>
                     </tr>
                 </table>
-                <h5>Filtrado</h5>
+                <h5>{% trans 'Filtering' %}</h5>
                 <table>
                     <tr>
-                        <td colspan="2"><label>{{ form.sex.label }}</label>{{ form.sex }}</td>
+                        <td colspan="2"><label>{% trans 'Sex' %}</label>{{ form.sex }}</td>
                     </tr>
                     <tr>
-                        <td colspan="2"><label>{{ form.city.label }}</label>{{ form.city }}</td>
+                        <td colspan="2"><label>{% trans 'City' %}</label>{{ form.city }}</td>
                     </tr>
                     <tr>
-                        <td><label>{{ form.age_initial_range.label}}</label>{{ form.age_initial_range }}</td>
-                        <td><label>{{ form.age_final_range.label }}</label>{{ form.age_final_range }}</td>
+                    <div class="datepicker">
+                        <td><label>{% trans 'Initial age' %}</label>{{ form.age_initial_range }}</td>
+                    </div>
+                    <div class="datepicker">
+                        <td><label>{% trans 'Final age' %}</label>{{ form.age_final_range }}</td>
+                    </div>
                     </tr>
                 </table>
                 <br/>
-                <input type="submit" value="Submit">
+                <button class="btn waves-effect waves-light" type="submit" value="Submit">{% trans "Create census" %}<i class="material-icons right">send</i></button>
             </form>
             <br/><br/>
         </div>
 
-        <h4>Pruebas temporales (hasta que se implemente el menú principal)</h4>
-        <div>
-            <h5>Exportar CSV</h5>
-            <button onclick="window.location='{% url 'exportCSV' %}'"
-                    title="Exportar CSV" class="button">
-                    Exportar CSV
-            </button>
-
-            <h5>Importar CSV</h5>
-            <form action="{% url 'importCSV' %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="file" name="file">
-                <p>Solo acepta ficheros CSV</p>
-                <button type="save">Upload CSV</button>
-            </form>
-            <br/><br/>
-        </div>
     </div>
+</div>    
+
 {% endblock %}
