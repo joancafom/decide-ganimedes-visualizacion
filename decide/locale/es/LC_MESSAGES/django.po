@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-11 01:17+0000\n"
+"POT-Creation-Date: 2019-01-11 10:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,7 +109,7 @@ msgstr "Debe incluir \"email\" and \"contraseña\"."
 #: authentication/templates/authentication/acc_active_email.html:3
 #: authentication/templates/authentication/confirm_email.html:4
 msgid "New user"
-msgstr "Nuev@ usuari@"
+msgstr "Nuevo usuario"
 
 #: authentication/templates/authentication/acc_active_email.html:9
 msgid "Thank you for your email confirmation. Now you can login your account."
@@ -151,7 +151,7 @@ msgstr "Error"
 
 #: authentication/templates/authentication/signup.html:13
 msgid "Sign up a new user"
-msgstr "Registrar nuev@ usuari@"
+msgstr "Registrar nuevo usuario"
 
 #: authentication/templates/authentication/signup.html:21
 msgid "Submit"
