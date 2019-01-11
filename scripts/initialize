@@ -1,0 +1,88 @@
+#!/bin/bash
+
+
+readonly compilar_mensajes=false
+
+if [ -d ~/decide-repo/ ]; then
+  echo "La carpeta 'decide-repo' ya existe. ¿Desea borrarla para continuar? (S/n)";
+  read continuar
+  if [ "$continuar" != "s" ] && [ "$continuar" != "S" ]  && [ "$continuar" != "" ] ; then
+    echo "El script no puede continuar sin su permiso."
+    exit 1;
+  else
+    rm -rf ~/decide-repo/
+  fi
+fi
+
+if [ -d ~/libreria/myenv/ ]; then
+  echo "La carpeta 'libreria/myenv' ya existe. ¿Desea borrarla para continuar? (S/n)";
+  read continuar
+  if [ "$continuar" != "s" ] && [ "$continuar" != "S" ]  && [ "$continuar" != "" ] ; then
+    echo "El script no puede continuar sin su permiso."
+    exit 1;
+  else
+    rm -rf ~/libreria/myenv/
+  fi
+fi
+
+echo "Introduzca usuario de github: "
+read usuario
+echo "Introduzca email de github: "
+read email
+
+
+
+if [ -d ~/libreria ]; then
+  echo "La carpeta 'librería' ya existe."
+else
+  mkdir ~/libreria
+fi
+
+cd ~/libreria
+
+echo "Creando entorno virtual"
+apt install python3 python3-pip postgresql -y
+pip3 install virtualenv
+virtualenv myenv
+source myenv/bin/activate
+echo "Entorno virtual 'myenv' activado"
+
+mkdir ~/decide-repo
+cd ~/decide-repo
+apt-get install -y git
+echo "Inicializando repositorio"
+git init
+git remote add origin https://github.com/decide-ganimedes-autenticacion/decide-ganimedes-autenticacion.git
+git config user.name $usuario
+git config user.email $email
+git pull origin master
+echo "Repositorio actualizado"
+
+
+pip3 install -r ~/decide-repo/requirements.txt
+sudo -u postgres -h localhost psql -c "create user decide with password 'decide'"
+sudo -u postgres -h localhost psql -c "ALTER USER decide CREATEDB"
+sudo -u postgres -h localhost psql -c "DROP DATABASE IF EXISTS decide"
+sudo -u postgres -h localhost psql -c "create database decide owner 'decide'"
+echo "Base de datos borrada y creada correctamente."
+
+~/decide-repo/decide/manage.py makemigrations
+~/decide-repo/decide/manage.py migrate
+
+if [ "$compilar_mensajes" = true ]; then
+  echo "Compilando mensajes."
+  ~/decide-repo/decide/manage.py compilemessages
+  echo "Mensajes compilados."
+fi
+
+echo "¿Desea crear un super usuario por defecto? (U: admin@decide.com | P: practica) (s/N)"
+read create
+if [ "$create" = "s" ] || [ "$create" = "S" ] ; then
+  echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin@decide.com', 'practica')" | python3 ~/decide-repo/decide/manage.py shell
+else
+  ~/decide-repo/decide/manage.py createsuperuser
+fi
+
+~/decide-repo/decide/manage.py runserver
+
+echo "Finalizado script de migración."
