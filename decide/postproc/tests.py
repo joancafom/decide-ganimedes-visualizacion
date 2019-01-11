@@ -196,9 +196,37 @@ class PostProcTestCase(APITestCase):
 
         values = response.json()
         self.assertEqual(values, expected_result)
+
+    # Supongamos que options es un array vacío (no hay candidatos)
+    def test_parity_options_vacio(self):
+        data = {
+            'type': PostProcType.PARITY,
+            'questions': [
+                {
+                    'number': 1,
+                    'options': [],
+                },
+            ],
+        }
+
+        expected_result = {
+            'type': PostProcType.PARITY,
+            'questions': [
+                {
+                    'number': 1,
+                    'options': [],
+                },
+            ],
+        }
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
         
     #PRUEBA BÁSICA
-    def test_parity(self):
+    def test_parity_basica(self):
         data = {
             'type': PostProcType.PARITY,
             'questions': [
@@ -235,13 +263,13 @@ class PostProcTestCase(APITestCase):
         values = response.json()
         self.assertEqual(values, expected_result)
 
-    #PRUEBAS CON LISTAS
-    def test_parityPruebasConListas(self):
+    #TODOS DEL MISMO SEXO
+    def test_parity_un_solo_sexo(self):
         data = {
             'type': PostProcType.PARITY,
             'questions': [
                 {#Que sean todos hombres
-                    'number': 1, 
+                    'number': 1,
                     'options': [
                         {'option': 'Option 1', 'number': 1, 'votes': 10, 'gender': True},
                         {'option': 'Option 2', 'number': 2, 'votes': 5, 'gender': True},
@@ -258,25 +286,6 @@ class PostProcTestCase(APITestCase):
                         {'option': 'Option 4', 'number': 8, 'votes': 2, 'gender': False},
                     ],
                 },
-                { #1 hombre y el resto mujeres
-                    'number': 3,
-                    'options': [
-                        {'option': 'Option 1', 'number': 9, 'votes': 10, 'gender': True},
-                        {'option': 'Option 2', 'number': 10, 'votes': 5, 'gender': False},
-                        {'option': 'Option 3', 'number': 11, 'votes': 13, 'gender': False},
-                        {'option': 'Option 4', 'number': 12, 'votes': 2, 'gender': False},
-                    ],
-                },
-                {  # 1 mujer y el resto hombres
-                    'number': 4,
-                    'options': [
-                        {'option': 'Option 1', 'number': 13, 'votes': 10, 'gender': False},
-                        {'option': 'Option 2', 'number': 14, 'votes': 5, 'gender': True},
-                        {'option': 'Option 3', 'number': 15, 'votes': 13, 'gender': True},
-                        {'option': 'Option 4', 'number': 16, 'votes': 2, 'gender': True},
-                    ],
-                },
-
             ],
         }
         expected_result = {
@@ -300,22 +309,60 @@ class PostProcTestCase(APITestCase):
                         {'option': 'Option 4', 'number': 8, 'votes': 2, 'gender': False},
                     ],
                 },
-                {  #1 hombre y el resto mujeres
-                    'number': 3,
+            ],
+        }
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+
+
+    #1 CANDIDATO DE UN SEXO Y EL RESTO DEL CONTRARIO
+    def test_parity_todxs_menos_unx(self):
+        data = {
+            'type': PostProcType.PARITY,
+            'questions': [
+                { #1 hombre y el resto mujeres
+                    'number': 1,
                     'options': [
-                        {'option': 'Option 3', 'number': 11, 'votes': 13, 'gender': False},
-                        {'option': 'Option 1', 'number': 9, 'votes': 10, 'gender': True},
-                        {'option': 'Option 2', 'number': 10, 'votes': 5, 'gender': False},
-                        {'option': 'Option 4', 'number': 12, 'votes': 2, 'gender': False},
+                        {'option': 'Option 1', 'number': 1, 'votes': 10, 'gender': True},
+                        {'option': 'Option 2', 'number': 2, 'votes': 5, 'gender': False},
+                        {'option': 'Option 3', 'number': 3, 'votes': 13, 'gender': False},
+                        {'option': 'Option 4', 'number': 4, 'votes': 2, 'gender': False},
                     ],
                 },
                 {  # 1 mujer y el resto hombres
-                    'number': 4,
+                    'number': 2,
                     'options': [
-                        {'option': 'Option 3', 'number': 15, 'votes': 13, 'gender': True},
-                        {'option': 'Option 1', 'number': 13, 'votes': 10, 'gender': False},
-                        {'option': 'Option 2', 'number': 14, 'votes': 5, 'gender': True},
-                        {'option': 'Option 4', 'number': 16, 'votes': 2, 'gender': True},
+                        {'option': 'Option 1', 'number': 5, 'votes': 10, 'gender': False},
+                        {'option': 'Option 2', 'number': 6, 'votes': 5, 'gender': True},
+                        {'option': 'Option 3', 'number': 7, 'votes': 13, 'gender': True},
+                        {'option': 'Option 4', 'number': 8, 'votes': 2, 'gender': True},
+                    ],
+                },
+
+            ],
+        }
+        expected_result = {
+            'type': PostProcType.PARITY,
+            'questions': [
+                {  #1 hombre y el resto mujeres
+                    'number': 1,
+                    'options': [
+                        {'option': 'Option 3', 'number': 3, 'votes': 13, 'gender': False},
+                        {'option': 'Option 1', 'number': 1, 'votes': 10, 'gender': True},
+                        {'option': 'Option 2', 'number': 2, 'votes': 5, 'gender': False},
+                        {'option': 'Option 4', 'number': 4, 'votes': 2, 'gender': False},
+                    ],
+                },
+                {  # 1 mujer y el resto hombres
+                    'number': 2,
+                    'options': [
+                        {'option': 'Option 3', 'number': 7, 'votes': 13, 'gender': True},
+                        {'option': 'Option 1', 'number': 5, 'votes': 10, 'gender': False},
+                        {'option': 'Option 2', 'number': 6, 'votes': 5, 'gender': True},
+                        {'option': 'Option 4', 'number': 8, 'votes': 2, 'gender': True},
                     ],
                 },
             ],
@@ -488,5 +535,6 @@ class PostProcTestCase(APITestCase):
 
             response = self.client.post('/postproc/', data, format='json')
             self.assertEqual(response.status_code, 200)
+
             values = response.json()
             self.assertEqual(values, expected_result)
