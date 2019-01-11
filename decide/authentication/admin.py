@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from .forms import UserCreateForm, UserCreationForm, UserChangeForm
+from .forms import UserCreateFormAdmin, UserCreationForm, UserChangeForm
 
 from django.contrib.auth import get_user_model 
 
@@ -11,7 +11,7 @@ User=get_user_model()
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
-    add_form = UserCreateForm
+    add_form = UserCreateFormAdmin
     # form = UserCreateForm
 
     # The fields to be used in displaying the DecideUser model.
@@ -26,7 +26,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('is_staff',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('birthdate','city','sex', 'first_name','last_name',),}),
+        ('Personal info', {'fields': ('birthdate','city','sex', 'first_name','last_name'),}),
         ('Permissions', {'fields': ('is_staff',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
