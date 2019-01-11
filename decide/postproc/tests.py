@@ -196,9 +196,37 @@ class PostProcTestCase(APITestCase):
 
         values = response.json()
         self.assertEqual(values, expected_result)
+
+    # Supongamos que options es un array vacío (no hay candidatos)
+    def test_parity_options_vacío(self):
+        data = {
+            'type': PostProcType.PARITY,
+            'questions': [
+                {
+                    'number': 1,
+                    'options': [],
+                },
+            ],
+        }
+
+        expected_result = {
+            'type': PostProcType.PARITY,
+            'questions': [
+                {
+                    'number': 1,
+                    'options': [],
+                },
+            ],
+        }
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
         
     #PRUEBA BÁSICA
-    def test_parity(self):
+    def test_parity_basica(self):
         data = {
             'type': PostProcType.PARITY,
             'questions': [

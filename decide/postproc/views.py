@@ -119,6 +119,10 @@ class PostProcView(APIView):
     resulte más votado ocupará una mejor posición en la lista resultante tras aplicar el método."""
 
     def parity(self, options):
+        #Si no hay opciones, devuelve un array vacío
+        if len(options) == 0:
+            return []
+
         hombres = []
         mujeres = []
         for opt in options:
