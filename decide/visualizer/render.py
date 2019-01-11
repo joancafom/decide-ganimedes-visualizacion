@@ -30,6 +30,7 @@ class Render:
 
         votacion = params['voting']
         writer = csv.writer(response)
+        print(votacion)
 
         if path == 'visualizer/ended_export.html':
             
@@ -41,6 +42,9 @@ class Render:
 
                 if votacion['postproc']['type'] == 1 or votacion['postproc']['type'] == 2:
                     writer.writerow(['Opción', 'Total', 'Número de votos'])
+
+                elif votacion['postproc']['type'] == 3:
+                    writer.writerow(['Género', 'Opción', 'Número de votos'])
                 
                 elif votacion['postproc']['type'] == 4:
                     writer.writerow(['Equipo', 'Opción', 'Número de votos'])
@@ -55,6 +59,10 @@ class Render:
 
                             if votacion['postproc']['type'] == 1 or votacion['postproc']['type'] == 2:
                                 writer.writerow([o['option'], o['postproc'], o['votes']])
+
+                            elif votacion['postproc']['type'] == 3:
+                                gender = "Hombre" if o['gender'] == True else "Mujer"
+                                writer.writerow([gender, o['option'], o['votes']])
 
                             elif votacion['postproc']['type'] == 4:
                                 writer.writerow([o['team'], o['option'], o['votes']])
@@ -119,10 +127,16 @@ class Render:
                 results_results = {}
 
                 for r in q['options']:
-                    if resultados['type'] == 1 or resultados['type'] == 2:
+
+                    if resultados['type'] == 0:
+                        results_results[str(r['option'])] = "Número de votos: {}".format(r['postproc'])
+                    elif resultados['type'] == 1 or resultados['type'] == 2:
                         results_results[str(r['option'])] = "Total: {} - Número de votos: {}".format(r['postproc'], r['votes'])
+                    elif resultados['type'] == 3:
+                        genero = "Hombre" if r['gender'] else "Mujer"
+                        results_results[str(r['option'])] = " ({}) - Número de votos: {}".format(genero, r['votes'])
                     elif resultados['type'] == 4:
-                         results_results['Equipo ' + str(r['team']) + " - " + str(r['option'])] = r['votes']
+                         results_results['Equipo ' + str(r['team']) + " - " + str(r['option'])] = "Número de votos: {}".format(r['votes'])
                     else:
                         results_results[str(r['option'])] = r['votes']
                 
@@ -227,13 +241,28 @@ class Render:
                     option = ET.SubElement(options, 'option')
                     desc = ET.SubElement(option, 'desc')
                     desc.text = o['option']
-                    if(votacion['postproc']['type'] == 1):
-
+                    if(votacion['postproc']['type'] == 1 or votacion['postproc']['type'] == 2):
                         postproc = ET.SubElement(option, 'postproc')
                         postproc.text = str(o['postproc'])
+                        votes = ET.SubElement(option, 'votes')
+                        votes.text = str(o['votes'])
+                    elif(votacion['postproc']['type'] == 3):
+                        if(o['gender']==True):
+                            gender = ET.SubElement(option, 'gender')
+                            gender.text = "Male"
+                        else:
+                            gender = ET.SubElement(option, 'gender')
+                            gender.text = "Female"
+                        votes = ET.SubElement(option, 'votes')
+                        votes.text = str(o['votes'])
+                    elif(votacion['postproc']['type'] == 4):
+                        team = ET.SubElement(option, 'team')
+                        team.text = str(o['team'])
+                        votes = ET.SubElement(option, 'votes')
+                        votes.text = str(o['votes'])
                     else:
                         postproc = ET.SubElement(option, 'postproc')
-                        postproc.text = str(o['votes'])
+                        postproc.text = str(o['postproc'])
 
 
             #Pasar el XML a String
