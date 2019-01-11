@@ -110,23 +110,36 @@ class PostProcView(APIView):
         equipos_mayor_a_menor = sorted(votes_per_team, key=int, reverse=True)
         equipos = lista_ordenada(votes_per_team, equipos_mayor_a_menor)
         return equipos
-    """"Este método aplica paridad de resultados a una votación. Es decir, dada una lista de candidatos con sus respectivos
-        atributos, siendo los más relevantes el número de votos y el género de los candidatos, devuelve una lista ordenada
-        por número de votos, alternando siempre entre mujeres y hombres, para asegurar así la paridad."""
+
+    """"Este método aplica paridad de resultados a una votación. Es decir, dada una lista de candidatos con
+    sus respectivos atributos, siendo los más relevantes el número de votos y el género de los candidatos,
+    devuelve una lista de candidatos ordenada por número de votos, alternando siempre entre hombres y mujeres,
+    para asegurar así la paridad de los resultados. Para garantizar que la lista par resultante sea lo más
+    justa posible, se realizan comparaciones dos a dos entre un candidato hombre y mujer, de modo que él que
+    resulte más votado ocupará una mejor posición en la lista resultante tras aplicar el método."""
+
     def parity(self, options):
         hombres = []
         mujeres = []
         for opt in options:
-            if opt['gender']:  # si la opcion es un hombre, añadelo a la lista hombres, si no, a mujer.
+            # si la opcion es un hombre, añadelo a la lista hombres, si no, a mujer.
+            if opt['gender']:
                 hombres.append(opt)
             else:
                 mujeres.append(opt)
 
-        hombres.sort(key=lambda x: -x['votes'])  # lista Ordenada de hombres por numero de votos
-        mujeres.sort(key=lambda x: -x['votes'])  # lista Ordenada de mujeres por numero de votos
+        # lista Ordenada de hombres por numero de votos
+        hombres.sort(key=lambda x: -x['votes'])
+        # lista Ordenada de mujeres por numero de votos
+        mujeres.sort(key=lambda x: -x['votes'])
+
         res = []
-        r = 0  # tendrá el valor de la longitud de la lista más corta (hombres o mujeres)
-        listaSecundaria = []  # la lista con más candidatos de las dos
+
+        # tendrá el valor de la longitud de la lista más corta (hombres o mujeres)
+        r = 0
+        # la lista con más candidatos de las dos
+        listaSecundaria = []
+
         if len(hombres) < len(mujeres):
             r = len(hombres)
             listaSecundaria = mujeres
@@ -139,6 +152,7 @@ class PostProcView(APIView):
         # listas aplicando paridad hasta que en una de las dos no haya más
         # elementos. Entonces, completamos la lista resultado con los
         # candidatos de la lista que aún no se ha terminado de recorrer.
+
         for i in range(r):
             if hombres[i]['votes'] > mujeres[i]['votes']:
                 res.append(hombres[i])
