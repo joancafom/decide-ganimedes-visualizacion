@@ -10,7 +10,7 @@ RUN pip install ipython
 
 WORKDIR /app
 
-RUN git clone https://github.com/decide-ganimedes-autenticacion/decide-ganimedes-autenticacion.git .
+RUN git clone https://github.com/decide-ganimedes/decide-ganimedes.git .
 ADD ./authentication/migrations ./decide/authentication/migrations
 ADD ./base/migrations ./decide/base/migrations
 ADD ./census/migrations ./decide/census/migrations
