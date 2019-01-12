@@ -581,7 +581,7 @@ msgstr "Ir"
 
 #: visualizer/templates/visualizer/list_ended.html:72
 msgid "There are no ended votings yet"
-msgstr ""
+msgstr "Todavía no hay votaciones finalizadas"
 
 #: visualizer/templates/visualizer/not_started.html:13
 msgid "Voting not started"

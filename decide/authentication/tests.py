@@ -91,7 +91,7 @@ class AuthTestCase(APITestCase):
     def test_nuevo_usuario_ok(self):
         os.environ['NORECAPTCHA_TESTING'] = 'True'
 
-        data = {'email': 'new1@mail.com', 'firs_name': 'new', 'last_name': 'new', 'birthday':'01/01/2000', 'password1': 'practica', 'password2': 'practica', 'city': 'Sevilla', 'g-recaptcha-response': 'PASSED'}# this user must not exits in db
+        data = {'email': 'new1@mail.com', 'first_name': 'new', 'last_name': 'new', 'birthday':'01/01/2000', 'password1': 'practica', 'password2': 'practica', 'city': 'Sevilla', 'g-recaptcha-response': 'PASSED'}# this user must not exits in db
         response = mods.get('authentication/signup', json=data, response=True) #getting the html
         self.assertEqual(response.status_code, 200)  
         response = mods.post('authentication/signup', json=data, response=True) 
