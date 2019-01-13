@@ -42,9 +42,8 @@ class UserCreateForm(UserCreationForm):
             user.save()
         return user
 
-    #  validations  
+    #  Validations  
 
-    
     def clean(self, *args, **kwargs):
         cleaned_data = super(UserCreateForm, self).clean(*args, **kwargs)
         email = cleaned_data.get('email', None)
@@ -55,16 +54,13 @@ class UserCreateForm(UserCreationForm):
                 if email==u.email:
                     self.add_error('email', _('Email alredy exits'))
                     break
-
                     
         birthdate= cleaned_data.get('birthdate', None)
         if birthdate is not None:
             now = timezone.now()
-           
             
             if birthdate > now:
                 self.add_error('birthdate', _('Future date not posible'))
-
 
 class UserChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
@@ -101,7 +97,7 @@ class UserCreateFormAdmin(UserCreationForm):
     class Meta:
         model = User
         fields = ("first_name", "last_name", "email", "birthdate", "city", "sex", "password1", "password2")
-
+    
     def save(self, commit=True):
         user = super(UserCreateFormAdmin, self).save(commit=False)
         user.first_name = self.cleaned_data["first_name"]
@@ -115,9 +111,8 @@ class UserCreateFormAdmin(UserCreationForm):
             user.save()
         return user
 
-    #  validations  
-
-
+    #  Validations  
+    
     def clean(self, *args, **kwargs):
         cleaned_data = super(UserCreateFormAdmin, self).clean(*args, **kwargs)
         email = cleaned_data.get('email', None)
@@ -128,12 +123,10 @@ class UserCreateFormAdmin(UserCreationForm):
                 if email==u.email:
                     self.add_error('email', _('Email alredy exits'))
                     break
-
-
+                    
         birthdate= cleaned_data.get('birthdate', None)
         if birthdate is not None:
-            now = timezone.now()
-
-
+            now = timezone.now() 
+            
             if birthdate > now:
                 self.add_error('birthdate', _('Future date not posible'))
